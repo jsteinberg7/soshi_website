@@ -8,24 +8,12 @@ import 'database.dart';
 import 'loading_screen.dart';
 
 void main() async {
-  // Routes.setupRouter();
   WidgetsFlutterBinding.ensureInitialized();
-  // runApp(LoadingScreen());
-  // Routes.setupRouter();
   await Firebase.initializeApp();
   runApp(MyApp());
-  // runApp(PageNotFoundScreen());
 }
 
 Future<User> fetchUserData(String UID) async {
-  // get UID
-  // UID = "MB89JmQytNb9s1JjNUSfvCKQSSX2";
-  // String URLPath = Uri.base.toString();
-  // print("Params " + Uri.base.queryParameters.toString());
-  // print("URLPath: " + URLPath);
-  // UID = URLPath.substring(URLPath.indexOf("/#/") + 3);
-  // print("UID: " + UID);
-  // retrieve all async values from database
   DatabaseService databaseService = new DatabaseService(UID: UID);
   String photoURL = await databaseService.getPhotoURL(UID);
   String soshiUsername =
@@ -37,7 +25,8 @@ Future<User> fetchUserData(String UID) async {
   return new User(
       fullName: fullName,
       usernames: usernames,
-      visiblePlatforms: visiblePlatforms);
+      visiblePlatforms: visiblePlatforms,
+      photoURL: photoURL);
 }
 
 class MyApp extends StatefulWidget {
@@ -48,12 +37,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // final router = Routes.router;
-
   @override
   void initState() {
     super.initState();
-    // Routes.configureRoutes(router);
   }
 
   @override
@@ -63,7 +49,7 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: (settings) {
           List<String> params = settings.name!.split("/");
           String UID = params.last;
-          if (params[4] == "user") {
+          if (params.contains("user")) {
             return MaterialPageRoute(builder: (context) {
               return FutureBuilder(
                   future: fetchUserData(UID),
@@ -71,9 +57,11 @@ class _MyAppState extends State<MyApp> {
                     if (snapshot.hasData) {
                       User user = snapshot.data as User;
                       return UserInfoDisplay(
-                          fullName: user.fullName,
-                          usernames: user.usernames,
-                          visiblePlatforms: user.visiblePlatforms);
+                        fullName: user.fullName,
+                        usernames: user.usernames,
+                        visiblePlatforms: user.visiblePlatforms,
+                        photoURL: user.photoURL,
+                      );
                     } else {
                       return LoadingScreen();
                     }

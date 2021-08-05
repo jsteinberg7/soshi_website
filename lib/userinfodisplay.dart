@@ -5,13 +5,17 @@ class UserInfoDisplay extends StatefulWidget {
   String fullName = "";
   Map<String, dynamic> usernames = {};
   List<String> visiblePlatforms = [];
+  String photoURL = "";
+
   UserInfoDisplay(
       {required String fullName,
       required Map<String, dynamic> usernames,
-      required List<String> visiblePlatforms}) {
+      required List<String> visiblePlatforms,
+      required String photoURL}) {
     this.fullName = fullName;
     this.usernames = usernames;
     this.visiblePlatforms = visiblePlatforms;
+    this.photoURL = photoURL;
   }
 
   @override
@@ -22,6 +26,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
   String fullName = "";
   Map<String, dynamic> usernames = {};
   List<String> visiblePlatforms = [];
+  String photoURL = "";
 
   @override
   void initState() {
@@ -29,6 +34,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
     this.fullName = widget.fullName;
     this.usernames = widget.usernames;
     this.visiblePlatforms = widget.visiblePlatforms;
+    this.photoURL = widget.photoURL;
   }
 
   // Create a clickable social media icon
@@ -65,8 +71,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(5.0, 5.0, 15.0, 5.0),
                 child: CircleAvatar(
-                    // backgroundImage: NetworkImage(photoURL),
-                    radius: 30.0),
+                    backgroundImage: NetworkImage(photoURL), radius: 30.0),
               ),
               Flex(
                 direction: Axis.vertical,
@@ -126,7 +131,11 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
             Dialog(
                 child: Container(
                     child: ElevatedButton(
-                        child: Text("Download Our App"), onPressed: () {}),
+                        child: Text("Download Our App"),
+                        onPressed: () {
+                          URL.launchURL(
+                              "https://play.google.com/store?hl=en_US&gl=US");
+                        }),
                     color: Colors.grey[50]))
           ])),
     );
