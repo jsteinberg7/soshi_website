@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
-import 'package:soshi_website/page_not_found_screen.dart';
-import 'package:soshi_website/user.dart';
-import 'package:soshi_website/userinfodisplay.dart';
+import 'package:flutter/services.dart';
+import 'package:soshi/constants/constants.dart';
+import 'package:soshi/page_not_found_screen.dart';
+import 'package:soshi/user.dart';
+import 'package:soshi/userinfodisplay.dart';
 import 'database.dart';
 import 'loading_screen.dart';
 
@@ -45,6 +47,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        theme: Constants.CustomTheme,
         initialRoute: "/",
         onGenerateRoute: (settings) {
           List<String> params = settings.name!.split("/");
@@ -54,7 +57,8 @@ class _MyAppState extends State<MyApp> {
               return FutureBuilder(
                   future: fetchUserData(UID),
                   builder: (BuildContext context, snapshot) {
-                    if (snapshot.hasData) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
                       User user = snapshot.data as User;
                       return UserInfoDisplay(
                         fullName: user.fullName,
@@ -62,8 +66,11 @@ class _MyAppState extends State<MyApp> {
                         visiblePlatforms: user.visiblePlatforms,
                         photoURL: user.photoURL,
                       );
-                    } else {
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
                       return LoadingScreen();
+                    } else {
+                      return PageNotFoundScreen();
                     }
                   });
             });

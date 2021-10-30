@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flowder/flowder.dart';
 
 /*
  Includes getters and setters for various fields in the Firebase database
@@ -135,5 +136,21 @@ class DatabaseService {
     return await usersCollection
         .doc(UID)
         .update({"Last": localLastDisplayName});
+  }
+
+  Future<void> downloadVCard(String otherUID) async {
+final downloaderUtils = DownloaderUtils(
+                  progressCallback: (current, total) {
+                    final progress = (current / total) * 100;
+                    print('Downloading: $progress');
+                  },
+                  file: File('/contact.vcf'),
+                  progress: ProgressImplementation(),
+                  onDone: () => print('Download done.'),
+                  deleteOnCancel: true,
+                );
+    await Flowder.download(
+                    'http://',
+                    downloaderUtils);
   }
 }

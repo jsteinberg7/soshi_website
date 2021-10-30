@@ -22,9 +22,16 @@ abstract class URL {
       return username;
     } else if (platform == "Facebook") {
       return username;
+    } else if (platform == "Reddit") {
+      return "https://www.reddit.com/user/" + username + "/";
+    } else if (platform == "TikTok") {
+      return username;
+    } else if (platform == "Discord") {
+      return "https://discordapp.com/users/" + username + "/";
+    } else if (platform == "Phone") {
+      return "sms://$username";
     }
     // to make compiler happy
     return "";
-    // insta snapchat twitter linkedin facebook
   }
 }
