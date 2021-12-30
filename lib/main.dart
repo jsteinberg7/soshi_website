@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:soshi/constants/constants.dart';
 import 'package:soshi/page_not_found_screen.dart';
+import 'package:soshi/url.dart';
 import 'package:soshi/user.dart';
 import 'package:soshi/userinfodisplay.dart';
 import 'database.dart';
@@ -70,13 +71,15 @@ class _MyAppState extends State<MyApp> {
                         ConnectionState.waiting) {
                       return LoadingScreen();
                     } else {
-                      return PageNotFoundScreen();
+                      return PageNotFoundScreen(launchURLIn: false);
                     }
                   });
             });
           } else {
             return MaterialPageRoute(builder: (context) {
-              return PageNotFoundScreen();
+              return PageNotFoundScreen(
+                launchURLIn: true,
+              );
             });
           }
         });

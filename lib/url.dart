@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 // Basic wrapper for url services (all methods are static)
 abstract class URL {
   // open browser to specified url target
-  static void launchURL(String url) async {
+  static Future<void> launchURL(String url) async {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
@@ -12,7 +12,7 @@ abstract class URL {
   // (Linkedin, Faceboook, etc. use a numbering system)
   static String getPlatformURL(
       {required String platform, required String username}) {
-      if (platform == "Phone") {
+    if (platform == "Phone") {
       return "sms://$username";
     } else if (platform == "Instagram") {
       return "https://www.instagram.com/" + username + "/?hl=en";
@@ -30,6 +30,14 @@ abstract class URL {
       return username;
     } else if (platform == "Discord") {
       return "https://discordapp.com/users/" + username + "/";
+    } else if (platform == "Email") {
+      return "mailto:" + username;
+    } else if (platform == "Spotify") {
+      return "https://open.spotify.com/user/" + username;
+    } else if (platform == "Venmo") {
+      return "https://venmo.com/" + username;
+    } else if (platform == "Contact") {
+      return username;
     }
     // to make compiler happy
     return "";

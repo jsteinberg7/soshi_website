@@ -1,11 +1,11 @@
 {
-    "name": "soshi_website",
-    "short_name": "soshi_website",
+    "name": "soshi",
+    "short_name": "soshi",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Contact sharing made simple.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

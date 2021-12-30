@@ -3,8 +3,25 @@ import 'package:soshi/url.dart';
 
 import 'constants/constants.dart';
 
-class PageNotFoundScreen extends StatelessWidget {
-  const PageNotFoundScreen({Key? key}) : super(key: key);
+class PageNotFoundScreen extends StatefulWidget {
+  bool launchURL = false;
+  PageNotFoundScreen({bool launchURLIn = false}) {
+    launchURL = launchURLIn;
+  }
+
+  @override
+  State<PageNotFoundScreen> createState() => _PageNotFoundScreenState();
+}
+
+class _PageNotFoundScreenState extends State<PageNotFoundScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // if (widget.launchURL) {
+
+    //   URL.launchURL("https://www.soshi.org/");
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +32,17 @@ class PageNotFoundScreen extends StatelessWidget {
         body: Center(
           child: Column(
             children: [
-              Padding(
-                  padding: EdgeInsets.all(height / 10),
-                  child:
-                      Image.asset("assets/images/SoshiLogos/soshi_logo.png")),
+              SizedBox(height: height / 7),
+              GestureDetector(
+                onTap: () {
+                  URL.launchURL("https://www.soshi.org/");
+                },
+                child: Image.asset(
+                  "assets/images/SoshiLogos/soshi_logo.png",
+                  height: height / 10,
+                ),
+              ),
+              SizedBox(height: height / 7),
               Container(
                 height: height / 2.5,
                 width: width / 1.5,
@@ -29,10 +53,7 @@ class PageNotFoundScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(width / 40),
                     child: Text(
-                      '''The page you're looking for could not be found :( \n 
-                          Check out our website or download our app to create 
-                          your own digital contact card and join the 
-                          Soshi community!''',
+                      'The user you\'re looking for could not be found :(\nDownload our app to create your own digital contact card and join the Soshi community!',
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: "Montserrat",
@@ -61,7 +82,7 @@ class PageNotFoundScreen extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               URL.launchURL(
-                                  "https://play.google.com/store?hl=en_US&gl=US");
+                                  "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
                             },
                             child: Image.asset(
                               "assets/images/download_the_app/get_it_on_google_play.png",
@@ -71,7 +92,8 @@ class PageNotFoundScreen extends StatelessWidget {
                           SizedBox(width: width / 25),
                           GestureDetector(
                             onTap: () {
-                              URL.launchURL("https://www.apple.com/app-store/");
+                              URL.launchURL(
+                                  "https://apps.apple.com/us/app/soshi/id1595515750");
                             },
                             child: Image.asset(
                                 "assets/images/download_the_app/get_it_on_the_app_store.png",

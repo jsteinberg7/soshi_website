@@ -1,4 +1,4 @@
-# soshi_website
+# soshi
 
 A new Flutter project.
 

@@ -1,5 +1,5 @@
-name: soshi_website
-description: A new Flutter project.
+name: soshi
+description: Meet. Greet. Connect. 
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -31,11 +31,15 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  seeip_client: ^0.1.2
+  firebase_analytics: ^9.0.4
   # cloud_firestore_web: ^2.2.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash: ^1.2.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -51,7 +55,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - 'assets/images/SMLogos/'
-    - 'assets/images/Backgrounds/'
+    - 'assets/images/download_the_app/'
+    - 'assets/images/SoshiLogos/'
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -65,7 +70,11 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+      - family: Montserrat
+        fonts: 
+          - asset: "assets/fonts/Montserrat/Montserrat-Medium.ttf"
+
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

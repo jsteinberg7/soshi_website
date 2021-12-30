@@ -3,6 +3,7 @@ import 'package:soshi/database.dart';
 import 'package:soshi/url.dart';
 
 import 'constants/constants.dart';
+import 'constants/widgets.dart';
 
 class UserInfoDisplay extends StatefulWidget {
   String fullName = "";
@@ -51,12 +52,12 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
       icon: Image.asset(
         "assets/images/SMLogos/" + platform + "Logo.png",
       ),
-      onPressed: () {
+      onPressed: () async {
         // if (platform == "Phone") {
         //   // DatabaseService.downloadVCard(otherUID);
         // } else
         // {
-        URL.launchURL(
+        await URL.launchURL(
             URL.getPlatformURL(platform: platform, username: username));
         // }
       },
@@ -91,10 +92,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                         padding: EdgeInsets.all(width / 30),
                         child: Flex(direction: Axis.horizontal, children: [
                           Container(
-                            child: CircleAvatar(
-                              radius: 50,
-                              backgroundImage: NetworkImage(photoURL),
-                            ),
+                            child: ProfilePic(radius: 50, url: photoURL),
                             decoration: new BoxDecoration(
                               shape: BoxShape.circle,
                               border: new Border.all(
@@ -174,9 +172,14 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                     ),
                   ),
                   SizedBox(height: height / 45),
-                  Image.asset(
-                    "assets/images/SoshiLogos/soshi_logo.png",
-                    height: height / 20,
+                  GestureDetector(
+                    onTap: () {
+                      URL.launchURL("https://www.soshi.org/");
+                    },
+                    child: Image.asset(
+                      "assets/images/SoshiLogos/soshi_logo.png",
+                      height: height / 20,
+                    ),
                   ),
                   Dialog(
                     backgroundColor: Colors.transparent,
@@ -212,7 +215,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                                 GestureDetector(
                                   onTap: () {
                                     URL.launchURL(
-                                        "https://play.google.com/store?hl=en_US&gl=US");
+                                        "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
                                   },
                                   child: Image.asset(
                                     "assets/images/download_the_app/get_it_on_google_play.png",
@@ -223,7 +226,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                                 GestureDetector(
                                   onTap: () {
                                     URL.launchURL(
-                                        "https://www.apple.com/app-store/");
+                                        "https://apps.apple.com/us/app/soshi/id1595515750");
                                   },
                                   child: Image.asset(
                                       "assets/images/download_the_app/get_it_on_the_app_store.png",
