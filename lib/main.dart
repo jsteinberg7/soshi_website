@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:soshi/constants/constants.dart';
 import 'package:soshi/page_not_found_screen.dart';
 import 'package:soshi/url.dart';
@@ -9,22 +8,25 @@ import 'package:soshi/user.dart';
 import 'package:soshi/userinfodisplay.dart';
 import 'database.dart';
 import 'loading_screen.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
+  // setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
 
-Future<User> fetchUserData(String UID) async {
-  DatabaseService databaseService = new DatabaseService(UID: UID);
-  String photoURL = await databaseService.getPhotoURL(UID);
-  String soshiUsername =
-      await databaseService.getUsernameForPlatform(platform: "Soshi");
-  String fullName = await databaseService.getFullName();
-  Map<String, dynamic> usernames = await databaseService.getUserProfileNames();
+Future<User> fetchUserData(String soshiUsername) async {
+  DatabaseService databaseService =
+      new DatabaseService(soshiUsernameIn: soshiUsername);
+  Map userData = await databaseService.getUserFile(soshiUsername);
+  String photoURL = databaseService.getPhotoURL(userData);
+  String fullName = databaseService.getFullName(userData);
+  Map<String, dynamic> usernames =
+      databaseService.getUserProfileNames(userData);
   List<String> visiblePlatforms =
-      await databaseService.getEnabledPlatformsList();
+      await databaseService.getEnabledPlatformsList(userData);
   return new User(
       fullName: fullName,
       usernames: usernames,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({Key? key}) : super(key: key);
@@ -6,10 +7,18 @@ class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-          child: Center(
-        child: CircularProgressIndicator.adaptive(),
-      )),
+      body: Column(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.6,
+          ),
+          Container(
+              child: SpinKitThreeInOut(
+            color: Colors.white,
+            size: 50.0,
+          )),
+        ],
+      ),
       backgroundColor: Color(0x59ECFF),
     );
   }

@@ -1,4 +1,4 @@
-import 'dart:io';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -7,12 +7,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
  Includes getters and setters for various fields in the Firebase database
  */
 class DatabaseService {
-  // UID of user
-  String UID = "";
+  // soshiUsername of user
+  String soshiUsername = "";
 
   // Basic constructor
-  DatabaseService({required String UID}) {
-    this.UID = UID;
+  DatabaseService({required String soshiUsernameIn}) {
+    soshiUsername = soshiUsernameIn;
   }
 
   // store reference to all user files
@@ -23,19 +23,21 @@ class DatabaseService {
   Methods pertaining to getting user data
   */
 
-  // pass in UID, return map of user switches (platform visibility)
-  Future<Map<String, dynamic>> getUserSwitches() async {
-    Map<String, dynamic> switchMap = {};
-    await usersCollection.doc(UID).get().then((DocumentSnapshot ds) {
-      Map data = ds.data() as Map;
-      switchMap = data["Switches"];
+  Future<dynamic> getUserFile(String soshiUsername) {
+    return usersCollection.doc(soshiUsername).get().then((DocumentSnapshot ds) {
+      dynamic data = ds.data();
+      return data;
     });
-    return switchMap;
+  }
+
+  // pass in soshiUsername, return map of user switches (platform visibility)
+  Map<String, dynamic> getUserSwitches(Map userData) {
+    return userData["Switches"];
   }
 
   // return list of enabled user switches
-  Future<List<String>> getEnabledPlatformsList() async {
-    Map<String, dynamic> platformsMap = await getUserSwitches();
+  Future<List<String>> getEnabledPlatformsList(Map userData) async {
+    Map<String, dynamic> platformsMap = getUserSwitches(userData);
 
     List<String> enabledPlatformsList = [];
     // add all enabled platforms to platformsList
@@ -44,98 +46,68 @@ class DatabaseService {
         enabledPlatformsList.add(platform);
       }
     });
+
     return enabledPlatformsList;
   }
 
-  // pass in UID, return (Map) of user profile names
-  Future<Map<String, dynamic>> getUserProfileNames() async {
-    Map<String, dynamic> profileNamesMap = {};
-    await usersCollection.doc(UID).get().then((DocumentSnapshot ds) {
-      Map data = ds.data() as Map;
-      profileNamesMap = data["Usernames"];
-    });
-    return profileNamesMap;
+  // pass in soshiUsername, return (Map) of user profile names
+  Map<String, dynamic> getUserProfileNames(Map userData) {
+    return userData["Usernames"];
   }
 
   // return username for specified platform
-  Future<String> getUsernameForPlatform({required String platform}) async {
+  Future<String> getUsernameForPlatform(
+      {required Map userData, required String platform}) async {
     String username;
-    Map<String, dynamic> profileNamesMap = await getUserProfileNames();
+    Map<String, dynamic> profileNamesMap = getUserProfileNames(userData);
     username = profileNamesMap[platform];
     return username;
   }
 
-  // pass in UID, return (Map) of full name of user
-  Future<Map<String, dynamic>> getFullNameMap() async {
-    Map<String, dynamic> fullNameMap = {};
-    await usersCollection.doc(UID).get().then((DocumentSnapshot ds) {
-      Map data = ds.data() as Map;
-      fullNameMap = data["Name"];
-    });
-    return fullNameMap;
+  // pass in soshiUsername, return (Map) of full name of user
+  Map<String, dynamic> getFullNameMap(Map userData) {
+    return userData["Name"];
   }
 
-  // pass in UID, return (String) full name of user
-  Future<String> getFullName() async {
-    Map<String, dynamic> fullNameMap;
-    String fullName;
-    fullNameMap = await getFullNameMap();
+  // pass in soshiUsername, return (String) full name of user
+  String getFullName(Map userData) {
+    Map fullNameMap = getFullNameMap(userData);
     // convert to String
-    fullName = fullNameMap["First"] + " " + fullNameMap["Last"];
+    String fullName = fullNameMap["First"] + " " + fullNameMap["Last"];
     return fullName;
   }
 
-  Future<String> getPhotoURL(String UID) async {
-    dynamic data;
-    await usersCollection.doc(UID).get().then((DocumentSnapshot ds) {
-      data = ds.data();
-    });
-    return data["Photo URL"];
+  String getPhotoURL(Map userData) {
+    return userData["Photo URL"];
   }
 
-// UV functions
+  Future<List<dynamic>> getProfilePlatforms() async {
+    dynamic data;
+    await usersCollection.doc(soshiUsername).get().then((DocumentSnapshot ds) {
+      data = ds.data();
+    });
+    return data["Profile Platforms"];
+  }
 
 //get first name of Display Name
-  Future<String> getFirstDisplayName() async {
+  Future<String> getFirstDisplayName(Map userData) async {
     String firstName;
-    Map<String, dynamic> fullNameMap = await getFullNameMap();
+    Map<String, dynamic> fullNameMap = getFullNameMap(userData);
     firstName = fullNameMap["First"];
-    // await usersCollection.doc(UID).get().then((DocumentSnapshot ds) =>
-    // firstDisplayName =
-    // ds.data()["Name"]); //Do i have to access "Names" first?
     return firstName;
   }
 
-  Future updateDisplayName({required String firstName}) async {
-    String localFirstDisplayName = await getFirstDisplayName();
-    String localLastDisplayName = await getLastDisplayName();
-    // update local map to reflect change
-    localFirstDisplayName = firstName;
-
-    //usernamesMap[platform] = username;
-    // update database to reflect local map change
-    return await usersCollection.doc(UID).update({
-      "Name": {"First": localFirstDisplayName, "Last": localLastDisplayName}
-    });
-  }
-
-  Future<String> getLastDisplayName() async {
+  String getLastDisplayName(Map userData) {
     String lastName;
-    Map<String, dynamic> fullName = await getFullNameMap();
+    Map<String, dynamic> fullName = getFullNameMap(userData);
     lastName = fullName["Last"];
 
+    // await usersCollection.doc(soshiUsername).get().then(
+    //     (DocumentSnapshot ds) => lastDisplayName = ds.data()["Name"]["Last"]);
     return lastName;
   }
 
-  Future updateLastDisplayName({required String lastName}) async {
-    String localLastDisplayName = await getLastDisplayName();
-    // update local map to reflect change
-    localLastDisplayName = lastName;
-    //usernamesMap[platform] = username;
-    // update database to reflect local map change
-    return await usersCollection
-        .doc(UID)
-        .update({"Last": localLastDisplayName});
+  Future<String> getBio(Map userData) async {
+    return userData["Bio"];
   }
-
 }
