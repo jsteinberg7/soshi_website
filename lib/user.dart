@@ -1,17 +1,16 @@
 class User {
-  String fullName = "";
-  Map<String, dynamic> usernames = {};
-  List<String> visiblePlatforms = [];
-  String photoURL = "";
+  String fullName;
+  Map<String, dynamic> usernames;
+  List<String> visiblePlatforms;
+  String photoURL;
+  String soshiUsername;
+  String userBio;
 
   User(
-      {required String fullName,
-      required Map<String, dynamic> usernames,
-      required List<String> visiblePlatforms,
-      required String photoURL}) {
-    this.fullName = fullName;
-    this.usernames = usernames;
-    this.visiblePlatforms = visiblePlatforms;
-    this.photoURL = photoURL;
-  }
+      {required this.fullName,
+      required this.usernames,
+      required this.visiblePlatforms,
+      required this.photoURL,
+      required this.soshiUsername,
+      required this.userBio});
 }

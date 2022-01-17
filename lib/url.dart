@@ -12,9 +12,14 @@ abstract class URL {
   // (Linkedin, Faceboook, etc. use a numbering system)
   static String getPlatformURL(
       {required String platform, required String username}) {
-    if (platform == "Phone") {
+    if (platform == "SMS") {
       return "sms://$username";
-    } else if (platform == "Instagram") {
+    } 
+    else if (platform == "Phone") {
+      return "tel://$username";
+    }
+    
+    else if (platform == "Instagram") {
       return "https://www.instagram.com/" + username + "/?hl=en";
     } else if (platform == "Snapchat") {
       return "https://www.snapchat.com/add/" + username;
