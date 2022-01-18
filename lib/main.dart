@@ -22,7 +22,12 @@ Future<User> fetchUserData(String soshiUsername) async {
   print("attempt to fetch user data base using $soshiUsername");
 
   DatabaseService databaseService = new DatabaseService(soshiUsernameIn: soshiUsername);
-  Map userData = await databaseService.getUserFile(soshiUsername);
+
+  print("got data back from database!");
+
+  var userData = await databaseService.getUserFile(soshiUsername);
+
+  print("after data print>?");
 
   print(userData);
 
@@ -64,10 +69,12 @@ class _MyAppState extends State<MyApp> {
           List<String> params = settings.name!.split("/");
           String UID = params.last;
 
-          // UID = "skan";
+          UID = "skan";
 
-          if (params.contains("user")) {
-            // if (true) {
+          // UID = "acorn68";
+
+          // if (params.contains("user")) {
+          if (true) {
             return MaterialPageRoute(builder: (context) {
               return FutureBuilder(
                   future: fetchUserData(UID),

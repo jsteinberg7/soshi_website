@@ -1,7 +1,4 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 
 /*
  Includes getters and setters for various fields in the Firebase database
@@ -16,8 +13,7 @@ class DatabaseService {
   }
 
   // store reference to all user files
-  CollectionReference usersCollection =
-      FirebaseFirestore.instance.collection("users");
+  CollectionReference usersCollection = FirebaseFirestore.instance.collection("users");
 
   /*
   Methods pertaining to getting user data
@@ -25,7 +21,7 @@ class DatabaseService {
 
   Future<dynamic> getUserFile(String soshiUsername) {
     return usersCollection.doc(soshiUsername).get().then((DocumentSnapshot ds) {
-      dynamic data = ds.data();
+      Map data = ds.data() as Map;
       return data;
     });
   }
@@ -56,8 +52,7 @@ class DatabaseService {
   }
 
   // return username for specified platform
-  Future<String> getUsernameForPlatform(
-      {required Map userData, required String platform}) async {
+  Future<String> getUsernameForPlatform({required Map userData, required String platform}) async {
     String username;
     Map<String, dynamic> profileNamesMap = getUserProfileNames(userData);
     username = profileNamesMap[platform];

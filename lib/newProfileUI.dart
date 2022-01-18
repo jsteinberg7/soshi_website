@@ -65,19 +65,14 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
         "assets/images/SMLogos/" + platform + "Logo.png",
       ),
       onPressed: () async {
-        // if (platform == "Phone") {
-        //   // DatabaseService.downloadVCard(otherUID);
-        // } else
-        // {
         await URL.launchURL(URL.getPlatformURL(platform: platform, username: username));
-        // }
       },
       // iconSize: MediaQuery.of(context).size.width / 4,
       iconSize: 20,
     );
   }
 
-  filterQuickContacts() {
+  filterAllContacts() {
     print("total userName contacts Beginning : ${widget.usernames.length}");
 
     quickContacts = [];
@@ -91,21 +86,32 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
     };
 
     widget.usernames.keys.forEach((key) {
+      if (!visiblePlatforms.contains(key)) {
+        return;
+      }
+
       if (['Email', 'Phone'].contains(key) && widget.usernames[key] != null && widget.usernames[key] != "") {
         print("[+] User has a valid Phone # or Email for making Quick contact");
-        quickContacts.add(converter[key]);
-        if (key == "Phone") {
-          quickContacts.add(converter["SMS"]);
-        }
 
         converter[key]['contact_info'] = widget.usernames[key];
+
+        quickContacts.add(converter[key]);
+
+        if (key == "Phone") {
+          converter["SMS"]['contact_info'] = widget.usernames[key];
+          quickContacts.add(converter["SMS"]);
+        }
 
         widget.usernames[key] = null;
       }
     });
 
     widget.usernames['Soshi'] = null;
-    vcfDownloadUrl = widget.usernames['Contact'];
+
+    if (widget.visiblePlatforms.contains("Contact")) {
+      vcfDownloadUrl = widget.usernames['Contact'];
+    }
+
     widget.usernames['Contact'] = null;
 
     print("total quick contacts: ${quickContacts.length}");
@@ -125,7 +131,7 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    filterQuickContacts();
+    filterAllContacts();
 
     MediaQueryData queryData = MediaQuery.of(context);
     double height = queryData.size.height;
@@ -280,6 +286,7 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
                                     child: Container(
                                       child: Text(
                                         widget.userBio,
+                                        textAlign: TextAlign.center,
                                         maxLines: 2,
                                       ),
                                     ),
@@ -454,10 +461,6 @@ class QuickContactSquare extends StatelessWidget {
       onTap: () async {
         print("Contact button pressed");
 
-        // if (contactData['contact_name'] == "Phone" || contactData['contact_name'] == "SMS") {
-        //     URL.getPlatformURL(platform: contactData['contact_name'], username: usernames["Phone"] );
-
-        // } else {}
         print(contactData);
 
         String url = URL.getPlatformURL(platform: contactData["contact_name"], username: contactData['contact_info']);
