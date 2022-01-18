@@ -113,6 +113,7 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
     }
 
     widget.usernames['Contact'] = null;
+    widget.usernames['Phone'] = null;
 
     print("total quick contacts: ${quickContacts.length}");
     print("total userName contacts after removing quick contacts: ${widget.usernames.length}");
@@ -309,17 +310,20 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
                           Container(
                             height: MediaQuery.of(context).size.height - 460,
                             width: MediaQuery.of(context).size.width - 50,
-                            child: GridView.builder(
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3, childAspectRatio: 1 / 1, crossAxisSpacing: 5, mainAxisSpacing: 5
-                                    // maxCrossAxisExtent: 200, childAspectRatio: 3 / 2, crossAxisSpacing: 20, mainAxisSpacing: 20
-                                    ),
-                                itemCount: widget.usernames.keys.length,
-                                itemBuilder: (BuildContext context, index) {
-                                  String currentKey = widget.usernames.keys.elementAt(index);
-                                  print("creating SM button");
-                                  return createSMButton(platform: currentKey, username: widget.usernames[currentKey], context: context);
-                                }),
+                            child: Scrollbar(
+                              isAlwaysShown: true,
+                              child: GridView.builder(
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3, childAspectRatio: 1 / 1, crossAxisSpacing: 5, mainAxisSpacing: 5
+                                      // maxCrossAxisExtent: 200, childAspectRatio: 3 / 2, crossAxisSpacing: 20, mainAxisSpacing: 20
+                                      ),
+                                  itemCount: widget.usernames.keys.length,
+                                  itemBuilder: (BuildContext context, index) {
+                                    String currentKey = widget.usernames.keys.elementAt(index);
+                                    print("creating SM button");
+                                    return createSMButton(platform: currentKey, username: widget.usernames[currentKey], context: context);
+                                  }),
+                            ),
                           ),
 
 // ------------- learn more Stuff
