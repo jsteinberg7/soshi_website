@@ -5,6 +5,7 @@ class User {
   String photoURL;
   String soshiUsername;
   String userBio;
+  int friendsAdded;
 
   User(
       {required this.fullName,
@@ -12,5 +13,6 @@ class User {
       required this.visiblePlatforms,
       required this.photoURL,
       required this.soshiUsername,
-      required this.userBio});
+      required this.userBio,
+      required this.friendsAdded});
 }

@@ -10,16 +10,22 @@ class UserInfoDisplay extends StatefulWidget {
   Map<String, dynamic> usernames = {};
   List<String> visiblePlatforms = [];
   String photoURL = "";
+  String bio = "";
+  int friendsAdded = 0;
 
   UserInfoDisplay(
       {required String fullName,
       required Map<String, dynamic> usernames,
       required List<String> visiblePlatforms,
-      required String photoURL}) {
+      required String photoURL,
+      required String bio,
+      required int friendsAdded}) {
     this.fullName = fullName;
     this.usernames = usernames;
     this.visiblePlatforms = visiblePlatforms;
     this.photoURL = photoURL;
+    this.bio = bio;
+    this.friendsAdded = friendsAdded;
   }
 
   @override
@@ -31,6 +37,8 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
   Map<String, dynamic> usernames = {};
   List<String> visiblePlatforms = [];
   String photoURL = "";
+  String bio = "";
+  int friendsAdded = 0;
 
   @override
   void initState() {
@@ -39,12 +47,14 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
     this.usernames = widget.usernames;
     this.visiblePlatforms = widget.visiblePlatforms;
     this.photoURL = widget.photoURL;
+    this.bio = widget.bio;
+    this.friendsAdded = widget.friendsAdded;
   }
 
   // Create a clickable social media icon
   static Widget createSMButton(
 
-    // print("crate");
+      // print("crate");
       {required String platform,
       required String username,
       required BuildContext context}) {
@@ -80,71 +90,155 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
           body: SingleChildScrollView(
             child: Container(
                 alignment: Alignment.center,
-                child: Flex(direction: Axis.vertical, children: [
+                child: Column(children: [
                   SizedBox(height: height / 65),
                   Container(
                     width: width / 1.05,
                     child: Card(
-                      elevation: 2.0,
+                      elevation: 5,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           side: BorderSide(color: Colors.cyanAccent)),
                       color: Constants.buttonColorDark,
                       child: Padding(
                         padding: EdgeInsets.all(width / 30),
-                        child: Flex(direction: Axis.horizontal, children: [
-                          Container(
-                            child: ProfilePic(radius: 50, url: photoURL),
-                            decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: new Border.all(
-                                color: Colors.cyanAccent,
-                                width: 2.0,
+                        child: Flex(direction: Axis.vertical, children: [
+                          Column(
+                            children: [
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                    child: ProfilePic(
+                                        url: photoURL, radius: height / 10),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: width / 15),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          fullName,
+                                          style: TextStyle(
+                                              fontSize: width / 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.grey[200]),
+                                        ),
+                                        SizedBox(height: height / 110),
+                                        Text(
+                                          "@" + usernames["Soshi"],
+                                          style: TextStyle(
+                                              fontSize: 22.0,
+                                              color: Colors.grey[500],
+                                              fontStyle: FontStyle.italic),
+                                        ),
+                                        SizedBox(height: height / 70),
+                                        Row(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.emoji_people,
+                                              color: Colors.cyan,
+                                              size: 30,
+                                            ),
+                                            SizedBox(width: 3),
+                                            Text(
+                                              "Friends: " +
+                                                  friendsAdded.toString(),
+                                              style: TextStyle(
+                                                  fontSize: 22.0,
+                                                  color: Colors.grey[500],
+                                                  fontStyle: FontStyle.italic),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    width / 50, width / 50, width / 50, 0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      border: Border.all(
+                                          color: Colors.transparent,
+                                          width: 1.0)),
+                                  //height: height / 20,
+                                  width: width,
+
+                                  child: Center(
+                                      child: (bio != null)
+                                          ? Text(bio,
+                                              style: TextStyle(
+                                                  color: Colors.grey[300],
+                                                  fontSize: 20))
+                                          : Container()),
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(width: width / 40),
-                          Column(children: [
-                            Text(
-                              fullName,
-                              style: TextStyle(
-                                color: Colors.cyan[300],
-                                letterSpacing: 2,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(
-                              height: height / 100,
-                            ),
-                            Text(
-                              "@" + usernames["Soshi"],
-                              style: TextStyle(
-                                  color: Colors.cyan[300],
-                                  letterSpacing: 2,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic),
-                            ),
-                          ]),
+
+                          // Container(
+                          //   child: ProfilePic(radius: 50, url: photoURL),
+                          //   decoration: new BoxDecoration(
+                          //     shape: BoxShape.circle,
+                          //     border: new Border.all(
+                          //       color: Colors.cyanAccent,
+                          //       width: 2.0,
+                          //     ),
+                          //   ),
+                          // ),xw
+                          // SizedBox(width: width / 40),
+                          // Column(children: [
+                          //   Text(
+                          //     fullName,
+                          //     style: TextStyle(
+                          //       color: Colors.cyan[300],
+                          //       letterSpacing: 2,
+                          //       fontSize:20,
+                          //       fontWeight: FontWeight.bold,
+                          //     ),
+                          //   ),
+                          //   SizedBox(
+                          //     height: height / 100,
+                          //   ),
+                          //   Text(
+                          //     "@" + usernames["Soshi"],
+                          //     style: TextStyle(
+                          //         color: Colors.cyan[300],
+                          //         letterSpacing: 2,
+                          //         fontSize: 10,
+                          //         fontWeight: FontWeight.bold,
+                          //         fontStyle: FontStyle.italic),
+                          //   ),
+                          // ]),
                         ]),
                       ),
                     ),
                   ),
-                  Divider(color: Colors.cyan[300]),
-                  Padding(padding: EdgeInsets.only(top: height / 50)),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: Divider(
+                      color: Colors.black,
+                      thickness: 2,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: height / 80)),
                   Container(
                     decoration: BoxDecoration(
                       color: Constants.buttonColorDark,
                       borderRadius: BorderRadius.circular(10.0),
                       border: Border.all(color: Colors.cyanAccent),
                     ),
-                    height: (height / 5) * (visiblePlatforms.length / 3).ceil(),
-                    width: width / 1.10,
+                    height:
+                        (height / 5.1) * (visiblePlatforms.length / 3).ceil(),
+                    width: width / 1.14,
                     child: ListView.separated(
                       physics: NeverScrollableScrollPhysics(),
                       separatorBuilder: (BuildContext context, int i) {
-                        return Padding(padding: EdgeInsets.all(5.0));
+                        return Padding(padding: EdgeInsets.all(0));
                       },
                       scrollDirection: Axis.vertical,
                       itemBuilder: (BuildContext context, int i) {
@@ -173,16 +267,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                       itemCount: (visiblePlatforms.length / 3).ceil(),
                     ),
                   ),
-                  SizedBox(height: height / 45),
-                  GestureDetector(
-                    onTap: () {
-                      URL.launchURL("https://www.soshi.org/");
-                    },
-                    child: Image.asset(
-                      "assets/images/SoshiLogos/soshi_logo.png",
-                      height: height / 20,
-                    ),
-                  ),
+                  SizedBox(height: height / 190),
                   Dialog(
                     backgroundColor: Colors.transparent,
                     child: Container(
@@ -205,7 +290,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                           ),
                         ),
                         SizedBox(
-                          height: height / 100,
+                          height: height / 170,
                         ),
                         Container(
                           height: height / 14,
@@ -239,6 +324,18 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                         )
                       ]),
                     ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      URL.launchURL("https://www.soshi.org/");
+                    },
+                    child: Image.asset(
+                      "assets/images/SoshiLogos/soshi_logo.png",
+                      height: height / 20,
+                    ),
+                  ),
+                  SizedBox(
+                    height: height / 20,
                   )
                 ])),
           )),

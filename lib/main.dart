@@ -21,7 +21,8 @@ void main() async {
 Future<User> fetchUserData(String soshiUsername) async {
   print("attempt to fetch user data base using $soshiUsername");
 
-  DatabaseService databaseService = new DatabaseService(soshiUsernameIn: soshiUsername);
+  DatabaseService databaseService =
+      new DatabaseService(soshiUsernameIn: soshiUsername);
 
   print("got data back from database!");
 
@@ -33,17 +34,24 @@ Future<User> fetchUserData(String soshiUsername) async {
 
   String photoURL = databaseService.getPhotoURL(userData);
   String fullName = databaseService.getFullName(userData);
-  String userBio = await databaseService.getBio(userData);
 
-  Map<String, dynamic> usernames = databaseService.getUserProfileNames(userData);
-  List<String> visiblePlatforms = await databaseService.getEnabledPlatformsList(userData);
+  Map<String, dynamic> usernames =
+      databaseService.getUserProfileNames(userData);
+  List<String> visiblePlatforms =
+      await databaseService.getEnabledPlatformsList(userData);
+  String userBio = databaseService.getBio(userData);
+  int friendsAdded = databaseService.getFriendsCount(userData);
+  print("friends added: " + friendsAdded.toString());
+  print("bio: " + userBio);
+
   return new User(
       fullName: fullName,
       usernames: usernames,
       visiblePlatforms: visiblePlatforms,
       photoURL: photoURL,
       soshiUsername: soshiUsername,
-      userBio: userBio);
+      userBio: userBio,
+      friendsAdded: friendsAdded);
 }
 
 class MyApp extends StatefulWidget {
@@ -69,7 +77,7 @@ class _MyAppState extends State<MyApp> {
           List<String> params = settings.name!.split("/");
           String UID = params.last;
 
-          UID = "skan";
+          UID = "yuvansun";
 
           // UID = "acorn68";
 
@@ -79,16 +87,21 @@ class _MyAppState extends State<MyApp> {
               return FutureBuilder(
                   future: fetchUserData(UID),
                   builder: (BuildContext context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
                       User user = snapshot.data as User;
-                      return NewProfileUI(
-                          fullName: user.fullName,
-                          usernames: user.usernames,
-                          visiblePlatforms: user.visiblePlatforms,
-                          photoURL: user.photoURL,
-                          soshiUsername: user.soshiUsername,
-                          userBio: user.userBio);
-                    } else if (snapshot.connectionState == ConnectionState.waiting) {
+                      return UserInfoDisplay(
+                        fullName: user.fullName,
+                        usernames: user.usernames,
+                        visiblePlatforms: user.visiblePlatforms,
+                        photoURL: user.photoURL,
+                        bio: user.userBio,
+                        friendsAdded: user.friendsAdded,
+                        //soshiUsername: user.soshiUsername,
+                        //userBio: user.userBio
+                      );
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
                       return LoadingScreen();
                     } else {
                       return PageNotFoundScreen(launchURLIn: false);
