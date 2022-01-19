@@ -82,6 +82,9 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
     MediaQueryData queryData = MediaQuery.of(context);
     double height = queryData.size.height;
     double width = queryData.size.width;
+    List nameSplit = fullName.split(" ");
+    String firstName = nameSplit[0];
+    String lastName = nameSplit[1];
     int index = 0;
     return Container(
       decoration: BoxDecoration(gradient: Constants.greyCyanGradient),
@@ -109,48 +112,77 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                                 children: <Widget>[
                                   Container(
                                     child: ProfilePic(
-                                        url: photoURL, radius: height / 10),
+                                        url: photoURL, radius: height / 13),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(left: width / 15),
+                                    padding: EdgeInsets.only(left: width / 25),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: <Widget>[
-                                        Text(
-                                          fullName,
-                                          style: TextStyle(
-                                              fontSize: width / 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.grey[200]),
+                                        Container(
+                                          width: width / 2.5,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                              border: Border.all(
+                                                  color: Colors.transparent,
+                                                  width: 1.0)),
+                                          child: Text(
+                                            fullName,
+                                            style: TextStyle(
+                                                fontSize: width / 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.grey[200]),
+                                          ),
                                         ),
+
+                                        // Text(
+                                        //   firstName,
+                                        //   style: TextStyle(
+                                        //       fontSize: width / 15,
+                                        //       fontWeight: FontWeight.bold,
+                                        //       color: Colors.grey[200]),
+                                        // ),
+                                        // Text(
+                                        //   lastName,
+                                        //   style: TextStyle(
+                                        //       fontSize: width / 15,
+                                        //       fontWeight: FontWeight.bold,
+                                        //       color: Colors.grey[200]),
+                                        // ),
                                         SizedBox(height: height / 110),
-                                        Text(
-                                          "@" + usernames["Soshi"],
-                                          style: TextStyle(
-                                              fontSize: 22.0,
-                                              color: Colors.grey[500],
-                                              fontStyle: FontStyle.italic),
-                                        ),
-                                        SizedBox(height: height / 70),
-                                        Row(
-                                          children: <Widget>[
-                                            Icon(
-                                              Icons.emoji_people,
-                                              color: Colors.cyan,
-                                              size: 30,
-                                            ),
-                                            SizedBox(width: 3),
+                                        Column(
+                                          children: [
                                             Text(
-                                              "Friends: " +
-                                                  friendsAdded.toString(),
+                                              "@" + usernames["Soshi"],
                                               style: TextStyle(
-                                                  fontSize: 22.0,
+                                                  fontSize: width / 20,
                                                   color: Colors.grey[500],
                                                   fontStyle: FontStyle.italic),
                                             ),
+                                            SizedBox(height: height / 70),
+                                            Row(
+                                              children: <Widget>[
+                                                Icon(
+                                                  Icons.emoji_people,
+                                                  color: Colors.cyan,
+                                                  size: width / 15,
+                                                ),
+                                                SizedBox(width: 3),
+                                                Text(
+                                                  "Friends: " +
+                                                      friendsAdded.toString(),
+                                                  style: TextStyle(
+                                                      fontSize: width / 20,
+                                                      color: Colors.grey[500],
+                                                      fontStyle:
+                                                          FontStyle.italic),
+                                                ),
+                                              ],
+                                            ),
                                           ],
-                                        ),
+                                        )
                                       ],
                                     ),
                                   ),
@@ -164,7 +196,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                                       borderRadius: BorderRadius.circular(5.0),
                                       border: Border.all(
                                           color: Colors.transparent,
-                                          width: 1.0)),
+                                          width: 0.0)),
                                   //height: height / 20,
                                   width: width,
 
@@ -173,7 +205,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                                           ? Text(bio,
                                               style: TextStyle(
                                                   color: Colors.grey[300],
-                                                  fontSize: 20))
+                                                  fontSize: width / 18))
                                           : Container()),
                                 ),
                               ),
@@ -233,45 +265,47 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                       border: Border.all(color: Colors.cyanAccent),
                     ),
                     height:
-                        (height / 5.1) * (visiblePlatforms.length / 3).ceil(),
-                    width: width / 1.14,
-                    child: ListView.separated(
-                      physics: NeverScrollableScrollPhysics(),
-                      separatorBuilder: (BuildContext context, int i) {
-                        return Padding(padding: EdgeInsets.all(0));
-                      },
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (BuildContext context, int i) {
-                        return Flex(direction: Axis.horizontal, children: [
-                          // SizedBox(width: width / 5),
-                          createSMButton(
-                              platform: visiblePlatforms[index],
-                              username: usernames[visiblePlatforms[index++]],
-                              context: context),
-                          (index >= visiblePlatforms.length)
-                              ? Text("")
-                              : createSMButton(
-                                  platform: visiblePlatforms[index],
-                                  username:
-                                      usernames[visiblePlatforms[index++]],
-                                  context: context),
-                          (index >= visiblePlatforms.length)
-                              ? Text("")
-                              : createSMButton(
-                                  platform: visiblePlatforms[index],
-                                  username:
-                                      usernames[visiblePlatforms[index++]],
-                                  context: context),
-                        ]);
-                      },
-                      itemCount: (visiblePlatforms.length / 3).ceil(),
+                        (height / 5.9) * (visiblePlatforms.length / 3).ceil(),
+                    width: width / 1.07,
+                    child: Center(
+                      child: ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        separatorBuilder: (BuildContext context, int i) {
+                          return Padding(padding: EdgeInsets.all(0));
+                        },
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (BuildContext context, int i) {
+                          return Flex(direction: Axis.horizontal, children: [
+                            // SizedBox(width: width / 5),
+                            createSMButton(
+                                platform: visiblePlatforms[index],
+                                username: usernames[visiblePlatforms[index++]],
+                                context: context),
+                            (index >= visiblePlatforms.length)
+                                ? Text("")
+                                : createSMButton(
+                                    platform: visiblePlatforms[index],
+                                    username:
+                                        usernames[visiblePlatforms[index++]],
+                                    context: context),
+                            (index >= visiblePlatforms.length)
+                                ? Text("")
+                                : createSMButton(
+                                    platform: visiblePlatforms[index],
+                                    username:
+                                        usernames[visiblePlatforms[index++]],
+                                    context: context),
+                          ]);
+                        },
+                        itemCount: (visiblePlatforms.length / 3).ceil(),
+                      ),
                     ),
                   ),
                   SizedBox(height: height / 190),
                   Dialog(
                     backgroundColor: Colors.transparent,
                     child: Container(
-                      height: height / 5,
+                      height: height / 5.5,
                       width: width / 2,
                       decoration: ShapeDecoration.fromBoxDecoration(
                           BoxDecoration(
@@ -293,7 +327,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                           height: height / 170,
                         ),
                         Container(
-                          height: height / 14,
+                          height: height / 20,
                           child: Flex(
                               direction: Axis.horizontal,
                               mainAxisAlignment: MainAxisAlignment.center,

@@ -81,8 +81,8 @@ class _MyAppState extends State<MyApp> {
 
           // UID = "acorn68";
 
-          if (params.contains("user")) {
-            // if (true) {
+          // if (params.contains("user")) {
+          if (true) {
             return MaterialPageRoute(builder: (context) {
               return FutureBuilder(
                   future: fetchUserData(UID),
