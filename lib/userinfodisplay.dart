@@ -128,14 +128,12 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                                               border: Border.all(
                                                   color: Colors.transparent,
                                                   width: 1.0)),
-                                          child: Center(
-                                            child: Text(
-                                              fullName,
-                                              style: TextStyle(
-                                                  fontSize: width / 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.grey[200]),
-                                            ),
+                                          child: Text(
+                                            fullName,
+                                            style: TextStyle(
+                                                fontSize: width / 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.grey[200]),
                                           ),
                                         ),
 
@@ -267,7 +265,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                       border: Border.all(color: Colors.cyanAccent),
                     ),
                     height:
-                        (height / 5.6) * (visiblePlatforms.length / 3).ceil(),
+                        (height / 5.4) * (visiblePlatforms.length / 3).ceil(),
                     width: width / 1.07,
                     child: Center(
                       child: (visiblePlatforms.length > 0)
