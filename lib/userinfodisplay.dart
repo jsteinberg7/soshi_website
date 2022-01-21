@@ -267,16 +267,17 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                       border: Border.all(color: Colors.cyanAccent),
                     ),
                     height:
-                        (height / 5.9) * (visiblePlatforms.length / 3).ceil(),
+                        (height / 5.8) * (visiblePlatforms.length / 3).ceil(),
                     width: width / 1.07,
                     child: Center(
                       child: Container(
-                        height: height / 3.5,
+                        height: height / 2.9,
                         width: width,
                         // padding: EdgeInsets.only(top: 10.0),
                         child: (visiblePlatforms.length > 0)
                             ? GridView.builder(
-                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                // padding: EdgeInsetsGeometry.infinity,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 3),
@@ -319,7 +320,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: "Montserrat",
-                                fontSize: 15.0),
+                                fontSize: 15),
                             textAlign: TextAlign.center,
                           ),
                         ),
