@@ -267,39 +267,34 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                       border: Border.all(color: Colors.cyanAccent),
                     ),
                     height:
-                        (height / 5.8) * (visiblePlatforms.length / 3).ceil(),
+                        (height / 5.6) * (visiblePlatforms.length / 3).ceil(),
                     width: width / 1.07,
                     child: Center(
-                      child: Container(
-                        height: height / 2.9,
-                        width: width,
-                        // padding: EdgeInsets.only(top: 10.0),
-                        child: (visiblePlatforms.length > 0)
-                            ? GridView.builder(
-                                shrinkWrap: true,
-                                // padding: EdgeInsetsGeometry.infinity,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3),
-                                scrollDirection: Axis.vertical,
-                                itemBuilder: (BuildContext context, int i) {
-                                  return createSMButton(
-                                      platform: visiblePlatforms[i],
-                                      username: usernames[visiblePlatforms[i]],
-                                      context: context);
-                                },
-                                itemCount: visiblePlatforms.length,
-                              )
-                            : Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(15),
-                                  child: Text(
-                                    "This user isn't currently sharing any social media platforms :(",
-                                    style: Constants.CustomCyan,
-                                  ),
+                      child: (visiblePlatforms.length > 0)
+                          ? GridView.builder(
+                              shrinkWrap: true,
+                              // padding: EdgeInsetsGeometry.infinity,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3),
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (BuildContext context, int i) {
+                                return createSMButton(
+                                    platform: visiblePlatforms[i],
+                                    username: usernames[visiblePlatforms[i]],
+                                    context: context);
+                              },
+                              itemCount: visiblePlatforms.length,
+                            )
+                          : Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(15),
+                                child: Text(
+                                  "This user isn't currently sharing any social media platforms :(",
+                                  style: Constants.CustomCyan,
                                 ),
                               ),
-                      ),
+                            ),
                     ),
                   ),
                   SizedBox(height: height / 190),
