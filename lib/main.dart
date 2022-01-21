@@ -76,9 +76,10 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: (settings) {
           List<String> params = settings.name!.split("/");
           String UID = params.last;
+          // String UID = "yuvansun";
 
           if (params.contains("user")) {
-            // if (true) {
+            //if (true) {
             return MaterialPageRoute(builder: (context) {
               return FutureBuilder(
                   future: fetchUserData(UID),

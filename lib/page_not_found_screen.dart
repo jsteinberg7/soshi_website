@@ -44,7 +44,7 @@ class _PageNotFoundScreenState extends State<PageNotFoundScreen> {
               ),
               SizedBox(height: height / 7),
               Container(
-                height: height / 2.5,
+                height: height / 3,
                 width: width / 1.5,
                 decoration: ShapeDecoration.fromBoxDecoration(BoxDecoration(
                     color: Colors.grey[50],
@@ -57,7 +57,7 @@ class _PageNotFoundScreenState extends State<PageNotFoundScreen> {
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: "Montserrat",
-                          fontSize: 20.0),
+                          fontSize: width / 20),
                       textAlign: TextAlign.center,
                     ),
                   ),

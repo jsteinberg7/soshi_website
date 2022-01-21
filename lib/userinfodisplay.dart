@@ -265,39 +265,38 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                       border: Border.all(color: Colors.cyanAccent),
                     ),
                     height:
-                        (height / 5.9) * (visiblePlatforms.length / 3).ceil(),
+                        (height / 5.8) * (visiblePlatforms.length / 3).ceil(),
                     width: width / 1.07,
                     child: Center(
-                      child: ListView.separated(
-                        physics: NeverScrollableScrollPhysics(),
-                        separatorBuilder: (BuildContext context, int i) {
-                          return Padding(padding: EdgeInsets.all(0));
-                        },
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (BuildContext context, int i) {
-                          return Flex(direction: Axis.horizontal, children: [
-                            // SizedBox(width: width / 5),
-                            createSMButton(
-                                platform: visiblePlatforms[index],
-                                username: usernames[visiblePlatforms[index++]],
-                                context: context),
-                            (index >= visiblePlatforms.length)
-                                ? Text("")
-                                : createSMButton(
-                                    platform: visiblePlatforms[index],
-                                    username:
-                                        usernames[visiblePlatforms[index++]],
-                                    context: context),
-                            (index >= visiblePlatforms.length)
-                                ? Text("")
-                                : createSMButton(
-                                    platform: visiblePlatforms[index],
-                                    username:
-                                        usernames[visiblePlatforms[index++]],
-                                    context: context),
-                          ]);
-                        },
-                        itemCount: (visiblePlatforms.length / 3).ceil(),
+                      child: Container(
+                        height: height / 2.9,
+                        width: width,
+                        // padding: EdgeInsets.only(top: 10.0),
+                        child: (visiblePlatforms.length > 0)
+                            ? GridView.builder(
+                                shrinkWrap: true,
+                                // padding: EdgeInsetsGeometry.infinity,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3),
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (BuildContext context, int i) {
+                                  return createSMButton(
+                                      platform: visiblePlatforms[i],
+                                      username: usernames[visiblePlatforms[i]],
+                                      context: context);
+                                },
+                                itemCount: visiblePlatforms.length,
+                              )
+                            : Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Text(
+                                    "This user isn't currently sharing any social media platforms :(",
+                                    style: Constants.CustomCyan,
+                                  ),
+                                ),
+                              ),
                       ),
                     ),
                   ),
@@ -319,7 +318,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: "Montserrat",
-                                fontSize: 15.0),
+                                fontSize: 15),
                             textAlign: TextAlign.center,
                           ),
                         ),
