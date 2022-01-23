@@ -1,5 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:seeip_client/seeip_client.dart';
+// import 'package:seeip_client/seeip_client.dart';
 
 abstract class Analytics {
   static FirebaseAnalytics instance = FirebaseAnalytics.instance;
@@ -7,7 +7,7 @@ abstract class Analytics {
   static Future<void> setUserAttributes(
       {required String userId}) async {
     await instance.setUserId(id: userId);
-    await instance.setUserProperty(name: 'location', value: SeeipClient().getGeoIP().toString());
+    // await instance.setUserProperty(name: 'location', value: SeeipClient().getGeoIP().toString());
   }
 
   static logSignIn(String method) async {
