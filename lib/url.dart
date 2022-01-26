@@ -10,16 +10,12 @@ abstract class URL {
   // return custom url for platform and username
   // note: some platforms use a system not invloving usernames
   // (Linkedin, Faceboook, etc. use a numbering system)
-  static String getPlatformURL(
-      {required String platform, required String username}) {
+  static String getPlatformURL({required String platform, required String username}) {
     if (platform == "SMS") {
       return "sms://$username";
-    } 
-    else if (platform == "Phone") {
+    } else if (platform == "Phone") {
       return "tel://$username";
-    }
-    
-    else if (platform == "Instagram") {
+    } else if (platform == "Instagram") {
       return "https://www.instagram.com/" + username + "/?hl=en";
     } else if (platform == "Snapchat") {
       return "https://www.snapchat.com/add/" + username;
@@ -31,7 +27,7 @@ abstract class URL {
       return username;
     } else if (platform == "Reddit") {
       return "https://www.reddit.com/user/" + username + "/";
-    } else if (platform == "TikTok") {
+    } else if (platform == "Tiktok") {
       return username;
     } else if (platform == "Discord") {
       return "https://discordapp.com/users/" + username + "/";
