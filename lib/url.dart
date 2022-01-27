@@ -16,9 +16,9 @@ abstract class URL {
       return "sms://$username";
     } 
     else if (platform == "Phone") {
-      return "tel://$username";
+      return "sms://$username";
+      // return "tel://$username";
     }
-    
     else if (platform == "Instagram") {
       return "https://www.instagram.com/" + username + "/?hl=en";
     } else if (platform == "Snapchat") {
