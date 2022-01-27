@@ -270,6 +270,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                     child: Center(
                       child: (visiblePlatforms.length > 0)
                           ? GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               // padding: EdgeInsetsGeometry.infinity,
                               gridDelegate:
