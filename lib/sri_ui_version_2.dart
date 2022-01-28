@@ -6,27 +6,32 @@ import 'package:url_launcher/url_launcher.dart';
 import 'constants/constants.dart';
 import 'constants/widgets.dart';
 
-class NewProfileUI extends StatefulWidget {
+class SriUI2 extends StatefulWidget {
   String fullName;
   Map<String, dynamic> usernames;
   List<String> visiblePlatforms;
   String photoURL;
   String soshiUsername;
   String userBio;
+  int friendsAdded;
 
-  NewProfileUI(
+
+  SriUI2(
       {required this.fullName,
       required this.usernames,
       required this.visiblePlatforms,
       required this.photoURL,
       required this.soshiUsername,
-      required this.userBio});
+      required this.userBio,
+      required this.friendsAdded
+      
+      });
 
   @override
-  _NewProfileUIState createState() => _NewProfileUIState();
+  _SriUI2State createState() => _SriUI2State();
 }
 
-class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMixin {
+class _SriUI2State extends State<SriUI2> with TickerProviderStateMixin {
   String fullName = "";
   Map<String, dynamic> usernames = {};
   List<String> visiblePlatforms = [];

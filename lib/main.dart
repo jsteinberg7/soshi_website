@@ -2,8 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:soshi/constants/constants.dart';
-import 'package:soshi/newProfileUI.dart';
+import 'package:soshi/sri_ui_version_2.dart';
 import 'package:soshi/page_not_found_screen.dart';
+import 'package:soshi/sri_ui_version_3.dart';
 import 'package:soshi/url.dart';
 import 'package:soshi/user.dart';
 import 'package:soshi/userinfodisplay.dart';
@@ -21,8 +22,7 @@ void main() async {
 Future<User> fetchUserData(String soshiUsername) async {
   print("attempt to fetch user data base using $soshiUsername");
 
-  DatabaseService databaseService =
-      new DatabaseService(soshiUsernameIn: soshiUsername);
+  DatabaseService databaseService = new DatabaseService(soshiUsernameIn: soshiUsername);
 
   print("got data back from database!");
 
@@ -35,10 +35,8 @@ Future<User> fetchUserData(String soshiUsername) async {
   String photoURL = databaseService.getPhotoURL(userData);
   String fullName = databaseService.getFullName(userData);
 
-  Map<String, dynamic> usernames =
-      databaseService.getUserProfileNames(userData);
-  List<String> visiblePlatforms =
-      await databaseService.getEnabledPlatformsList(userData);
+  Map<String, dynamic> usernames = databaseService.getUserProfileNames(userData);
+  List<String> visiblePlatforms = await databaseService.getEnabledPlatformsList(userData);
   String userBio = databaseService.getBio(userData);
   int friendsAdded = databaseService.getFriendsCount(userData);
   print("friends added: " + friendsAdded.toString());
@@ -76,29 +74,44 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: (settings) {
           List<String> params = settings.name!.split("/");
           String UID = params.last;
+
           // String UID = "yuvansun";
 
-          //if (params.contains("user")) {
-          if (true) {
+          // UID = "skan2";
+
+          if (params.contains("user")) {
+            // if (true) {
             return MaterialPageRoute(builder: (context) {
               return FutureBuilder(
                   future: fetchUserData(UID),
                   builder: (BuildContext context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done &&
-                        snapshot.hasData) {
+                    if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                       User user = snapshot.data as User;
-                      return UserInfoDisplay(
-                        fullName: user.fullName,
-                        usernames: user.usernames,
-                        visiblePlatforms: user.visiblePlatforms,
-                        photoURL: user.photoURL,
-                        bio: user.userBio,
-                        friendsAdded: user.friendsAdded,
-                        //soshiUsername: user.soshiUsername,
-                        //userBio: user.userBio
+                      // return UserInfoDisplay(
+                      //   fullName: user.fullName,
+                      //   usernames: user.usernames,
+                      //   visiblePlatforms: user.visiblePlatforms,
+                      //   photoURL: user.photoURL,
+                      //   bio: user.userBio,
+                      //   friendsAdded: user.friendsAdded,
+                      //   //soshiUsername: user.soshiUsername,
+                      //   //userBio: user.userBio
+                      // );
+
+                      return AnimatedGradient(
+                        child: SriUI3(
+                          fullName: user.fullName,
+                          usernames: user.usernames,
+                          visiblePlatforms: user.visiblePlatforms,
+                          photoURL: user.photoURL,
+                          userBio: user.userBio, soshiUsername: user.soshiUsername,
+                          friendsAdded: user.friendsAdded,
+                          // friendsAdded: user.friendsAdded,
+                          //soshiUsername: user.soshiUsername,
+                          //userBio: user.userBio
+                        ),
                       );
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
+                    } else if (snapshot.connectionState == ConnectionState.waiting) {
                       return LoadingScreen();
                     } else {
                       return PageNotFoundScreen(launchURLIn: false);
