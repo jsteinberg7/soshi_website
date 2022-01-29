@@ -14,12 +14,9 @@ abstract class URL {
       {required String platform, required String username}) {
     if (platform == "SMS") {
       return "sms://$username";
-    } 
-    else if (platform == "Phone") {
+    } else if (platform == "Phone") {
       return "sms://$username";
-      // return "tel://$username";
-    }
-    else if (platform == "Instagram") {
+    } else if (platform == "Instagram") {
       return "https://www.instagram.com/" + username + "/?hl=en";
     } else if (platform == "Snapchat") {
       return "https://www.snapchat.com/add/" + username;
@@ -31,8 +28,16 @@ abstract class URL {
       return username;
     } else if (platform == "Reddit") {
       return "https://www.reddit.com/user/" + username + "/";
-    } else if (platform == "TikTok") {
-      return username;
+    } else if (platform == "Tiktok") {
+      String tiktokLink;
+      if (platform.contains("tiktok.com")) {
+        username.contains("https://")
+            ? tiktokLink = username
+            : tiktokLink = "https://" + username;
+      } else {
+        tiktokLink = "https://www.tiktok.com/@" + username;
+      }
+      return tiktokLink;
     } else if (platform == "Discord") {
       return "https://discordapp.com/users/" + username + "/";
     } else if (platform == "Email") {
