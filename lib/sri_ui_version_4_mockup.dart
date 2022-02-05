@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:soshi/database.dart';
 import 'package:soshi/responsive.dart';
 import 'package:soshi/url.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'constants/constants.dart';
 import 'constants/widgets.dart';
+
+bool biz = true;
 
 class AnimatedGradient extends StatefulWidget {
   Widget child;
@@ -57,7 +60,7 @@ class _AnimatedGradientState extends State<AnimatedGradient> {
   }
 }
 
-class SriUI3 extends StatefulWidget {
+class SriUI4 extends StatefulWidget {
   String fullName;
   Map<String, dynamic> usernames;
   List<String> visiblePlatforms;
@@ -67,7 +70,7 @@ class SriUI3 extends StatefulWidget {
   int friendsAdded;
   bool isVerified;
 
-  SriUI3(
+  SriUI4(
       {required this.fullName,
       required this.usernames,
       required this.visiblePlatforms,
@@ -78,10 +81,10 @@ class SriUI3 extends StatefulWidget {
       required this.isVerified});
 
   @override
-  _SriUI3State createState() => _SriUI3State();
+  _SriUI4State createState() => _SriUI4State();
 }
 
-class _SriUI3State extends State<SriUI3> with TickerProviderStateMixin {
+class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
   String fullName = "";
   Map<String, dynamic> usernames = {};
   List<String> visiblePlatforms = [];
@@ -101,6 +104,46 @@ class _SriUI3State extends State<SriUI3> with TickerProviderStateMixin {
     this.photoURL = widget.photoURL;
   }
 
+  createWebsite() {
+    return Padding(
+      padding: const EdgeInsets.all(7.0),
+      child: Container(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.network(
+            // "https://icons-for-free.com/download-icon-high+quality+social+social+media+square+website+www+icon-1320192619856305568_32.png",
+            // "https://st2.depositphotos.com/4202565/9540/v/950/depositphotos_95408772-stock-illustration-white-website-icon.jpg",
+            // "https://ak.picdn.net/shutterstock/videos/1057666969/thumb/7.jpg?ip=x480",
+            "https://ak.picdn.net/shutterstock/videos/1056117800/thumb/4.jpg",
+            height: 100,
+            width: 100,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Widget createMenue() {
+    return Padding(
+      padding: const EdgeInsets.all(7.0),
+      child: Container(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.network(
+            // "https://images.squarespace-cdn.com/content/v1/5c724434fb1820401d01c3c6/1550993794454-I1C4EX0XC2FZM77JKD5V/menu+icon+big.png",
+            // "https://thumbs.dreamstime.com/b/restaurant-menu-vector-flat-color-line-icon-restaurant-menu-icon-website-design-desktop-envelopment-development-premium-166585029.jpg",
+            // "https://media.istockphoto.com/vectors/restaurant-food-menu-icon-black-vector-design-is-isolated-on-a-white-vector-id1268954466",
+            "https://cdn-icons-png.flaticon.com/512/1046/1046747.png",
+            height: 100,
+            width: 100,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+
   // Create a clickable social media icon
   static Widget createSMButton(
 
@@ -118,7 +161,7 @@ class _SriUI3State extends State<SriUI3> with TickerProviderStateMixin {
         await URL.launchURL(URL.getPlatformURL(platform: platform, username: username));
       },
       // iconSize: MediaQuery.of(context).size.width / 4,
-      iconSize: 20,
+      iconSize: 50,
     );
   }
 
@@ -190,6 +233,10 @@ class _SriUI3State extends State<SriUI3> with TickerProviderStateMixin {
 // Remove all usernames that are now null
 
     print("total userName contacts after removing waste contacts: ${usernamesCopy.length}");
+
+    usernamesCopy['Menu'] = "DUMMY_MENU";
+
+    usernamesCopy['Website'] = "WEBSITE";
   }
 
   @override
@@ -206,7 +253,8 @@ class _SriUI3State extends State<SriUI3> with TickerProviderStateMixin {
       // decoration: BoxDecoration(gradient: Constants.greyCyanGradient),
 
       child: Scaffold(
-          bottomNavigationBar: DownloadSoshiBanner(),
+          // bottomNavigationBar: DownloadSoshiBanner(),
+          bottomNavigationBar: GetYourOwnCard(),
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
             child: Column(
@@ -239,7 +287,7 @@ class _SriUI3State extends State<SriUI3> with TickerProviderStateMixin {
 
                             Container(
                               child: Card(
-                                color: Colors.white.withOpacity(0.5),
+                                color: Colors.white.withOpacity(0.6),
                                 elevation: 7,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
@@ -328,16 +376,30 @@ class _SriUI3State extends State<SriUI3> with TickerProviderStateMixin {
 
                       // SizedBox(height: 5),
                       Divider(thickness: 1),
-                      Container(
-                        width: MediaQuery.of(context).size.width - 50,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: quickContacts.map((e) {
-                              return QuickContactSquare(contactData: e);
-                            }).toList()),
+                      Card(
+                        elevation: 7,
+                        color: Colors.white.withOpacity(0.6),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              // color: Colors.black38,
+
+                              // gradient: Constants.greyCyanGradient,
+                              // border: Border.all(color: Colors.black),
+                              borderRadius: BorderRadius.all(Radius.circular(20))),
+                          width: MediaQuery.of(context).size.width - 20,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: quickContacts.map((e) {
+                                return QuickContactSquare(contactData: e);
+                              }).toList()),
+                        ),
                       ),
                       Divider(thickness: 1),
                       Container(
+                        // color: Colors.red,
                         // height: MediaQuery.of(context).size.height - 460,
                         // height: double.infinity,
                         width: Responsive.isMobile(context) ? MediaQuery.of(context).size.width - 50 : MediaQuery.of(context).size.width - 500,
@@ -345,14 +407,21 @@ class _SriUI3State extends State<SriUI3> with TickerProviderStateMixin {
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 4, crossAxisSpacing: 5, mainAxisSpacing: 5, childAspectRatio: 1 / 1
+                              crossAxisCount: 4, crossAxisSpacing: 5, mainAxisSpacing: 5,
+                              // childAspectRatio: 1 / 1
 
-                                // maxCrossAxisExtent: 200, childAspectRatio: , crossAxisSpacing: 20, mainAxisSpacing: 20
-                                ),
+                              // maxCrossAxisExtent: 200, childAspectRatio: , crossAxisSpacing: 20, mainAxisSpacing: 20
+                            ),
                             itemCount: usernamesCopy.keys.length,
                             itemBuilder: (BuildContext context, index) {
                               String currentKey = usernamesCopy.keys.elementAt(index);
                               print("creating SM button");
+
+                              if (currentKey == "Menu") {
+                                return createMenue();
+                              } else if (currentKey == "Website") {
+                                return createWebsite();
+                              }
                               return Container(
                                   // height: 50,
                                   child: createSMButton(platform: currentKey, username: usernamesCopy[currentKey], context: context));
@@ -362,6 +431,159 @@ class _SriUI3State extends State<SriUI3> with TickerProviderStateMixin {
 // ------------- learn more Stuff
 
                       // GetYourOwnCard(height: height, width: width)
+
+                      Divider(thickness: 1),
+                      SizedBox(height: 10),
+
+                      InkWell(
+                        onTap: () {
+                          print("send feedback pressed [!]");
+                          showModalBottomSheet<void>(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(
+                                height: 320,
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Text("Feedback", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.blueGrey)),
+                                      ),
+                                      RatingBar.builder(
+                                        itemSize: 60,
+                                        initialRating: 3,
+                                        itemCount: 5,
+                                        itemBuilder: (context, index) {
+                                          switch (index) {
+                                            case 0:
+                                              return Icon(
+                                                Icons.sentiment_very_dissatisfied,
+                                                color: Colors.red,
+                                              );
+                                            case 1:
+                                              return Icon(
+                                                Icons.sentiment_dissatisfied,
+                                                color: Colors.redAccent,
+                                              );
+                                            case 2:
+                                              return Icon(
+                                                Icons.sentiment_neutral,
+                                                color: Colors.amber,
+                                              );
+                                            case 3:
+                                              return Icon(
+                                                Icons.sentiment_satisfied,
+                                                color: Colors.lightGreen,
+                                              );
+                                            case 4:
+                                              return Icon(
+                                                Icons.sentiment_very_satisfied,
+                                                color: Colors.green,
+                                              );
+                                          }
+
+                                          return Icon(Icons.cancel);
+                                        },
+                                        onRatingUpdate: (rating) {
+                                          print(rating);
+                                        },
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Container(
+                                          height: 120,
+                                          child: TextField(
+                                            maxLines: null,
+                                            maxLength: 120,
+                                            maxLengthEnforced: true,
+                                            style: TextStyle(fontSize: 18.0, color: Colors.black),
+                                            decoration: InputDecoration(
+                                              hintText: "Type your feedback...",
+                                              contentPadding: const EdgeInsets.all(10),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          print("SUBMIT GIVEN FEEDBACK to business!");
+                                        },
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                          elevation: 7,
+                                          child: Container(
+                                            height: 40,
+                                            width: 200,
+                                            // decoration: fancyDecor,
+                                            decoration: BoxDecoration(
+                                                color: Colors.blue.withOpacity(0.4), borderRadius: BorderRadius.all(Radius.circular(10))),
+
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.send_rounded,
+                                                  color: Colors.black,
+                                                  size: 30,
+                                                ),
+                                                SizedBox(width: 10),
+                                                Text("Submit", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          elevation: 7,
+                          child: Container(
+                            height: 60,
+                            width: 250,
+                            // decoration: fancyDecor,
+                            decoration: BoxDecoration(color: Colors.blue.withOpacity(0.4), borderRadius: BorderRadius.all(Radius.circular(10))),
+
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.chat_bubble,
+                                  color: Colors.black,
+                                  size: 30,
+                                ),
+                                SizedBox(width: 10),
+                                Text("Send Feedback", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black))
+                              ],
+                            ),
+
+                            // child: ElevatedButton.icon(
+                            //     onPressed: () {},
+                            //     icon: Icon(Icons.chat_bubble),
+                            //     label: Text("Send Feedback", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+                          ),
+                        ),
+                      ),
                     ]),
                 // DownloadSoshiBanner()
               ],
@@ -390,7 +612,7 @@ class DownloadSoshiBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 65,
+      height: 100,
       // decoration: fancyDecor,
       decoration: BoxDecoration(
           color: Colors.black38,
@@ -399,15 +621,15 @@ class DownloadSoshiBanner extends StatelessWidget {
           borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))),
 
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+        padding: const EdgeInsets.fromLTRB(2, 5, 2, 0),
         child: Column(
           children: [
             Text(
               "Join Soshi to make your own!",
-              style: TextStyle(color: Colors.white, fontFamily: "Montserrat", fontSize: 15.0, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.white, fontFamily: "Montserrat", fontSize: 20.0, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -417,7 +639,7 @@ class DownloadSoshiBanner extends StatelessWidget {
                   },
                   child: Image.asset(
                     "assets/images/download_the_app/get_it_on_google_play.png",
-                    width: 100,
+                    width: 150,
                   ),
                 ),
                 SizedBox(width: 50),
@@ -425,7 +647,7 @@ class DownloadSoshiBanner extends StatelessWidget {
                   onTap: () {
                     URL.launchURL("https://apps.apple.com/us/app/soshi/id1595515750");
                   },
-                  child: Image.asset("assets/images/download_the_app/get_it_on_the_app_store.png", width: 100),
+                  child: Image.asset("assets/images/download_the_app/get_it_on_the_app_store.png", width: 150),
                 ),
               ],
             ),
@@ -439,60 +661,68 @@ class DownloadSoshiBanner extends StatelessWidget {
 class GetYourOwnCard extends StatelessWidget {
   const GetYourOwnCard({
     Key? key,
-    required this.height,
-    required this.width,
+    // required this.height,
+    // required this.width,
   }) : super(key: key);
 
-  final double height;
-  final double width;
+  // final double height;
+  // final double width;
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      child: Container(
-        height: height / 5,
-        width: width / 2,
-        decoration: ShapeDecoration.fromBoxDecoration(BoxDecoration(color: Colors.grey[50], borderRadius: BorderRadius.circular(15.0))),
-        child: Flex(direction: Axis.vertical, children: [
-          Padding(
-            padding: EdgeInsets.all(width / 40),
-            child: Text(
-              "Want your own contact card? Join the Soshi community today!",
-              style: TextStyle(color: Colors.black, fontFamily: "Montserrat", fontSize: 15.0),
-              textAlign: TextAlign.center,
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: Card(
+        elevation: 10,
+        // shape: ShapeBorder(borderRadius: BorderRadius.circular(15.0))),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Container(
+          // height: height / 5,
+          // width: width / 2,
+          height: 140,
+          width: 150,
+          decoration: ShapeDecoration.fromBoxDecoration(BoxDecoration(color: Colors.grey[50], borderRadius: BorderRadius.circular(15.0))),
+          child: Column(children: [
+            Padding(
+              padding: EdgeInsets.all(15),
+              child: Text(
+                "Want your own contact card? Join the Soshi community today!",
+                style: TextStyle(color: Colors.black, fontFamily: "Montserrat", fontSize: 16.0),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          SizedBox(
-            height: height / 100,
-          ),
-          Container(
-            height: height / 14,
-            child: Flex(
-                direction: Axis.horizontal,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      URL.launchURL("https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
-                    },
-                    child: Image.asset(
-                      "assets/images/download_the_app/get_it_on_google_play.png",
-                      width: width / 3.5,
-                    ),
-                  ),
-                  SizedBox(width: width / 20),
-                  GestureDetector(
-                    onTap: () {
-                      URL.launchURL("https://apps.apple.com/us/app/soshi/id1595515750");
-                    },
-                    child: Image.asset("assets/images/download_the_app/get_it_on_the_app_store.png", width: width / 3.5),
-                  ),
-                  // ),
-                ]),
-          )
-        ]),
+            SizedBox(
+              height: 10,
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              GestureDetector(
+                onTap: () {
+                  URL.launchURL("https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
+                },
+                child: Image.asset(
+                  "assets/images/download_the_app/get_it_on_google_play.png",
+                  height: 40,
+                  // width: 120,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(width: 10),
+              GestureDetector(
+                  onTap: () {
+                    URL.launchURL("https://apps.apple.com/us/app/soshi/id1595515750");
+                  },
+                  child: Image.asset(
+                    "assets/images/download_the_app/get_it_on_the_app_store.png",
+                    height: 40,
+                    // width: 120,
+                    fit: BoxFit.cover,
+                  )),
+              // ),
+            ])
+          ]),
+        ),
       ),
     );
   }
@@ -518,23 +748,30 @@ class QuickContactSquare extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: Container(
-          height: 65,
-          width: 65,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.black.withOpacity(0.1),
-              // color: Colors.transparent,
-              border: Border.all(
-                color: Colors.black,
-                width: 2,
-              )),
+          height: 60,
+          width: 60,
+          // decoration: BoxDecoration(
+          //     shape: BoxShape.circle,
+          //     color: Colors.black.withOpacity(0.1),
+          //     // color: Colors.transparent,
+          //     border: Border.all(
+          //       color: Colors.black,
+          //       width: 2,
+          //     )),
           child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Icon(
-                contactData['contact_icon'],
-                color: Colors.black,
-                size: 30,
-              )),
+            padding: const EdgeInsets.all(5.0),
+            // child: Icon(
+            //   contactData['contact_icon'],
+            //   color: Colors.black,
+            //   size: 30,
+            // )
+
+            child: Container(
+              child: Image.asset(
+                "assets/images/SMLogos/" + contactData['contact_name'] + "Logo.png",
+              ),
+            ),
+          ),
         ),
       ),
     );

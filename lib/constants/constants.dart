@@ -9,7 +9,9 @@ class Constants {
     accentColor: Colors.cyan[300],
   );
 
-  static TextStyle textStyle = new TextStyle(fontFamily: "Montserrat");
+  // static TextStyle textStyle = new TextStyle(fontFamily: "Montserrat");
+
+  
 
   static var backgroundColor = Colors.grey[800];
 

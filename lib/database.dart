@@ -13,8 +13,7 @@ class DatabaseService {
   }
 
   // store reference to all user files
-  CollectionReference usersCollection =
-      FirebaseFirestore.instance.collection("users");
+  CollectionReference usersCollection = FirebaseFirestore.instance.collection("users");
 
   /*
   Methods pertaining to getting user data
@@ -53,8 +52,7 @@ class DatabaseService {
   }
 
   // return username for specified platform
-  Future<String> getUsernameForPlatform(
-      {required Map userData, required String platform}) async {
+  Future<String> getUsernameForPlatform({required Map userData, required String platform}) async {
     String username;
     Map<String, dynamic> profileNamesMap = getUserProfileNames(userData);
     username = profileNamesMap[platform];
@@ -110,6 +108,14 @@ class DatabaseService {
 
   List getFriends(Map userData) {
     return userData["Friends"];
+  }
+
+  bool isVerified(Map userData) {
+    if (userData["is_verified"] == null || userData["is_verified"] == false) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   int getFriendsCount(Map userData) {

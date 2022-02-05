@@ -5,11 +5,11 @@ import 'constants.dart';
 
 /* Widget to build the profile picture and check if they are null */
 class ProfilePic extends StatelessWidget {
-  double radius = 10.0;
+  double customSize = 10.0;
   String url = "";
 
   ProfilePic({required double radius, required String url}) {
-    this.radius = radius;
+    this.customSize = radius;
     this.url = url;
 
     print("received url +" + url.toString());
@@ -51,17 +51,19 @@ class ProfilePic extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Container(
-            height: 110,
-            width: 110,
+            // height: 110,
+            // width: 110,
+            height: customSize,
+            width: customSize,
             child: url == "null" || url == null || url == ""
                 ? Image.asset(
                     'assets/images/SoshiLogos/soshi_icon.png',
-                    height: 110,
+                      height: customSize,
                     fit: BoxFit.cover,
                   )
                 : Image.network(
                     url,
-                    height: 110,
+                   height: customSize,
                     fit: BoxFit.cover,
                   )),
       ),

@@ -1,10 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:soshi/constants/constants.dart';
 import 'package:soshi/sri_ui_version_2.dart';
 import 'package:soshi/page_not_found_screen.dart';
-import 'package:soshi/sri_ui_version_3.dart';
+// import 'package:soshi/sri_ui_version_3.dart';
+import 'package:soshi/sri_ui_version_4_mockup.dart';
 import 'package:soshi/url.dart';
 import 'package:soshi/user.dart';
 import 'package:soshi/userinfodisplay.dart';
@@ -40,6 +42,8 @@ Future<User> fetchUserData(String soshiUsername) async {
   String userBio = databaseService.getBio(userData);
   int friendsAdded = databaseService.getFriendsCount(userData);
   print("friends added: " + friendsAdded.toString());
+  bool isVerified = databaseService.isVerified(userData);
+
   print("bio: " + userBio);
 
   return new User(
@@ -49,7 +53,8 @@ Future<User> fetchUserData(String soshiUsername) async {
       photoURL: photoURL,
       soshiUsername: soshiUsername,
       userBio: userBio,
-      friendsAdded: friendsAdded);
+      friendsAdded: friendsAdded,
+      isVerified: isVerified);
 }
 
 class MyApp extends StatefulWidget {
@@ -69,18 +74,27 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: Constants.CustomTheme,
+        // theme: Constants.CustomTheme,
+
+        theme: ThemeData(
+          textTheme: GoogleFonts.latoTextTheme(
+            Theme.of(context).textTheme, // If this is not set, then ThemeData.light().textTheme is used.
+          ),
+        ),
         initialRoute: "/",
         onGenerateRoute: (settings) {
-          List<String> params = settings.name!.split("/");
-          String UID = params.last;
+          // List<String> params = settings.name!.split("/");
+          // String UID = params.last;
 
           // String UID = "yuvansun";
 
-          // UID = "skan2";
+          // UID = "yuvansun";
 
-          if (params.contains("user")) {
-            // if (true) {
+          // UID = "skan2";
+          String UID = "marathon";
+
+          // if (params.contains("user")) {
+          if (true) {
             return MaterialPageRoute(builder: (context) {
               return FutureBuilder(
                   future: fetchUserData(UID),
@@ -99,13 +113,15 @@ class _MyAppState extends State<MyApp> {
                       // );
 
                       return AnimatedGradient(
-                        child: SriUI3(
+                        child: SriUI4(
                           fullName: user.fullName,
                           usernames: user.usernames,
                           visiblePlatforms: user.visiblePlatforms,
                           photoURL: user.photoURL,
                           userBio: user.userBio, soshiUsername: user.soshiUsername,
                           friendsAdded: user.friendsAdded,
+                          isVerified: user.isVerified,
+
                           // friendsAdded: user.friendsAdded,
                           //soshiUsername: user.soshiUsername,
                           //userBio: user.userBio
