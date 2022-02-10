@@ -201,7 +201,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                                   width: width,
 
                                   child: Center(
-                                      child: (bio != null)
+                                      child: (bio != "")
                                           ? Text(bio,
                                               style: TextStyle(
                                                   color: Colors.grey[300],

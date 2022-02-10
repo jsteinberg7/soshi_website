@@ -26,7 +26,8 @@ class NewProfileUI extends StatefulWidget {
   _NewProfileUIState createState() => _NewProfileUIState();
 }
 
-class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMixin {
+class _NewProfileUIState extends State<NewProfileUI>
+    with TickerProviderStateMixin {
   String fullName = "";
   Map<String, dynamic> usernames = {};
   List<String> visiblePlatforms = [];
@@ -65,7 +66,8 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
         "assets/images/SMLogos/" + platform + "Logo.png",
       ),
       onPressed: () async {
-        await URL.launchURL(URL.getPlatformURL(platform: platform, username: username));
+        await URL.launchURL(
+            URL.getPlatformURL(platform: platform, username: username));
       },
       // iconSize: MediaQuery.of(context).size.width / 4,
       iconSize: 20,
@@ -80,9 +82,18 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
     print("have username data: $usernames");
 
     Map converter = {
-      'Phone': {'contact_name': 'Phone', 'contact_icon': Icon(Icons.phone, size: 30, color: Colors.cyan[300])},
-      'Email': {'contact_name': 'Email', 'contact_icon': Icon(Icons.email, size: 30, color: Colors.cyan[300])},
-      'SMS': {'contact_name': 'SMS', 'contact_icon': Icon(Icons.chat, size: 30, color: Colors.cyan[300])}
+      'Phone': {
+        'contact_name': 'Phone',
+        'contact_icon': Icon(Icons.phone, size: 30, color: Colors.cyan[300])
+      },
+      'Email': {
+        'contact_name': 'Email',
+        'contact_icon': Icon(Icons.email, size: 30, color: Colors.cyan[300])
+      },
+      'SMS': {
+        'contact_name': 'SMS',
+        'contact_icon': Icon(Icons.chat, size: 30, color: Colors.cyan[300])
+      }
     };
 
     widget.usernames.keys.forEach((key) {
@@ -90,7 +101,9 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
         return;
       }
 
-      if (['Email', 'Phone'].contains(key) && widget.usernames[key] != null && widget.usernames[key] != "") {
+      if (['Email', 'Phone'].contains(key) &&
+          widget.usernames[key] != null &&
+          widget.usernames[key] != "") {
         print("[+] User has a valid Phone # or Email for making Quick contact");
 
         converter[key]['contact_info'] = widget.usernames[key];
@@ -116,7 +129,8 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
     widget.usernames['Phone'] = null;
 
     print("total quick contacts: ${quickContacts.length}");
-    print("total userName contacts after removing quick contacts: ${widget.usernames.length}");
+    print(
+        "total userName contacts after removing quick contacts: ${widget.usernames.length}");
     print(widget.usernames);
 
     widget.usernames.removeWhere((usernamesKey, usernamesValue) {
@@ -127,7 +141,8 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
       }
     });
 
-    print("total userName contacts after removing waste contacts: ${widget.usernames.length}");
+    print(
+        "total userName contacts after removing waste contacts: ${widget.usernames.length}");
   }
 
   @override
@@ -252,9 +267,12 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
 
                                                 await launch(vcfDownloadUrl);
                                               },
-                                              icon: Icon(Icons.perm_contact_calendar_rounded),
+                                              icon: Icon(Icons
+                                                  .perm_contact_calendar_rounded),
                                               label: Text("Add to contacts"),
-                                              style: ElevatedButton.styleFrom(primary: Colors.cyan[300], onPrimary: Colors.black),
+                                              style: ElevatedButton.styleFrom(
+                                                  primary: Colors.cyan[300],
+                                                  onPrimary: Colors.black),
                                             ),
                                           ),
                                         ),
@@ -313,15 +331,23 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
                             child: Scrollbar(
                               isAlwaysShown: true,
                               child: GridView.builder(
-                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3, childAspectRatio: 1 / 1, crossAxisSpacing: 5, mainAxisSpacing: 5
-                                      // maxCrossAxisExtent: 200, childAspectRatio: 3 / 2, crossAxisSpacing: 20, mainAxisSpacing: 20
-                                      ),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3,
+                                          childAspectRatio: 1 / 1,
+                                          crossAxisSpacing: 5,
+                                          mainAxisSpacing: 5
+                                          // maxCrossAxisExtent: 200, childAspectRatio: 3 / 2, crossAxisSpacing: 20, mainAxisSpacing: 20
+                                          ),
                                   itemCount: widget.usernames.keys.length,
                                   itemBuilder: (BuildContext context, index) {
-                                    String currentKey = widget.usernames.keys.elementAt(index);
+                                    String currentKey =
+                                        widget.usernames.keys.elementAt(index);
                                     print("creating SM button");
-                                    return createSMButton(platform: currentKey, username: widget.usernames[currentKey], context: context);
+                                    return createSMButton(
+                                        platform: currentKey,
+                                        username: widget.usernames[currentKey],
+                                        context: context);
                                   }),
                             ),
                           ),
@@ -338,7 +364,9 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
                     color: Colors.black38,
                     // gradient: Constants.greyCyanGradient,
                     border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(20),
+                        topLeft: Radius.circular(20))),
 
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
@@ -346,7 +374,11 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
                     children: [
                       Text(
                         "Join Soshi to make your own!",
-                        style: TextStyle(color: Colors.white, fontFamily: "Montserrat", fontSize: 12.0, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Montserrat",
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 5),
@@ -355,7 +387,8 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
                         children: [
                           GestureDetector(
                             onTap: () {
-                              URL.launchURL("https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
+                              URL.launchURL(
+                                  "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
                             },
                             child: Image.asset(
                               "assets/images/download_the_app/get_it_on_google_play.png",
@@ -365,9 +398,12 @@ class _NewProfileUIState extends State<NewProfileUI> with TickerProviderStateMix
                           SizedBox(width: width / 20),
                           GestureDetector(
                             onTap: () {
-                              URL.launchURL("https://apps.apple.com/us/app/soshi/id1595515750");
+                              URL.launchURL(
+                                  "https://apps.apple.com/us/app/soshi/id1595515750");
                             },
-                            child: Image.asset("assets/images/download_the_app/get_it_on_the_app_store.png", width: width / 3.5),
+                            child: Image.asset(
+                                "assets/images/download_the_app/get_it_on_the_app_store.png",
+                                width: width / 3.5),
                           ),
                         ],
                       ),
@@ -409,13 +445,17 @@ class GetYourOwnCard extends StatelessWidget {
       child: Container(
         height: height / 5,
         width: width / 2,
-        decoration: ShapeDecoration.fromBoxDecoration(BoxDecoration(color: Colors.grey[50], borderRadius: BorderRadius.circular(15.0))),
+        decoration: ShapeDecoration.fromBoxDecoration(BoxDecoration(
+            color: Colors.grey[50], borderRadius: BorderRadius.circular(15.0))),
         child: Flex(direction: Axis.vertical, children: [
           Padding(
             padding: EdgeInsets.all(width / 40),
             child: Text(
               "Want your own contact card? Join the Soshi community today!",
-              style: TextStyle(color: Colors.black, fontFamily: "Montserrat", fontSize: 15.0),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: "Montserrat",
+                  fontSize: 15.0),
               textAlign: TextAlign.center,
             ),
           ),
@@ -431,7 +471,8 @@ class GetYourOwnCard extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      URL.launchURL("https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
+                      URL.launchURL(
+                          "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
                     },
                     child: Image.asset(
                       "assets/images/download_the_app/get_it_on_google_play.png",
@@ -441,9 +482,12 @@ class GetYourOwnCard extends StatelessWidget {
                   SizedBox(width: width / 20),
                   GestureDetector(
                     onTap: () {
-                      URL.launchURL("https://apps.apple.com/us/app/soshi/id1595515750");
+                      URL.launchURL(
+                          "https://apps.apple.com/us/app/soshi/id1595515750");
                     },
-                    child: Image.asset("assets/images/download_the_app/get_it_on_the_app_store.png", width: width / 3.5),
+                    child: Image.asset(
+                        "assets/images/download_the_app/get_it_on_the_app_store.png",
+                        width: width / 3.5),
                   ),
                   // ),
                 ]),
@@ -467,7 +511,9 @@ class QuickContactSquare extends StatelessWidget {
 
         print(contactData);
 
-        String url = URL.getPlatformURL(platform: contactData["contact_name"], username: contactData['contact_info']);
+        String url = URL.getPlatformURL(
+            platform: contactData["contact_name"],
+            username: contactData['contact_info']);
 
         await launch(url);
       },
@@ -476,8 +522,12 @@ class QuickContactSquare extends StatelessWidget {
         child: Container(
           height: 50,
           width: 50,
-          decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.all(Radius.circular(10.0))),
-          child: Padding(padding: const EdgeInsets.all(10.0), child: contactData['contact_icon']),
+          decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: contactData['contact_icon']),
         ),
       ),
     );

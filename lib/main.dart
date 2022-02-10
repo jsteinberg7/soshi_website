@@ -75,8 +75,8 @@ class _MyAppState extends State<MyApp> {
         initialRoute: "/",
         onGenerateRoute: (settings) {
           List<String> params = settings.name!.split("/");
-          String UID = params.last;
-          // String UID = "yuvansun";
+          //String UID = params.last;
+          String UID = "ian";
 
           //if (params.contains("user")) {
           if (true) {
@@ -105,13 +105,14 @@ class _MyAppState extends State<MyApp> {
                     }
                   });
             });
-          } else {
-            return MaterialPageRoute(builder: (context) {
-              return PageNotFoundScreen(
-                launchURLIn: true,
-              );
-            });
           }
+          // else {
+          //   return MaterialPageRoute(builder: (context) {
+          //     return PageNotFoundScreen(
+          //       launchURLIn: true,
+          //     );
+          //   });
+          // }
         });
   }
 }
