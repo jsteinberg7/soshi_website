@@ -36,7 +36,7 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
   String fullName = "";
   Map<String, dynamic> usernames = {};
   List<String> visiblePlatforms = [];
-  String photoURL = "";
+  String photoURL = "null";
   String bio = "";
   int friendsAdded = 0;
 

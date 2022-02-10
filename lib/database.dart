@@ -33,7 +33,7 @@ class DatabaseService {
   }
 
   // return list of enabled user switches
-  Future<List<String>> getEnabledPlatformsList(Map userData) async {
+  List<String> getEnabledPlatformsList(Map userData) {
     Map<String, dynamic> platformsMap = getUserSwitches(userData);
 
     List<String> enabledPlatformsList = [];
@@ -105,7 +105,7 @@ class DatabaseService {
   }
 
   String getBio(Map userData) {
-    return userData["Bio"];
+    return userData["Bio"] ?? "";
   }
 
   List getFriends(Map userData) {

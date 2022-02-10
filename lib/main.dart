@@ -43,6 +43,7 @@ Future<User> fetchUserData(String soshiUsername) async {
   int friendsAdded = databaseService.getFriendsCount(userData);
   print("friends added: " + friendsAdded.toString());
   print("bio: " + userBio);
+  print(photoURL);
 
   return new User(
       fullName: fullName,
@@ -76,7 +77,7 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: (settings) {
           List<String> params = settings.name!.split("/");
           //String UID = params.last;
-          String UID = "ian";
+          String UID = "uviscute";
 
           //if (params.contains("user")) {
           if (true) {
