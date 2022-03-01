@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:soshi/constants/constants.dart';
 import 'package:soshi/newProfileUI.dart';
 import 'package:soshi/page_not_found_screen.dart';
+import 'package:soshi/sri_ui_version_2.dart';
 import 'package:soshi/url.dart';
 import 'package:soshi/user.dart';
 import 'package:soshi/userinfodisplay.dart';
@@ -78,8 +79,8 @@ class _MyAppState extends State<MyApp> {
     /* remove # if necessary */
     print("URL: " + window.location.href);
     List<String> inputURL = window.location.href.split("/");
-    if (inputURL.contains("#")) {
-      window.history.pushState(null, "User", "/user/${inputURL.last}");
+    if (inputURL.contains("#") || inputURL.contains("user")) {
+      window.history.pushState(null, "Profile", "/${inputURL.last}");
     }
     // window.history.pushState(null, "Home", "/#/user/testing");
     // print("pushing url");
@@ -97,11 +98,11 @@ class _MyAppState extends State<MyApp> {
           }
           // String UID = "yuvansun";
 
-          if (params.length >= 2 &&
-              params[1] == "user" &&
-              params.last != "user") {
-            print("params:" + params.toString());
-            // if (true) {
+          if (params.length >= 1
+              // &&
+              // (params[1] == "user" || params[1] == "u") &&
+              // (params.last != "user" && params.last != "u")
+              ) {
             return MaterialPageRoute(
                 settings: settings,
                 builder: (context) {
