@@ -19,7 +19,12 @@ class AnimatedGradient extends StatefulWidget {
 }
 
 class _AnimatedGradientState extends State<AnimatedGradient> {
-  List<Color> colorList = [Colors.red, Colors.blue, Colors.green, Colors.yellow];
+  List<Color> colorList = [
+    Colors.red,
+    Colors.blue,
+    Colors.green,
+    Colors.yellow
+  ];
   List<Alignment> alignmentList = [
     Alignment.bottomLeft,
     Alignment.bottomRight,
@@ -54,7 +59,9 @@ class _AnimatedGradientState extends State<AnimatedGradient> {
           end = alignmentList[(index + 2) % alignmentList.length];
         });
       },
-      decoration: BoxDecoration(gradient: LinearGradient(begin: begin, end: end, colors: [bottomColor, topColor])),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: begin, end: end, colors: [bottomColor, topColor])),
       child: widget.child,
     ));
   }
@@ -158,7 +165,8 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
         "assets/images/SMLogos/" + platform + "Logo.png",
       ),
       onPressed: () async {
-        await URL.launchURL(URL.getPlatformURL(platform: platform, username: username));
+        await URL.launchURL(
+            URL.getPlatformURL(platform: platform, username: username));
       },
       // iconSize: MediaQuery.of(context).size.width / 4,
       iconSize: 50,
@@ -180,7 +188,10 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
       'Phone': {'contact_name': 'Phone', 'contact_icon': Icons.phone},
       'Email': {'contact_name': 'Email', 'contact_icon': Icons.email},
       'SMS': {'contact_name': 'SMS', 'contact_icon': Icons.chat},
-      'Contact': {'contact_name': 'Contact', 'contact_icon': Icons.perm_contact_calendar_sharp}
+      'Contact': {
+        'contact_name': 'Contact',
+        'contact_icon': Icons.perm_contact_calendar_sharp
+      }
     };
 
     usernamesCopy.keys.forEach((key) {
@@ -189,14 +200,18 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
         return;
       }
 
-      if (key == "Email" && widget.usernames[key] != null && widget.usernames[key] != "") {
+      if (key == "Email" &&
+          widget.usernames[key] != null &&
+          widget.usernames[key] != "") {
         converter[key]['contact_info'] = widget.usernames[key];
         quickContacts.add(converter[key]);
         usernamesCopy['Email'] = null;
         // converter[key] = null;
       }
 
-      if (key == "Phone" && widget.usernames[key] != null && widget.usernames[key] != "") {
+      if (key == "Phone" &&
+          widget.usernames[key] != null &&
+          widget.usernames[key] != "") {
         converter[key]['contact_info'] = widget.usernames[key];
         quickContacts.add(converter[key]);
         converter["SMS"]['contact_info'] = widget.usernames[key];
@@ -206,7 +221,9 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
         // converter[key] = null;
       }
 
-      if (key == "Contact" && widget.usernames[key] != null && widget.usernames[key] != "") {
+      if (key == "Contact" &&
+          widget.usernames[key] != null &&
+          widget.usernames[key] != "") {
         vcfDownloadUrl = widget.usernames['Contact'];
         converter["Contact"]['contact_info'] = vcfDownloadUrl;
         quickContacts.add(converter["Contact"]);
@@ -219,7 +236,8 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
     usernamesCopy['Soshi'] = null;
 
     print("total quick contacts: ${quickContacts.length}");
-    print("total userName contacts after removing quick contacts: ${usernamesCopy.length}");
+    print(
+        "total userName contacts after removing quick contacts: ${usernamesCopy.length}");
     print(widget.usernames);
 
     // Clean up
@@ -232,7 +250,8 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
     });
 // Remove all usernames that are now null
 
-    print("total userName contacts after removing waste contacts: ${usernamesCopy.length}");
+    print(
+        "total userName contacts after removing waste contacts: ${usernamesCopy.length}");
 
     usernamesCopy['Menu'] = "DUMMY_MENU";
 
@@ -295,18 +314,23 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                                 child: Row(
                                   children: [
                                     Container(
-                                      child: ProfilePic(radius: 120, url: photoURL),
+                                      child: ProfilePic(
+                                          radius: 120, url: photoURL),
                                     ),
                                     SizedBox(width: 10),
                                     Column(
                                       children: [
                                         Text(
                                           fullName,
-                                          style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(height: 5),
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
                                               "@" + widget.soshiUsername,
@@ -319,13 +343,19 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                                                   fontStyle: FontStyle.italic),
                                             ),
                                             SizedBox(width: 5),
-                                            true ? Icon(Icons.verified, color: Colors.blue) : Container(),
+                                            true
+                                                ? Icon(Icons.verified,
+                                                    color: Colors.blue)
+                                                : Container(),
                                           ],
                                         ),
                                         SizedBox(height: 4),
                                         Container(
                                           decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black), borderRadius: BorderRadius.all(Radius.circular(20))),
+                                              border: Border.all(
+                                                  color: Colors.black),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20))),
                                           child: Padding(
                                             padding: const EdgeInsets.all(7.0),
                                             child: Row(
@@ -338,7 +368,12 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                                                 Text(
                                                   "${widget.friendsAdded} Friends",
                                                   style: TextStyle(
-                                                      color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+                                                      color: Colors.black,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontStyle:
+                                                          FontStyle.italic),
                                                 ),
                                               ],
                                             ),
@@ -388,7 +423,8 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
 
                               // gradient: Constants.greyCyanGradient,
                               // border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.all(Radius.circular(20))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
                           width: MediaQuery.of(context).size.width - 20,
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -402,19 +438,24 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                         // color: Colors.red,
                         // height: MediaQuery.of(context).size.height - 460,
                         // height: double.infinity,
-                        width: Responsive.isMobile(context) ? MediaQuery.of(context).size.width - 50 : MediaQuery.of(context).size.width - 500,
+                        width: Responsive.isMobile(context)
+                            ? MediaQuery.of(context).size.width - 50
+                            : MediaQuery.of(context).size.width - 500,
                         child: GridView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4, crossAxisSpacing: 5, mainAxisSpacing: 5,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4, crossAxisSpacing: 5,
+                              mainAxisSpacing: 5,
                               // childAspectRatio: 1 / 1
 
                               // maxCrossAxisExtent: 200, childAspectRatio: , crossAxisSpacing: 20, mainAxisSpacing: 20
                             ),
                             itemCount: usernamesCopy.keys.length,
                             itemBuilder: (BuildContext context, index) {
-                              String currentKey = usernamesCopy.keys.elementAt(index);
+                              String currentKey =
+                                  usernamesCopy.keys.elementAt(index);
                               print("creating SM button");
 
                               if (currentKey == "Menu") {
@@ -424,7 +465,10 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                               }
                               return Container(
                                   // height: 50,
-                                  child: createSMButton(platform: currentKey, username: usernamesCopy[currentKey], context: context));
+                                  child: createSMButton(
+                                      platform: currentKey,
+                                      username: usernamesCopy[currentKey],
+                                      context: context));
                             }),
                       ),
 
@@ -452,7 +496,11 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(10.0),
-                                        child: Text("Feedback", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.blueGrey)),
+                                        child: Text("Feedback",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 30,
+                                                color: Colors.blueGrey)),
                                       ),
                                       RatingBar.builder(
                                         itemSize: 60,
@@ -462,7 +510,8 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                                           switch (index) {
                                             case 0:
                                               return Icon(
-                                                Icons.sentiment_very_dissatisfied,
+                                                Icons
+                                                    .sentiment_very_dissatisfied,
                                                 color: Colors.red,
                                               );
                                             case 1:
@@ -501,15 +550,22 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                                             maxLines: null,
                                             maxLength: 120,
                                             maxLengthEnforced: true,
-                                            style: TextStyle(fontSize: 18.0, color: Colors.black),
+                                            style: TextStyle(
+                                                fontSize: 18.0,
+                                                color: Colors.black),
                                             decoration: InputDecoration(
                                               hintText: "Type your feedback...",
-                                              contentPadding: const EdgeInsets.all(10),
+                                              contentPadding:
+                                                  const EdgeInsets.all(10),
                                               focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                                                borderSide: BorderSide(
+                                                    color: Colors.blue,
+                                                    width: 2.0),
                                               ),
                                               enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                                                borderSide: BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 1.0),
                                               ),
                                             ),
                                           ),
@@ -517,11 +573,13 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                                       ),
                                       InkWell(
                                         onTap: () {
-                                          print("SUBMIT GIVEN FEEDBACK to business!");
+                                          print(
+                                              "SUBMIT GIVEN FEEDBACK to business!");
                                         },
                                         child: Card(
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
                                           elevation: 7,
                                           child: Container(
@@ -529,10 +587,14 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                                             width: 200,
                                             // decoration: fancyDecor,
                                             decoration: BoxDecoration(
-                                                color: Colors.blue.withOpacity(0.4), borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                color: Colors.blue
+                                                    .withOpacity(0.4),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10))),
 
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 Icon(
                                                   Icons.send_rounded,
@@ -540,7 +602,12 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                                                   size: 30,
                                                 ),
                                                 SizedBox(width: 10),
-                                                Text("Submit", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black))
+                                                Text("Submit",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black))
                                               ],
                                             ),
                                           ),
@@ -562,7 +629,10 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                             height: 60,
                             width: 250,
                             // decoration: fancyDecor,
-                            decoration: BoxDecoration(color: Colors.blue.withOpacity(0.4), borderRadius: BorderRadius.all(Radius.circular(10))),
+                            decoration: BoxDecoration(
+                                color: Colors.blue.withOpacity(0.4),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
 
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -573,7 +643,11 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                                   size: 30,
                                 ),
                                 SizedBox(width: 10),
-                                Text("Send Feedback", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black))
+                                Text("Send Feedback",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black))
                               ],
                             ),
 
@@ -618,7 +692,8 @@ class DownloadSoshiBanner extends StatelessWidget {
           color: Colors.black38,
           // gradient: Constants.greyCyanGradient,
           border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))),
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(20), topLeft: Radius.circular(20))),
 
       child: Padding(
         padding: const EdgeInsets.fromLTRB(2, 5, 2, 0),
@@ -626,7 +701,11 @@ class DownloadSoshiBanner extends StatelessWidget {
           children: [
             Text(
               "Join Soshi to make your own!",
-              style: TextStyle(color: Colors.white, fontFamily: "Montserrat", fontSize: 20.0, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Montserrat",
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 10),
@@ -635,7 +714,8 @@ class DownloadSoshiBanner extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    URL.launchURL("https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
+                    URL.launchURL(
+                        "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
                   },
                   child: Image.asset(
                     "assets/images/download_the_app/get_it_on_google_play.png",
@@ -645,9 +725,12 @@ class DownloadSoshiBanner extends StatelessWidget {
                 SizedBox(width: 50),
                 GestureDetector(
                   onTap: () {
-                    URL.launchURL("https://apps.apple.com/us/app/soshi/id1595515750");
+                    URL.launchURL(
+                        "https://apps.apple.com/us/app/soshi/id1595515750");
                   },
-                  child: Image.asset("assets/images/download_the_app/get_it_on_the_app_store.png", width: 150),
+                  child: Image.asset(
+                      "assets/images/download_the_app/get_it_on_the_app_store.png",
+                      width: 150),
                 ),
               ],
             ),
@@ -683,13 +766,18 @@ class GetYourOwnCard extends StatelessWidget {
           // width: width / 2,
           height: 140,
           width: 150,
-          decoration: ShapeDecoration.fromBoxDecoration(BoxDecoration(color: Colors.grey[50], borderRadius: BorderRadius.circular(15.0))),
+          decoration: ShapeDecoration.fromBoxDecoration(BoxDecoration(
+              color: Colors.grey[50],
+              borderRadius: BorderRadius.circular(15.0))),
           child: Column(children: [
             Padding(
               padding: EdgeInsets.all(15),
               child: Text(
                 "Want your own contact card? Join the Soshi community today!",
-                style: TextStyle(color: Colors.black, fontFamily: "Montserrat", fontSize: 16.0),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "Montserrat",
+                    fontSize: 16.0),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -699,7 +787,8 @@ class GetYourOwnCard extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               GestureDetector(
                 onTap: () {
-                  URL.launchURL("https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
+                  URL.launchURL(
+                      "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
                 },
                 child: Image.asset(
                   "assets/images/download_the_app/get_it_on_google_play.png",
@@ -711,7 +800,8 @@ class GetYourOwnCard extends StatelessWidget {
               SizedBox(width: 10),
               GestureDetector(
                   onTap: () {
-                    URL.launchURL("https://apps.apple.com/us/app/soshi/id1595515750");
+                    URL.launchURL(
+                        "https://apps.apple.com/us/app/soshi/id1595515750");
                   },
                   child: Image.asset(
                     "assets/images/download_the_app/get_it_on_the_app_store.png",
@@ -741,7 +831,9 @@ class QuickContactSquare extends StatelessWidget {
 
         print(contactData);
 
-        String url = URL.getPlatformURL(platform: contactData["contact_name"], username: contactData['contact_info']);
+        String url = URL.getPlatformURL(
+            platform: contactData["contact_name"],
+            username: contactData['contact_info']);
 
         await launch(url);
       },
@@ -768,7 +860,9 @@ class QuickContactSquare extends StatelessWidget {
 
             child: Container(
               child: Image.asset(
-                "assets/images/SMLogos/" + contactData['contact_name'] + "Logo.png",
+                "assets/images/SMLogos/" +
+                    contactData['contact_name'] +
+                    "Logo.png",
               ),
             ),
           ),
