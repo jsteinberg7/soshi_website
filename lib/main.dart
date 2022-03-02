@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:soshi/constants/constants.dart';
+import 'package:soshi/hybridUI.dart';
 import 'package:soshi/newProfileUI.dart';
 import 'package:soshi/page_not_found_screen.dart';
 import 'package:soshi/sri_ui_version_2.dart';
@@ -112,13 +113,20 @@ class _MyAppState extends State<MyApp> {
                         if (snapshot.connectionState == ConnectionState.done &&
                             snapshot.hasData) {
                           User user = snapshot.data as User;
-                          return UserInfoDisplay(
+                          // return UserInfoDisplay(
+                          //   fullName: user.fullName,
+                          //   usernames: user.usernames,
+                          //   visiblePlatforms: user.visiblePlatforms,
+                          //   photoURL: user.photoURL,
+                          //   bio: user.userBio,
+                          //   friendsAdded: user.friendsAdded,
+                          return HybridUI(
                             fullName: user.fullName,
                             usernames: user.usernames,
                             visiblePlatforms: user.visiblePlatforms,
                             photoURL: user.photoURL,
-                            bio: user.userBio,
-                            friendsAdded: user.friendsAdded,
+                            // bio: user.userBio,
+                            friendsAdded: user.friendsAdded, isVerified: false, soshiUsername: user.soshiUsername, userBio: user.userBio,
                             //soshiUsername: user.soshiUsername,
                             //userBio: user.userBio
                           );

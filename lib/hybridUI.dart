@@ -67,7 +67,7 @@ class _AnimatedGradientState extends State<AnimatedGradient> {
   }
 }
 
-class SriUI4 extends StatefulWidget {
+class HybridUI extends StatefulWidget {
   String fullName;
   Map<String, dynamic> usernames;
   List<String> visiblePlatforms;
@@ -77,7 +77,7 @@ class SriUI4 extends StatefulWidget {
   int friendsAdded;
   bool isVerified;
 
-  SriUI4(
+  HybridUI(
       {required this.fullName,
       required this.usernames,
       required this.visiblePlatforms,
@@ -88,10 +88,10 @@ class SriUI4 extends StatefulWidget {
       required this.isVerified});
 
   @override
-  _SriUI4State createState() => _SriUI4State();
+  _HybridUIState createState() => _HybridUIState();
 }
 
-class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
+class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
   String fullName = "";
   Map<String, dynamic> usernames = {};
   List<String> visiblePlatforms = [];
@@ -315,7 +315,7 @@ class _SriUI4State extends State<SriUI4> with TickerProviderStateMixin {
                                   children: [
                                     Container(
                                       child: ProfilePic(
-                                          radius: 120, url: photoURL),
+                                          radius: height / 14, url: photoURL),
                                     ),
                                     SizedBox(width: 10),
                                     Column(
