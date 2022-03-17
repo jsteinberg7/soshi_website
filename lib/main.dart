@@ -113,23 +113,29 @@ class _MyAppState extends State<MyApp> {
                         if (snapshot.connectionState == ConnectionState.done &&
                             snapshot.hasData) {
                           User user = snapshot.data as User;
-                          // return UserInfoDisplay(
-                          //   fullName: user.fullName,
-                          //   usernames: user.usernames,
-                          //   visiblePlatforms: user.visiblePlatforms,
-                          //   photoURL: user.photoURL,
-                          //   bio: user.userBio,
-                          //   friendsAdded: user.friendsAdded,
-                          return HybridUI(
+                          return UserInfoDisplay(
                             fullName: user.fullName,
                             usernames: user.usernames,
                             visiblePlatforms: user.visiblePlatforms,
                             photoURL: user.photoURL,
-                            // bio: user.userBio,
-                            friendsAdded: user.friendsAdded, isVerified: false, soshiUsername: user.soshiUsername, userBio: user.userBio,
-                            //soshiUsername: user.soshiUsername,
-                            //userBio: user.userBio
+                            bio: user.userBio,
+                            friendsAdded: user.friendsAdded,
                           );
+                          // return AnimatedGradient(
+                          //   child: HybridUI(
+                          //     fullName: user.fullName,
+                          //     usernames: user.usernames,
+                          //     visiblePlatforms: user.visiblePlatforms,
+                          //     photoURL: user.photoURL,
+                          //     // bio: user.userBio,
+                          //     friendsAdded: user.friendsAdded,
+                          //     isVerified: false,
+                          //     soshiUsername: user.soshiUsername,
+                          //     userBio: user.userBio,
+                          //     //soshiUsername: user.soshiUsername,
+                          //     //userBio: user.userBio
+                          //   ),
+                          // );
                         } else if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return LoadingScreen();
