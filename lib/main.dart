@@ -81,17 +81,17 @@ class _MyAppState extends State<MyApp> {
             Theme.of(context).textTheme, // If this is not set, then ThemeData.light().textTheme is used.
           ),
         ),
-        initialRoute: "/",
+        // initialRoute: "/",
         onGenerateRoute: (settings) {
-          // List<String> params = settings.name!.split("/");
-          // String UID = params.last;
+          List<String> params = settings.name!.split("/");
+          String UID = params.last;
 
           // String UID = "yuvansun";
 
           // UID = "yuvansun";
 
           // UID = "skan2";
-          String UID = "marathon";
+          // String UID = "marathon";
 
           // if (params.contains("user")) {
           if (true) {
@@ -101,6 +101,7 @@ class _MyAppState extends State<MyApp> {
                   builder: (BuildContext context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                       User user = snapshot.data as User;
+
                       // return UserInfoDisplay(
                       //   fullName: user.fullName,
                       //   usernames: user.usernames,
