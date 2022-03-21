@@ -16,6 +16,8 @@ import 'database.dart';
 import 'loading_screen.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
+import "package:os_detect/os_detect.dart" as Platform;
+
 void main() async {
   setUrlStrategy(PathUrlStrategy());
   WidgetsFlutterBinding.ensureInitialized();
@@ -93,6 +95,9 @@ class _MyAppState extends State<MyApp> {
           print("SETTINGS: " + settings.toString());
           List<String> params = settings.name!.split("/");
           String UID = params.last;
+
+          UID = "sri";
+
           // if URL has slash at end, remove slash from UID
           if (UID.endsWith('/')) {
             UID = UID.replaceAll('/', '');

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:soshi/database.dart';
 import 'package:soshi/url.dart';
@@ -298,118 +296,64 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                             ),
                     ),
                   ),
-                  // SizedBox(height: height / 190),
-                  SizedBox(height: 20),
-
-                  Container(
-                    child: Card(
-                        color: Colors.white.withOpacity(0.7),
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        elevation: 10,
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Container(
-                            width: 250,
-                            height: 50,
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Want your own?",
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                SizedBox(width: 20),
-                                Container(
-                                  height: 40,
-                                  child: ElevatedButton.icon(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: Colors.cyanAccent,
-                                          onPrimary: Colors.black,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20)))),
-                                      onPressed: () {
-                                        if (Platform.isIOS) {
-                                          print("[+] Go to app store");
-                                          URL.launchURL(
-                                              "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
-                                        } else {
-                                          print("[+] Go to play store");
-                                          URL.launchURL(
-                                              "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
-                                        }
-                                      },
-                                      icon: Icon(Icons.download),
-                                      label: Text(
-                                        "Get",
-                                      )),
-                                )
-                              ],
-                            ),
+                  SizedBox(height: height / 190),
+                  Dialog(
+                    backgroundColor: Colors.transparent,
+                    child: Container(
+                      height: height / 5.5,
+                      width: width / 2,
+                      decoration: ShapeDecoration.fromBoxDecoration(
+                          BoxDecoration(
+                              color: Colors.grey[50],
+                              borderRadius: BorderRadius.circular(15.0))),
+                      child: Flex(direction: Axis.vertical, children: [
+                        Padding(
+                          padding: EdgeInsets.all(width / 40),
+                          child: Text(
+                            "Want your own contact card? Join the Soshi community today!",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: "Montserrat",
+                                fontSize: 15),
+                            textAlign: TextAlign.center,
                           ),
-                        )),
+                        ),
+                        SizedBox(
+                          height: height / 170,
+                        ),
+                        Container(
+                          height: height / 20,
+                          child: Flex(
+                              direction: Axis.horizontal,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    URL.launchURL(
+                                        "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
+                                  },
+                                  child: Image.asset(
+                                    "assets/images/download_the_app/get_it_on_google_play.png",
+                                    width: width / 3.5,
+                                  ),
+                                ),
+                                SizedBox(width: width / 20),
+                                GestureDetector(
+                                  onTap: () {
+                                    URL.launchURL(
+                                        "https://apps.apple.com/us/app/soshi/id1595515750");
+                                  },
+                                  child: Image.asset(
+                                      "assets/images/download_the_app/get_it_on_the_app_store.png",
+                                      width: width / 3.5),
+                                ),
+                                // ),
+                              ]),
+                        )
+                      ]),
+                    ),
                   ),
-                  SizedBox(height: 20),
-
-                  // Dialog(
-                  //   backgroundColor: Colors.transparent,
-                  //   child: Container(
-                  //     height: height / 5.5,
-                  //     width: width / 2,
-                  //     decoration: ShapeDecoration.fromBoxDecoration(
-                  //         BoxDecoration(
-                  //             color: Colors.grey[50],
-                  //             borderRadius: BorderRadius.circular(15.0))),
-                  //     child: Flex(direction: Axis.vertical, children: [
-                  //       Padding(
-                  //         padding: EdgeInsets.all(width / 40),
-                  //         child: Text(
-                  //           "Want your own contact card? Join the Soshi community today!",
-                  //           style: TextStyle(
-                  //               color: Colors.black,
-                  //               fontFamily: "Montserrat",
-                  //               fontSize: 15),
-                  //           textAlign: TextAlign.center,
-                  //         ),
-                  //       ),
-                  //       SizedBox(
-                  //         height: height / 170,
-                  //       ),
-                  //       Container(
-                  //         height: height / 20,
-                  //         child: Flex(
-                  //             direction: Axis.horizontal,
-                  //             mainAxisAlignment: MainAxisAlignment.center,
-                  //             crossAxisAlignment: CrossAxisAlignment.center,
-                  //             children: [
-                  //               GestureDetector(
-                  //                 onTap: () {
-                  //                   URL.launchURL(
-                  //                       "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
-                  //                 },
-                  //                 child: Image.asset(
-                  //                   "assets/images/download_the_app/get_it_on_google_play.png",
-                  //                   width: width / 3.5,
-                  //                 ),
-                  //               ),
-                  //               SizedBox(width: width / 20),
-                  //               GestureDetector(
-                  //                 onTap: () {
-                  //                   URL.launchURL(
-                  //                       "https://apps.apple.com/us/app/soshi/id1595515750");
-                  //                 },
-                  //                 child: Image.asset(
-                  //                     "assets/images/download_the_app/get_it_on_the_app_store.png",
-                  //                     width: width / 3.5),
-                  //               ),
-                  //               // ),
-                  //             ]),
-                  //       )
-                  //     ]),
-                  //   ),
-                  // ),
-
                   GestureDetector(
                     onTap: () {
                       URL.launchURL("https://www.soshi.org/");
