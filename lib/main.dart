@@ -18,11 +18,40 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import "package:os_detect/os_detect.dart" as Platform;
 
+import 'dart:async';
+import 'dart:developer' as developer;
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 void main() async {
   setUrlStrategy(PathUrlStrategy());
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
+}
+
+Map<String, dynamic> _readWebBrowserInfo(WebBrowserInfo data) {
+  return <String, dynamic>{
+    'browserName': describeEnum(data.browserName),
+    'appCodeName': data.appCodeName,
+    'appName': data.appName,
+    'appVersion': data.appVersion,
+    'deviceMemory': data.deviceMemory,
+    'language': data.language,
+    'languages': data.languages,
+    'platform': data.platform,
+    'product': data.product,
+    'productSub': data.productSub,
+    'userAgent': data.userAgent,
+    'vendor': data.vendor,
+    'vendorSub': data.vendorSub,
+    'hardwareConcurrency': data.hardwareConcurrency,
+    'maxTouchPoints': data.maxTouchPoints,
+  };
 }
 
 Future<User> fetchUserData(String soshiUsername) async {
@@ -31,8 +60,7 @@ Future<User> fetchUserData(String soshiUsername) async {
 
   print("attempt to fetch user data base using $soshiUsername");
 
-  DatabaseService databaseService =
-      new DatabaseService(soshiUsernameIn: soshiUsername);
+  DatabaseService databaseService = new DatabaseService(soshiUsernameIn: soshiUsername);
 
   print("got data back from database!");
 
@@ -45,23 +73,31 @@ Future<User> fetchUserData(String soshiUsername) async {
   String photoURL = databaseService.getPhotoURL(userData);
   String fullName = databaseService.getFullName(userData);
 
-  Map<String, dynamic> usernames =
-      databaseService.getUserProfileNames(userData);
-  List<String> visiblePlatforms =
-      await databaseService.getEnabledPlatformsList(userData);
+  Map<String, dynamic> usernames = databaseService.getUserProfileNames(userData);
+  List<String> visiblePlatforms = await databaseService.getEnabledPlatformsList(userData);
   String userBio = databaseService.getBio(userData);
   int friendsAdded = databaseService.getFriendsCount(userData);
   print("friends added: " + friendsAdded.toString());
   print("bio: " + userBio);
 
-  return new User(
+  DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+
+  // Map<String, dynamic> _deviceData = <String, dynamic>{};
+
+  Map OSData = _readWebBrowserInfo(await deviceInfoPlugin.webBrowserInfo);
+
+  print("printing user data:  " + OSData.toString());
+
+  return User(
       fullName: fullName,
       usernames: usernames,
       visiblePlatforms: visiblePlatforms,
       photoURL: photoURL,
       soshiUsername: soshiUsername,
+      // userBio: OSData.toString(),
       userBio: userBio,
-      friendsAdded: friendsAdded);
+      friendsAdded: friendsAdded,
+      platformMetaData: OSData);
 }
 
 class MyApp extends StatefulWidget {
@@ -115,8 +151,7 @@ class _MyAppState extends State<MyApp> {
                   return FutureBuilder(
                       future: fetchUserData(UID),
                       builder: (BuildContext context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done &&
-                            snapshot.hasData) {
+                        if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                           User user = snapshot.data as User;
                           return UserInfoDisplay(
                             fullName: user.fullName,
@@ -125,6 +160,7 @@ class _MyAppState extends State<MyApp> {
                             photoURL: user.photoURL,
                             bio: user.userBio,
                             friendsAdded: user.friendsAdded,
+                            platformMetaData: user.platformMetaData,
                           );
                           // return AnimatedGradient(
                           //   child: HybridUI(
@@ -141,8 +177,7 @@ class _MyAppState extends State<MyApp> {
                           //     //userBio: user.userBio
                           //   ),
                           // );
-                        } else if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
+                        } else if (snapshot.connectionState == ConnectionState.waiting) {
                           return LoadingScreen();
                         } else {
                           return PageNotFoundScreen(launchURLIn: false);
