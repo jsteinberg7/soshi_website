@@ -98,157 +98,256 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                   Container(
                     width: width / 1.05,
                     child: Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(color: Colors.cyanAccent)),
-                      color: Constants.buttonColorDark,
-                      child: Padding(
-                        padding: EdgeInsets.all(width / 30),
-                        child: Flex(direction: Axis.vertical, children: [
-                          Column(
-                            children: [
-                              Row(
-                                children: <Widget>[
-                                  Container(
-                                    child: ProfilePic(
-                                        url: photoURL, radius: height / 13),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: width / 25),
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(color: Colors.cyanAccent)),
+                        color: Constants.buttonColorDark,
+                        child: Padding(
+                          padding: EdgeInsets.all(width / 25.0),
+                          child: Column(children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  child: ProfilePic(
+                                      url: photoURL, radius: height / 13.5),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: width / 40),
+                                  child: Container(
+                                    // height: height / 8,
+                                    width: width / 2.1,
                                     child: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                          MainAxisAlignment.spaceEvenly,
+                                      // crossAxisAlignment:
+                                      //     CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Container(
-                                          width: width / 2.5,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                              border: Border.all(
-                                                  color: Colors.transparent,
-                                                  width: 1.0)),
-                                          child: Text(
-                                            fullName,
-                                            style: TextStyle(
-                                                fontSize: width / 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.grey[200]),
+                                        Text(
+                                          fullName,
+                                          softWrap: false,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.fade,
+                                          style: TextStyle(
+                                            letterSpacing: 2,
+                                            fontSize: width / 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
                                           ),
                                         ),
-
-                                        // Text(
-                                        //   firstName,
-                                        //   style: TextStyle(
-                                        //       fontSize: width / 15,
-                                        //       fontWeight: FontWeight.bold,
-                                        //       color: Colors.grey[200]),
-                                        // ),
-                                        // Text(
-                                        //   lastName,
-                                        //   style: TextStyle(
-                                        //       fontSize: width / 15,
-                                        //       fontWeight: FontWeight.bold,
-                                        //       color: Colors.grey[200]),
-                                        // ),
-                                        SizedBox(height: height / 110),
+                                        //SizedBox(height: height / 120),
                                         Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
+                                            SizedBox(height: height / 60),
                                             Text(
                                               "@" + usernames["Soshi"],
                                               style: TextStyle(
-                                                  fontSize: width / 20,
-                                                  color: Colors.grey[500],
+                                                  fontSize: width / 21,
+                                                  color: Colors.grey,
                                                   fontStyle: FontStyle.italic),
                                             ),
-                                            SizedBox(height: height / 70),
+                                            SizedBox(height: height / 65),
                                             Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: <Widget>[
                                                 Icon(
                                                   Icons.emoji_people,
                                                   color: Colors.cyan,
-                                                  size: width / 15,
                                                 ),
-                                                SizedBox(width: 3),
+                                                SizedBox(width: width / 100),
                                                 Text(
                                                   "Friends: " +
                                                       friendsAdded.toString(),
                                                   style: TextStyle(
-                                                      fontSize: width / 20,
-                                                      color: Colors.grey[500],
+                                                      letterSpacing: 2,
+                                                      fontSize: width / 23,
+                                                      color: Colors.grey,
                                                       fontStyle:
                                                           FontStyle.italic),
                                                 ),
                                               ],
-                                            ),
+                                            )
                                           ],
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),
-                                ],
+                                )
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  width / 60, height / 60, width / 60, 0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    border: Border.all(
+                                        color: Colors.transparent, width: 1.0)),
+                                //height: height / 20,
+                                width: width,
+                                child: Center(
+                                    child: (bio != null)
+                                        ? Text(bio,
+                                            style: TextStyle(
+                                                color: Colors.grey[300],
+                                                letterSpacing: 2,
+                                                fontSize: width / 25))
+                                        : Container()),
                               ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    width / 50, width / 50, width / 50, 0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5.0),
-                                      border: Border.all(
-                                          color: Colors.transparent,
-                                          width: 0.0)),
-                                  //height: height / 20,
-                                  width: width,
+                            ),
+                          ]),
+                        )
+                        // child: Padding(
+                        //   padding: EdgeInsets.all(width / 30),
+                        //   child: Flex(direction: Axis.vertical, children: [
+                        //     Column(
+                        //       children: [
+                        //         Row(
+                        //           children: <Widget>[
+                        //             Container(
+                        //               child: ProfilePic(
+                        //                   url: photoURL, radius: height / 13),
+                        //             ),
+                        //             Padding(
+                        //               padding: EdgeInsets.only(left: width / 25),
+                        //               child: Column(
+                        //                 mainAxisAlignment:
+                        //                     MainAxisAlignment.start,
+                        //                 children: <Widget>[
+                        //                   Container(
+                        //                     width: width / 2.5,
+                        //                     decoration: BoxDecoration(
+                        //                         borderRadius:
+                        //                             BorderRadius.circular(5.0),
+                        //                         border: Border.all(
+                        //                             color: Colors.transparent,
+                        //                             width: 1.0)),
+                        //                     child: Text(
+                        //                       fullName,
+                        //                       style: TextStyle(
+                        //                           fontSize: width / 15,
+                        //                           fontWeight: FontWeight.bold,
+                        //                           color: Colors.grey[200]),
+                        //                     ),
+                        //                   ),
 
-                                  child: Center(
-                                      child: (bio != "")
-                                          ? Text(bio,
-                                              style: TextStyle(
-                                                  color: Colors.grey[300],
-                                                  fontSize: width / 18))
-                                          : Container()),
-                                ),
-                              ),
-                            ],
-                          ),
+                        //                   // Text(
+                        //                   //   firstName,
+                        //                   //   style: TextStyle(
+                        //                   //       fontSize: width / 15,
+                        //                   //       fontWeight: FontWeight.bold,
+                        //                   //       color: Colors.grey[200]),
+                        //                   // ),
+                        //                   // Text(
+                        //                   //   lastName,
+                        //                   //   style: TextStyle(
+                        //                   //       fontSize: width / 15,
+                        //                   //       fontWeight: FontWeight.bold,
+                        //                   //       color: Colors.grey[200]),
+                        //                   // ),
+                        //                   SizedBox(height: height / 110),
+                        //                   Column(
+                        //                     children: [
+                        //                       Text(
+                        //                         "@" + usernames["Soshi"],
+                        //                         style: TextStyle(
+                        //                             fontSize: width / 20,
+                        //                             color: Colors.grey[500],
+                        //                             fontStyle: FontStyle.italic),
+                        //                       ),
+                        //                       SizedBox(height: height / 70),
+                        //                       Row(
+                        //                         children: <Widget>[
+                        //                           Icon(
+                        //                             Icons.emoji_people,
+                        //                             color: Colors.cyan,
+                        //                             size: width / 15,
+                        //                           ),
+                        //                           SizedBox(width: 3),
+                        //                           Text(
+                        //                             "Friends: " +
+                        //                                 friendsAdded.toString(),
+                        //                             style: TextStyle(
+                        //                                 fontSize: width / 20,
+                        //                                 color: Colors.grey[500],
+                        //                                 fontStyle:
+                        //                                     FontStyle.italic),
+                        //                           ),
+                        //                         ],
+                        //                       ),
+                        //                     ],
+                        //                   )
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         Padding(
+                        //           padding: EdgeInsets.fromLTRB(
+                        //               width / 50, width / 50, width / 50, 0),
+                        //           child: Container(
+                        //             decoration: BoxDecoration(
+                        //                 borderRadius: BorderRadius.circular(5.0),
+                        //                 border: Border.all(
+                        //                     color: Colors.transparent,
+                        //                     width: 0.0)),
+                        //             //height: height / 20,
+                        //             width: width,
 
-                          // Container(
-                          //   child: ProfilePic(radius: 50, url: photoURL),
-                          //   decoration: new BoxDecoration(
-                          //     shape: BoxShape.circle,
-                          //     border: new Border.all(
-                          //       color: Colors.cyanAccent,
-                          //       width: 2.0,
-                          //     ),
-                          //   ),
-                          // ),xw
-                          // SizedBox(width: width / 40),
-                          // Column(children: [
-                          //   Text(
-                          //     fullName,
-                          //     style: TextStyle(
-                          //       color: Colors.cyan[300],
-                          //       letterSpacing: 2,
-                          //       fontSize:20,
-                          //       fontWeight: FontWeight.bold,
-                          //     ),
-                          //   ),
-                          //   SizedBox(
-                          //     height: height / 100,
-                          //   ),
-                          //   Text(
-                          //     "@" + usernames["Soshi"],
-                          //     style: TextStyle(
-                          //         color: Colors.cyan[300],
-                          //         letterSpacing: 2,
-                          //         fontSize: 10,
-                          //         fontWeight: FontWeight.bold,
-                          //         fontStyle: FontStyle.italic),
-                          //   ),
-                          // ]),
-                        ]),
-                      ),
-                    ),
+                        //             child: Center(
+                        //                 child: (bio != "")
+                        //                     ? Text(bio,
+                        //                         style: TextStyle(
+                        //                             color: Colors.grey[300],
+                        //                             fontSize: width / 18))
+                        //                     : Container()),
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+
+                        //     // Container(
+                        //     //   child: ProfilePic(radius: 50, url: photoURL),
+                        //     //   decoration: new BoxDecoration(
+                        //     //     shape: BoxShape.circle,
+                        //     //     border: new Border.all(
+                        //     //       color: Colors.cyanAccent,
+                        //     //       width: 2.0,
+                        //     //     ),
+                        //     //   ),
+                        //     // ),xw
+                        //     // SizedBox(width: width / 40),
+                        //     // Column(children: [
+                        //     //   Text(
+                        //     //     fullName,
+                        //     //     style: TextStyle(
+                        //     //       color: Colors.cyan[300],
+                        //     //       letterSpacing: 2,
+                        //     //       fontSize:20,
+                        //     //       fontWeight: FontWeight.bold,
+                        //     //     ),
+                        //     //   ),
+                        //     //   SizedBox(
+                        //     //     height: height / 100,
+                        //     //   ),
+                        //     //   Text(
+                        //     //     "@" + usernames["Soshi"],
+                        //     //     style: TextStyle(
+                        //     //         color: Colors.cyan[300],
+                        //     //         letterSpacing: 2,
+                        //     //         fontSize: 10,
+                        //     //         fontWeight: FontWeight.bold,
+                        //     //         fontStyle: FontStyle.italic),
+                        //     //   ),
+                        //     // ]),
+                        //   ]),
+                        // ),
+                        ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),

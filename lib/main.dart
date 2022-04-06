@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: (settings) {
           List<String> params = settings.name!.split("/");
           //String UID = params.last;
-          String UID = "uviscute";
+          String UID = "iostesting";
 
           //if (params.contains("user")) {
           if (true) {

@@ -48,6 +48,12 @@ abstract class URL {
       return "https://venmo.com/" + username;
     } else if (platform == "Contact") {
       return username;
+    } else if (platform == "Personal") {
+      String personalLink;
+      username.contains("https://")
+          ? personalLink = username
+          : personalLink = "https://" + username;
+      return personalLink;
     }
     // to make compiler happy
     return "";
