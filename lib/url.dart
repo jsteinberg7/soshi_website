@@ -54,6 +54,12 @@ abstract class URL {
           ? personalLink = username
           : personalLink = "https://" + username;
       return personalLink;
+    } else if (platform == "Youtube") {
+      String youtubeLink;
+      username.contains("https://")
+          ? youtubeLink = username
+          : youtubeLink = "https://www.youtube.com/channel/" + username;
+      return youtubeLink;
     }
     // to make compiler happy
     return "";
