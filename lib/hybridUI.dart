@@ -7,6 +7,7 @@ import 'package:soshi/url.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'constants/constants.dart';
 import 'constants/widgets.dart';
+import 'package:flutter/foundation.dart';
 
 bool biz = true;
 
@@ -20,10 +21,14 @@ class AnimatedGradient extends StatefulWidget {
 
 class _AnimatedGradientState extends State<AnimatedGradient> {
   List<Color> colorList = [
-    Colors.red,
-    Colors.blue,
-    Colors.green,
-    Colors.yellow
+    // Colors.red,
+    // Colors.blue,
+    // Colors.green,
+    // Colors.yellow
+    Colors.black,
+    Colors.cyan,
+    Colors.cyanAccent,
+    Colors.white
   ];
   List<Alignment> alignmentList = [
     Alignment.bottomLeft,
@@ -32,8 +37,8 @@ class _AnimatedGradientState extends State<AnimatedGradient> {
     Alignment.topLeft,
   ];
   int index = 0;
-  Color bottomColor = Colors.red;
-  Color topColor = Colors.yellow;
+  Color bottomColor = Colors.black;
+  Color topColor = Colors.white;
   Alignment begin = Alignment.bottomLeft;
   Alignment end = Alignment.topRight;
 
@@ -41,7 +46,7 @@ class _AnimatedGradientState extends State<AnimatedGradient> {
   Widget build(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 10), () {
       setState(() {
-        bottomColor = Colors.blue;
+        bottomColor = Colors.cyan;
       });
     });
 
@@ -76,6 +81,7 @@ class HybridUI extends StatefulWidget {
   String userBio;
   int friendsAdded;
   bool isVerified;
+  bool isBusiness;
 
   HybridUI(
       {required this.fullName,
@@ -85,7 +91,8 @@ class HybridUI extends StatefulWidget {
       required this.soshiUsername,
       required this.userBio,
       required this.friendsAdded,
-      required this.isVerified});
+      required this.isVerified,
+      required this.isBusiness});
 
   @override
   _HybridUIState createState() => _HybridUIState();
@@ -253,9 +260,9 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
     print(
         "total userName contacts after removing waste contacts: ${usernamesCopy.length}");
 
-    usernamesCopy['Menu'] = "DUMMY_MENU";
+    // usernamesCopy['Menu'] = "DUMMY_MENU";
 
-    usernamesCopy['Website'] = "WEBSITE";
+    // usernamesCopy['Website'] = "WEBSITE";
   }
 
   @override
@@ -289,7 +296,7 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
                         child: Container(
                           color: Colors.transparent,
                           child: Column(children: [
-                            SizedBox(height: 5),
+                            SizedBox(height: 20),
 
                             GestureDetector(
                               onTap: () {
@@ -302,6 +309,10 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
                             ),
                             Divider(
                               thickness: 1,
+                              color: Colors.transparent,
+                            ),
+                            SizedBox(
+                              height: 10.0,
                             ),
 
                             Container(
@@ -311,77 +322,84 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      child: ProfilePic(
-                                          radius: height / 14, url: photoURL),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          fullName,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 30,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(height: 5),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "@" + widget.soshiUsername,
-                                              style: TextStyle(
-                                                  // color: Colors.cyan[300],
-                                                  color: Colors.black,
-                                                  letterSpacing: 2,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle: FontStyle.italic),
-                                            ),
-                                            SizedBox(width: 5),
-                                            true
-                                                ? Icon(Icons.verified,
-                                                    color: Colors.blue)
-                                                : Container(),
-                                          ],
-                                        ),
-                                        SizedBox(height: 4),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.black),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20))),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(7.0),
-                                            child: Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.emoji_people,
-                                                  color: Colors.black,
-                                                  size: 20,
-                                                ),
-                                                Text(
-                                                  "${widget.friendsAdded} Friends",
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontStyle:
-                                                          FontStyle.italic),
-                                                ),
-                                              ],
+                                child: Container(
+                                  height: height / 7,
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        child: ProfilePic(
+                                            radius: height / 17, url: photoURL),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            fullName,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: "Lato"),
+                                          ),
+                                          SizedBox(height: 5),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "@" + widget.soshiUsername,
+                                                style: TextStyle(
+                                                    // color: Colors.cyan[300],
+                                                    color: Colors.black,
+                                                    letterSpacing: 2,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontStyle: FontStyle.italic,
+                                                    fontFamily: "Arial"),
+                                              ),
+                                              SizedBox(width: 5),
+                                              true
+                                                  ? Icon(Icons.verified,
+                                                      color: Colors.blue)
+                                                  : Container(),
+                                            ],
+                                          ),
+                                          SizedBox(height: 4),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.black),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20))),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(7.0),
+                                              child: Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.emoji_people,
+                                                    color: Colors.black,
+                                                    size: 15,
+                                                  ),
+                                                  Text(
+                                                    "${widget.friendsAdded} Friends",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 12,
+                                                        // fontWeight:
+                                                        // FontWeight.bold,
+                                                        fontStyle:
+                                                            FontStyle.italic,
+                                                        fontFamily: "Arial"),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -397,9 +415,11 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
                                 child: Container(
                                   child: Text(
                                     widget.userBio,
-                                    style: TextStyle(fontSize: 18),
+                                    style: TextStyle(
+                                        fontSize: 18, fontFamily: "Arial"),
                                     textAlign: TextAlign.center,
                                     maxLines: 3,
+
                                     // softWrap: false,
                                   ),
                                 ),
@@ -410,7 +430,10 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
                       ),
 
                       // SizedBox(height: 5),
-                      Divider(thickness: 1),
+                      Divider(
+                        thickness: 1,
+                        color: Colors.transparent,
+                      ),
                       Card(
                         elevation: 7,
                         color: Colors.white.withOpacity(0.6),
@@ -433,7 +456,10 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
                               }).toList()),
                         ),
                       ),
-                      Divider(thickness: 1),
+                      Divider(
+                        thickness: 1,
+                        color: Colors.transparent,
+                      ),
                       Container(
                         // color: Colors.red,
                         // height: MediaQuery.of(context).size.height - 460,
@@ -476,185 +502,197 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
 
                       // GetYourOwnCard(height: height, width: width)
 
-                      Divider(thickness: 1),
+                      Divider(
+                        thickness: 1,
+                        color: Colors.transparent,
+                      ),
                       SizedBox(height: 10),
 
-                      InkWell(
-                        onTap: () {
-                          print("send feedback pressed [!]");
-                          showModalBottomSheet<void>(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Container(
-                                height: 320,
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Text("Feedback",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 30,
-                                                color: Colors.blueGrey)),
-                                      ),
-                                      RatingBar.builder(
-                                        itemSize: 60,
-                                        initialRating: 3,
-                                        itemCount: 5,
-                                        itemBuilder: (context, index) {
-                                          switch (index) {
-                                            case 0:
-                                              return Icon(
-                                                Icons
-                                                    .sentiment_very_dissatisfied,
-                                                color: Colors.red,
-                                              );
-                                            case 1:
-                                              return Icon(
-                                                Icons.sentiment_dissatisfied,
-                                                color: Colors.redAccent,
-                                              );
-                                            case 2:
-                                              return Icon(
-                                                Icons.sentiment_neutral,
-                                                color: Colors.amber,
-                                              );
-                                            case 3:
-                                              return Icon(
-                                                Icons.sentiment_satisfied,
-                                                color: Colors.lightGreen,
-                                              );
-                                            case 4:
-                                              return Icon(
-                                                Icons.sentiment_very_satisfied,
-                                                color: Colors.green,
-                                              );
-                                          }
-
-                                          return Icon(Icons.cancel);
-                                        },
-                                        onRatingUpdate: (rating) {
-                                          print(rating);
-                                        },
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Container(
-                                          height: 120,
-                                          child: TextField(
-                                            maxLines: null,
-                                            maxLength: 120,
-                                            maxLengthEnforced: true,
-                                            style: TextStyle(
-                                                fontSize: 18.0,
-                                                color: Colors.black),
-                                            decoration: InputDecoration(
-                                              hintText: "Type your feedback...",
-                                              contentPadding:
-                                                  const EdgeInsets.all(10),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.blue,
-                                                    width: 2.0),
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 1.0),
-                                              ),
-                                            ),
-                                          ),
+                      Visibility(
+                        visible: widget.isBusiness,
+                        child: InkWell(
+                          onTap: () {
+                            print("send feedback pressed [!]");
+                            showModalBottomSheet<void>(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  height: 320,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Text("Feedback",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 30,
+                                                  color: Colors.blueGrey)),
                                         ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          print(
-                                              "SUBMIT GIVEN FEEDBACK to business!");
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          elevation: 7,
+                                        RatingBar.builder(
+                                          itemSize: 60,
+                                          initialRating: 3,
+                                          itemCount: 5,
+                                          itemBuilder: (context, index) {
+                                            switch (index) {
+                                              case 0:
+                                                return Icon(
+                                                  Icons
+                                                      .sentiment_very_dissatisfied,
+                                                  color: Colors.red,
+                                                );
+                                              case 1:
+                                                return Icon(
+                                                  Icons.sentiment_dissatisfied,
+                                                  color: Colors.redAccent,
+                                                );
+                                              case 2:
+                                                return Icon(
+                                                  Icons.sentiment_neutral,
+                                                  color: Colors.amber,
+                                                );
+                                              case 3:
+                                                return Icon(
+                                                  Icons.sentiment_satisfied,
+                                                  color: Colors.lightGreen,
+                                                );
+                                              case 4:
+                                                return Icon(
+                                                  Icons
+                                                      .sentiment_very_satisfied,
+                                                  color: Colors.green,
+                                                );
+                                            }
+
+                                            return Icon(Icons.cancel);
+                                          },
+                                          onRatingUpdate: (rating) {
+                                            print(rating);
+                                          },
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
                                           child: Container(
-                                            height: 40,
-                                            width: 200,
-                                            // decoration: fancyDecor,
-                                            decoration: BoxDecoration(
-                                                color: Colors.blue
-                                                    .withOpacity(0.4),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  Icons.send_rounded,
-                                                  color: Colors.black,
-                                                  size: 30,
+                                            height: 120,
+                                            child: TextField(
+                                              maxLines: null,
+                                              maxLength: 120,
+                                              maxLengthEnforced: true,
+                                              style: TextStyle(
+                                                  fontSize: 18.0,
+                                                  color: Colors.black),
+                                              decoration: InputDecoration(
+                                                hintText:
+                                                    "Type your feedback...",
+                                                contentPadding:
+                                                    const EdgeInsets.all(10),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.blue,
+                                                      width: 2.0),
                                                 ),
-                                                SizedBox(width: 10),
-                                                Text("Submit",
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.black))
-                                              ],
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 1.0),
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        InkWell(
+                                          onTap: () {
+                                            print(
+                                                "SUBMIT GIVEN FEEDBACK to business!");
+                                          },
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            elevation: 7,
+                                            child: Container(
+                                              height: 40,
+                                              width: 200,
+                                              // decoration: fancyDecor,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.blue
+                                                      .withOpacity(0.4),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(10))),
+
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.send_rounded,
+                                                    color: Colors.black,
+                                                    size: 30,
+                                                  ),
+                                                  SizedBox(width: 10),
+                                                  Text("Submit",
+                                                      style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black))
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          elevation: 7,
-                          child: Container(
-                            height: 60,
-                            width: 250,
-                            // decoration: fancyDecor,
-                            decoration: BoxDecoration(
-                                color: Colors.blue.withOpacity(0.4),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.chat_bubble,
-                                  color: Colors.black,
-                                  size: 30,
-                                ),
-                                SizedBox(width: 10),
-                                Text("Send Feedback",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black))
-                              ],
+                                );
+                              },
+                            );
+                          },
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
+                            elevation: 7,
+                            child: Container(
+                              height: 60,
+                              width: 250,
+                              // decoration: fancyDecor,
+                              decoration: BoxDecoration(
+                                  color: Colors.blue.withOpacity(0.4),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
 
-                            // child: ElevatedButton.icon(
-                            //     onPressed: () {},
-                            //     icon: Icon(Icons.chat_bubble),
-                            //     label: Text("Send Feedback", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.chat_bubble,
+                                    color: Colors.black,
+                                    size: 30,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text("Send Feedback",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black))
+                                ],
+                              ),
+
+                              // child: ElevatedButton.icon(
+                              //     onPressed: () {},
+                              //     icon: Icon(Icons.chat_bubble),
+                              //     label: Text("Send Feedback", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+                            ),
                           ),
                         ),
                       ),
@@ -709,31 +747,6 @@ class DownloadSoshiBanner extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    URL.launchURL(
-                        "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
-                  },
-                  child: Image.asset(
-                    "assets/images/download_the_app/get_it_on_google_play.png",
-                    width: 150,
-                  ),
-                ),
-                SizedBox(width: 50),
-                GestureDetector(
-                  onTap: () {
-                    URL.launchURL(
-                        "https://apps.apple.com/us/app/soshi/id1595515750");
-                  },
-                  child: Image.asset(
-                      "assets/images/download_the_app/get_it_on_the_app_store.png",
-                      width: 150),
-                ),
-              ],
-            ),
           ],
         ),
       ),
@@ -753,6 +766,9 @@ class GetYourOwnCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Padding(
       padding: const EdgeInsets.all(30.0),
       child: Card(
@@ -762,12 +778,12 @@ class GetYourOwnCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: Container(
-          // height: height / 5,
-          // width: width / 2,
-          height: 140,
-          width: 150,
+          height: height / 5,
+          width: width / 2,
+          // height: 140,
+          // width: 150,
           decoration: ShapeDecoration.fromBoxDecoration(BoxDecoration(
-              color: Colors.grey[50],
+              color: Colors.white.withOpacity(0.6),
               borderRadius: BorderRadius.circular(15.0))),
           child: Column(children: [
             Padding(
@@ -784,33 +800,40 @@ class GetYourOwnCard extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              GestureDetector(
-                onTap: () {
+            ElevatedButton(
+              onPressed: () {
+                if (defaultTargetPlatform == TargetPlatform.android) {
+                  print("[+] Go to play store");
                   URL.launchURL(
                       "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
-                },
-                child: Image.asset(
-                  "assets/images/download_the_app/get_it_on_google_play.png",
-                  height: 40,
-                  // width: 120,
-                  fit: BoxFit.cover,
+                } else {
+                  print("[+] Go to app store");
+                  URL.launchURL(
+                      "https://apps.apple.com/us/app/soshi/id1595515750");
+                }
+              },
+              child: Container(
+                  height: height / 25,
+                  width: width / 2,
+                  child: Center(
+                    child: Text(
+                      "Get the App",
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  )),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black,
+                // side: BorderSide(color: Colors.cyan[400]!, width: 2),
+                elevation: 20,
+                padding: const EdgeInsets.all(15.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
-              SizedBox(width: 10),
-              GestureDetector(
-                  onTap: () {
-                    URL.launchURL(
-                        "https://apps.apple.com/us/app/soshi/id1595515750");
-                  },
-                  child: Image.asset(
-                    "assets/images/download_the_app/get_it_on_the_app_store.png",
-                    height: 40,
-                    // width: 120,
-                    fit: BoxFit.cover,
-                  )),
-              // ),
-            ])
+            )
           ]),
         ),
       ),

@@ -65,13 +65,9 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
         "assets/images/SMLogos/" + platform + "Logo.png",
       ),
       onPressed: () async {
-        // if (platform == "Phone") {
-        //   // DatabaseService.downloadVCard(otherUID);
-        // } else
-        // {
-        await URL.launchURL(
-            URL.getPlatformURL(platform: platform, username: username));
-        // }
+          await URL.launchURL(
+              URL.getPlatformURL(platform: platform, username: username));
+        
       },
       iconSize: MediaQuery.of(context).size.width / 4,
     );
@@ -205,7 +201,8 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
                                           ? Text(bio,
                                               style: TextStyle(
                                                   color: Colors.grey[300],
-                                                  fontSize: width / 18))
+                                                  fontSize: width / 18,
+                                                  fontFamily: "Arial"))
                                           : Container()),
                                 ),
                               ),

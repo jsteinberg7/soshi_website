@@ -1,10 +1,13 @@
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/foundation.dart';
 
 // Basic wrapper for url services (all methods are static)
 abstract class URL {
   // open browser to specified url target
   static Future<void> launchURL(String url) async {
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+    await canLaunch(url)
+        ? await launch(url, forceSafariVC: false)
+        : throw 'Could not launch $url';
   }
 
   // return custom url for platform and username
@@ -45,7 +48,12 @@ abstract class URL {
     } else if (platform == "Spotify") {
       return "https://open.spotify.com/user/" + username;
     } else if (platform == "Venmo") {
-      return "https://venmo.com/" + username;
+      // check platform
+      if (defaultTargetPlatform == TargetPlatform.iOS) {
+        return "venmo://paycharge?txn=pay&recipients=$username";
+      } else {
+        return "https://venmo.com/" + username;
+      }
     } else if (platform == "Contact") {
       return username;
     }

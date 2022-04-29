@@ -10,7 +10,7 @@ import 'package:soshi/page_not_found_screen.dart';
 import 'package:soshi/sri_ui_version_2.dart';
 import 'package:soshi/url.dart';
 import 'package:soshi/user.dart';
-import 'package:soshi/userinfodisplay.dart';
+import 'package:soshi/userinfodisplay_backup.dart';
 import 'customUrlStrategy.dart';
 import 'database.dart';
 import 'loading_screen.dart';
@@ -96,7 +96,7 @@ class _MyAppState extends State<MyApp> {
           List<String> params = settings.name!.split("/");
           String UID = params.last;
 
-          UID = "sri";
+          // UID = "sri";
 
           // if URL has slash at end, remove slash from UID
           if (UID.endsWith('/')) {
@@ -118,29 +118,31 @@ class _MyAppState extends State<MyApp> {
                         if (snapshot.connectionState == ConnectionState.done &&
                             snapshot.hasData) {
                           User user = snapshot.data as User;
-                          return UserInfoDisplay(
-                            fullName: user.fullName,
-                            usernames: user.usernames,
-                            visiblePlatforms: user.visiblePlatforms,
-                            photoURL: user.photoURL,
-                            bio: user.userBio,
-                            friendsAdded: user.friendsAdded,
-                          );
-                          // return AnimatedGradient(
-                          //   child: HybridUI(
-                          //     fullName: user.fullName,
-                          //     usernames: user.usernames,
-                          //     visiblePlatforms: user.visiblePlatforms,
-                          //     photoURL: user.photoURL,
-                          //     // bio: user.userBio,
-                          //     friendsAdded: user.friendsAdded,
-                          //     isVerified: false,
-                          //     soshiUsername: user.soshiUsername,
-                          //     userBio: user.userBio,
-                          //     //soshiUsername: user.soshiUsername,
-                          //     //userBio: user.userBio
-                          //   ),
+                          // return UserInfoDisplay(
+                          //   visiblePlatforms: user.visiblePlatforms,
+                          //   fullName: user.fullName,
+                          //   usernames: user.usernames,
+                          //   photoURL: user.photoURL,
+                          //   bio: user.userBio,
+                          //   friendsAdded: user.friendsAdded,
                           // );
+                          return AnimatedGradient(
+                            child: HybridUI(
+                              fullName: user.fullName,
+                              usernames: user.usernames,
+                              visiblePlatforms: user.visiblePlatforms,
+
+                              //   visiblePlatforms: user.visiblePlatforms                         photoURL: user.photoURL,
+                              // bio: user.userBio,
+                              friendsAdded: user.friendsAdded,
+                              isVerified: false,
+                              soshiUsername: user.soshiUsername,
+                              userBio: user.userBio, photoURL: user.photoURL,
+                              isBusiness: false,
+                              //soshiUsername: user.soshiUsername,
+                              //userBio: user.userBio
+                            ),
+                          );
                         } else if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return LoadingScreen();

@@ -27,7 +27,7 @@ class ProfilePic extends StatelessWidget {
       decoration: new BoxDecoration(
         shape: BoxShape.circle,
         border: new Border.all(
-          color: Colors.cyanAccent,
+          color: Colors.transparent,
           width: radius / 30,
         ),
       ),
@@ -36,7 +36,7 @@ class ProfilePic extends StatelessWidget {
         placeHolder: (b, c) {
           return Image.asset('assets/images/SoshiLogos/soshi_icon.png');
         },
-        borderColor: Colors.black,
+        borderColor: Colors.transparent,
         borderWidth: radius / 20,
         elevation: 5,
         radius: radius,
