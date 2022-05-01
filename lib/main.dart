@@ -18,12 +18,41 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import "package:os_detect/os_detect.dart" as Platform;
 
+import 'dart:async';
+import 'dart:developer' as developer;
+import 'dart:io';
+
+// import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 void main() async {
   setUrlStrategy(PathUrlStrategy());
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
+
+// Map<String, dynamic> _readWebBrowserInfo(WebBrowserInfo data) {
+//   return <String, dynamic>{
+//     'browserName': describeEnum(data.browserName),
+//     'appCodeName': data.appCodeName,
+//     'appName': data.appName,
+//     'appVersion': data.appVersion,
+//     'deviceMemory': data.deviceMemory,
+//     'language': data.language,
+//     'languages': data.languages,
+//     'platform': data.platform,
+//     'product': data.product,
+//     'productSub': data.productSub,
+//     'userAgent': data.userAgent,
+//     'vendor': data.vendor,
+//     'vendorSub': data.vendorSub,
+//     'hardwareConcurrency': data.hardwareConcurrency,
+//     'maxTouchPoints': data.maxTouchPoints,
+//   };
+// }
 
 Future<User> fetchUserData(String soshiUsername) async {
   var url = window.location.href;
@@ -55,12 +84,21 @@ Future<User> fetchUserData(String soshiUsername) async {
   print("bio: " + userBio);
   bool isVerified = databaseService.getVerifiedStatus(userData);
 
-  return new User(
+  // DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+
+  // Map<String, dynamic> _deviceData = <String, dynamic>{};
+
+  // Map OSData = _readWebBrowserInfo(await deviceInfoPlugin.webBrowserInfo);
+
+  // print("printing user data:  " + OSData.toString());
+
+  return User(
       fullName: fullName,
       usernames: usernames,
       visiblePlatforms: visiblePlatforms,
       photoURL: photoURL,
       soshiUsername: soshiUsername,
+      // userBio: OSData.toString(),
       userBio: userBio,
       friendsAdded: friendsAdded,
       isVerified: isVerified);
