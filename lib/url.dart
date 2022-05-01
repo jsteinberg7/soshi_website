@@ -48,14 +48,25 @@ abstract class URL {
     } else if (platform == "Spotify") {
       return "https://open.spotify.com/user/" + username;
     } else if (platform == "Venmo") {
-      // check platform
       if (defaultTargetPlatform == TargetPlatform.iOS) {
-        return "venmo://paycharge?txn=pay&recipients=$username";
+        return "venmo://paycharge?txn=pay&recipients=" + username;
       } else {
         return "https://venmo.com/" + username;
       }
     } else if (platform == "Contact") {
       return username;
+    } else if (platform == "Personal") {
+      String personalLink;
+      username.contains("https://")
+          ? personalLink = username
+          : personalLink = "https://" + username;
+      return personalLink;
+    } else if (platform == "Youtube") {
+      String youtubeLink;
+      username.contains("https://")
+          ? youtubeLink = username
+          : youtubeLink = "https://www.youtube.com/channel/" + username;
+      return youtubeLink;
     }
     // to make compiler happy
     return "";

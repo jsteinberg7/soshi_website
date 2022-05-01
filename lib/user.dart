@@ -6,6 +6,7 @@ class User {
   String soshiUsername;
   String userBio;
   int friendsAdded;
+  bool isVerified;
 
   User(
       {required this.fullName,
@@ -14,5 +15,6 @@ class User {
       required this.photoURL,
       required this.soshiUsername,
       required this.userBio,
-      required this.friendsAdded});
+      required this.friendsAdded,
+      required this.isVerified});
 }

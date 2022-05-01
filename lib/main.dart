@@ -53,6 +53,7 @@ Future<User> fetchUserData(String soshiUsername) async {
   int friendsAdded = databaseService.getFriendsCount(userData);
   print("friends added: " + friendsAdded.toString());
   print("bio: " + userBio);
+  bool isVerified = databaseService.getVerifiedStatus(userData);
 
   return new User(
       fullName: fullName,
@@ -61,7 +62,8 @@ Future<User> fetchUserData(String soshiUsername) async {
       photoURL: photoURL,
       soshiUsername: soshiUsername,
       userBio: userBio,
-      friendsAdded: friendsAdded);
+      friendsAdded: friendsAdded,
+      isVerified: isVerified);
 }
 
 class MyApp extends StatefulWidget {
@@ -135,7 +137,7 @@ class _MyAppState extends State<MyApp> {
                               //   visiblePlatforms: user.visiblePlatforms                         photoURL: user.photoURL,
                               // bio: user.userBio,
                               friendsAdded: user.friendsAdded,
-                              isVerified: false,
+                              isVerified: user.isVerified,
                               soshiUsername: user.soshiUsername,
                               userBio: user.userBio, photoURL: user.photoURL,
                               isBusiness: false,
