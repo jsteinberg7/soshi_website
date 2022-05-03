@@ -6,7 +6,7 @@ class User {
   String soshiUsername;
   String userBio;
   int friendsAdded;
-  Map platformMetaData;
+  bool isVerified;
 
   User(
       {required this.fullName,
@@ -16,5 +16,5 @@ class User {
       required this.soshiUsername,
       required this.userBio,
       required this.friendsAdded,
-      required this.platformMetaData});
+      required this.isVerified});
 }

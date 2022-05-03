@@ -117,4 +117,15 @@ class DatabaseService {
     int friendsCount = friendsList.length;
     return friendsCount;
   }
+
+  bool getVerifiedStatus(Map userData) {
+    return userData["Verified"];
+    // if (isVerified == null) {
+    //   isVerified == false;
+    // }
+  }
+
+  Future<void> updateVerifiedStatus(String soshiUser, bool isVerified) async {
+    await usersCollection.doc(soshiUser).update({"Verified": isVerified});
+  }
 }
