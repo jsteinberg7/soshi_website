@@ -5,6 +5,7 @@
   },
   "hosting": {
     "public": "build/web",
+    "site": "soshi-web",
     "ignore": [
       "firebase.json",
       "**/.*",
