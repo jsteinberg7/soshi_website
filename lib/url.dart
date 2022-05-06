@@ -5,9 +5,7 @@ import 'package:flutter/foundation.dart';
 abstract class URL {
   // open browser to specified url target
   static Future<void> launchURL(String url) async {
-    await canLaunch(url)
-        ? await launch(url, forceSafariVC: false)
-        : throw 'Could not launch $url';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
   // return custom url for platform and username
@@ -49,7 +47,7 @@ abstract class URL {
       return "https://open.spotify.com/user/" + username;
     } else if (platform == "Venmo") {
       if (defaultTargetPlatform == TargetPlatform.iOS) {
-        return "venmo://paycharge?txn=pay&recipients=" + username;
+        return "venmo://paycharge?txn=pay&recipients=$username";
       } else {
         return "https://venmo.com/" + username;
       }
@@ -70,5 +68,16 @@ abstract class URL {
     }
     // to make compiler happy
     return "";
+  }
+
+  static Future<void> launchVenmo(String username) async {
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      await launch("venmo://paycharge?txn=pay&recipients=$username");
+    } else {
+      await launch("https://venmo.com/");
+    }
+    // await launch(
+    //   "venmo://paycharge?txn=pay&recipients=jsteinberg7",
+    // );
   }
 }

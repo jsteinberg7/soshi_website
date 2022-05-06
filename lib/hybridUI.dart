@@ -177,8 +177,12 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
         "assets/images/SMLogos/" + platform + "Logo.png",
       ),
       onPressed: () async {
-        await URL.launchURL(
-            URL.getPlatformURL(platform: platform, username: username));
+        if (platform == "Venmo") {
+          await URL.launchVenmo(username);
+        } else {
+          await URL.launchURL(
+              URL.getPlatformURL(platform: platform, username: username));
+        }
       },
       // iconSize: MediaQuery.of(context).size.width / 4,
       iconSize: 50,
