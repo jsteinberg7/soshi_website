@@ -210,204 +210,218 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
     return Responsive.isDesktop(context)
         ? Scaffold(
             backgroundColor: Colors.transparent,
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: () {
-                      URL.launchURL("https://www.soshi.org/");
-                    },
-                    child: Image.asset(
-                      "assets/images/SoshiLogos/soshi_logo.png",
-                      height: 50,
+            body: SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 10),
+                    GestureDetector(
+                      onTap: () {
+                        URL.launchURL("https://www.soshi.org/");
+                      },
+                      child: Image.asset(
+                        "assets/images/SoshiLogos/soshi_logo.png",
+                        height: 50,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Container(
-                    width: 1000,
-                    height: 700,
-                    decoration: BoxDecoration(
-                        // shape: BoxShape.circle,
-                        // color: Color.fromARGB(255, 27, 28, 30),
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.cyan.withOpacity(0.6),
-                              blurRadius: _animation.value,
-                              spreadRadius: _animation.value)
-                        ]),
-                    child: Card(
-                      color: Colors.white.withOpacity(0.8),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Card(
-                                  elevation: 10,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    child: Image.network(
-                                      // "https://qph.cf2.quoracdn.net/main-qimg-142be607dd44672c4cf844cda26962a3-lq",
-                                      photoURL,
-                                      height: 700,
-                                      fit: BoxFit.cover,
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Container(
+                      width: 900,
+                      height: 700,
+                      decoration: BoxDecoration(
+                          // shape: BoxShape.circle,
+                          // color: Color.fromARGB(255, 27, 28, 30),
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.cyan.withOpacity(0.8),
+                                blurRadius: _animation.value,
+                                spreadRadius: _animation.value)
+                          ]),
+                      child: Card(
+                        color: Colors.white.withOpacity(0.8),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20))),
+                        child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Card(
+                                    elevation: 10,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      child: Image.network(
+                                        // "https://qph.cf2.quoracdn.net/main-qimg-142be607dd44672c4cf844cda26962a3-lq",
+                                        photoURL,
+                                        height: 700,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(20, 80, 20, 10),
-                                      child: Text(
-                                        fullName,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 50,
-                                            fontWeight: FontWeight.w200,
-                                            fontFamily: "Arial"),
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "@" + widget.soshiUsername,
+                                Expanded(
+                                  flex: 1,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(20, 80, 20, 10),
+                                        child: Text(
+                                          fullName,
                                           style: TextStyle(
-                                              // color: Colors.cyan[300],
                                               color: Colors.black,
-                                              letterSpacing: 2,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle: FontStyle.italic,
+                                              fontSize: 50,
+                                              fontWeight: FontWeight.w200,
                                               fontFamily: "Arial"),
                                         ),
-                                        SizedBox(width: 5),
-                                        widget.isVerified
-                                            ? Icon(Icons.verified, color: Colors.blue)
-                                            : Container(),
-                                        SizedBox(width: 10),
-                                        Container(
-                                            height: 50, child: VerticalDivider(color: Colors.grey)),
-                                        SizedBox(width: 10),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.emoji_people,
-                                              color: Colors.black,
-                                              size: 30,
-                                            ),
-                                            Text(
-                                              "${widget.friendsAdded}",
-                                              style: TextStyle(
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "@" + widget.soshiUsername,
+                                            style: TextStyle(
+                                                // color: Colors.cyan[300],
                                                 color: Colors.black,
+                                                letterSpacing: 2,
                                                 fontSize: 18,
-                                                // fontWeight:
-                                                // FontWeight.bold,
                                                 fontWeight: FontWeight.bold,
                                                 fontStyle: FontStyle.italic,
-                                                fontFamily: "Arial",
-                                              ),
-                                            ),
-                                            Text(
-                                              " Friends",
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 18,
-                                                // fontWeight:
-                                                // FontWeight.bold,
-                                                fontStyle: FontStyle.italic,
-                                                fontFamily: "Arial",
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: SocialGridWidget(),
-                                    ),
-
-                                    SizedBox(height: 20),
-                                    // For Desktop Web version
-                                    Visibility(
-                                      visible: isContactEnabled,
-                                      child: ElevatedButton(
-                                        onPressed: () async {
-                                          await URL.launchURL(usernames["Contact"]);
-                                        },
-                                        child: Container(
-                                          // height: height / 22,
-                                          // width: width / 2,
-                                          //
-
-                                          width: 250,
-
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                fontFamily: "Arial"),
+                                          ),
+                                          SizedBox(width: 5),
+                                          widget.isVerified
+                                              ? Icon(Icons.verified, color: Colors.blue)
+                                              : Container(),
+                                          SizedBox(width: 10),
+                                          Container(
+                                              height: 50,
+                                              child: VerticalDivider(color: Colors.grey)),
+                                          SizedBox(width: 10),
+                                          Row(
                                             children: [
-                                              Image.asset(
-                                                "assets/images/SMLogos/ContactLogo.png",
-                                                height: 50,
+                                              Icon(
+                                                Icons.emoji_people,
+                                                color: Colors.black,
+                                                size: 30,
                                               ),
                                               Text(
-                                                "Add To Contacts",
+                                                "${widget.friendsAdded}",
                                                 style: TextStyle(
-                                                    fontFamily: "Montserrat",
-                                                    fontSize: 15,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold),
+                                                  color: Colors.black,
+                                                  fontSize: 18,
+                                                  // fontWeight:
+                                                  // FontWeight.bold,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontStyle: FontStyle.italic,
+                                                  fontFamily: "Arial",
+                                                ),
                                               ),
-                                              SizedBox(width: 4),
-                                              Icon(
-                                                Icons.download,
-                                                size: 25,
-                                                color: Colors.black,
+                                              Text(
+                                                " Friends",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18,
+                                                  // fontWeight:
+                                                  // FontWeight.bold,
+                                                  fontStyle: FontStyle.italic,
+                                                  fontFamily: "Arial",
+                                                ),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                        style: ElevatedButton.styleFrom(
-                                          shadowColor: Colors.black,
-                                          primary: Colors.white,
-                                          // side: BorderSide(color: Colors.cyan[400]!, width: 2),
-                                          elevation: 20,
-                                          padding: const EdgeInsets.all(15.0),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10.0),
+                                        ],
+                                      ),
+
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                        child: Container(
+                                          width: 200,
+                                          child: Text(
+                                            widget.userBio,
+                                            style: TextStyle(fontSize: 18, fontFamily: "Arial"),
+                                            textAlign: TextAlign.center,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                            // softWrap: false,
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
+
+                                      Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: SocialGridWidget(),
+                                      ),
+
+                                      SizedBox(height: 20),
+                                      // For Desktop Web version
+                                      Visibility(
+                                        visible: isContactEnabled,
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            await URL.launchURL(usernames["Contact"]);
+                                          },
+                                          child: Container(
+                                            width: 250,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Image.asset(
+                                                  "assets/images/SMLogos/ContactLogo.png",
+                                                  height: 50,
+                                                ),
+                                                Text(
+                                                  "Add To Contacts",
+                                                  style: TextStyle(
+                                                      fontFamily: "Montserrat",
+                                                      fontSize: 15,
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                SizedBox(width: 4),
+                                                Icon(
+                                                  Icons.download,
+                                                  size: 25,
+                                                  color: Colors.black,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                            shadowColor: Colors.black,
+                                            primary: Colors.white,
+                                            // side: BorderSide(color: Colors.cyan[400]!, width: 2),
+                                            elevation: 20,
+                                            padding: const EdgeInsets.all(15.0),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10.0),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  GetYourOwnCard()
-                ],
+                    GetYourOwnCard()
+                  ],
+                ),
               ),
             ),
           )
@@ -885,10 +899,10 @@ class GetYourOwnCard extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
 
     return Padding(
-      padding: const EdgeInsets.all(30.0),
+      padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
       child: Card(
         elevation: 10,
-        // shape: ShapeBorder(borderRadius: BorderRadius.circular(15.0))),
+        color: Colors.white.withOpacity(0.8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -897,8 +911,8 @@ class GetYourOwnCard extends StatelessWidget {
           width: width / 2,
           // height: 140,
           // width: 150,
-          decoration: ShapeDecoration.fromBoxDecoration(BoxDecoration(
-              color: Colors.white.withOpacity(0.6), borderRadius: BorderRadius.circular(15.0))),
+          decoration: ShapeDecoration.fromBoxDecoration(
+              BoxDecoration(borderRadius: BorderRadius.circular(15.0))),
           child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Column(children: [
@@ -915,24 +929,6 @@ class GetYourOwnCard extends StatelessWidget {
                         fontFamily: "Montserrat",
                         fontSize: 12.0,
                         fontStyle: FontStyle.italic),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 1.0,
-              ),
-              Text(
-                "Join the Soshi community for free!",
-                style: Responsive.isDesktop(context)
-                    ? TextStyle(
-                        color: Colors.black,
-                        fontFamily: "Montserrat",
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w600)
-                    : TextStyle(
-                        color: Colors.black,
-                        fontFamily: "Montserrat",
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
               ),
               SizedBox(
@@ -953,10 +949,29 @@ class GetYourOwnCard extends StatelessWidget {
                     height: height / 25,
                     width: Responsive.isDesktop(context) ? width / 5 : width / 2,
                     child: Center(
-                      child: Text(
-                        "Get the App",
-                        style: TextStyle(
-                            fontFamily: "Montserrat", fontWeight: FontWeight.bold, fontSize: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "Get the App",
+                            style: TextStyle(
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                          // SizedBox(width: 15),
+                          ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            child: Image.asset(
+                              "assets/images/SoshiLogos/soshi_icon.png",
+                            ),
+                          ),
+                          // SizedBox(width: 10),
+                          // Icon(
+                          //   Icons.chevron_right,
+                          //   size: 30,
+                          // )
+                        ],
                       ),
                     )),
                 style: ElevatedButton.styleFrom(
@@ -965,7 +980,7 @@ class GetYourOwnCard extends StatelessWidget {
                   elevation: 15,
                   padding: const EdgeInsets.all(15.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
               )
