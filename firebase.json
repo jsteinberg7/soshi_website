@@ -19,6 +19,22 @@
       {
         "source": "!/user/**",
         "destination": "/index.html"
+      },
+      {
+        "source": "/joingroup/**",
+        "dynamicLinks": true
+      },
+      {
+        "source": "!/joingroup/**",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/deeplink/**",
+        "dynamicLinks": true
+      },
+      {
+        "source": "!/deeplink/**",
+        "destination": "/index.html"
       }
     ]
   },
