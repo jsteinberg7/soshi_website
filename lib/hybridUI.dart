@@ -66,8 +66,7 @@ class _AnimatedGradientState extends State<AnimatedGradient> {
         });
       },
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: begin, end: end, colors: [bottomColor, topColor])),
+          gradient: LinearGradient(begin: begin, end: end, colors: [bottomColor, topColor])),
       child: widget.child,
     ));
   }
@@ -109,10 +108,18 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
   String vcfDownloadUrl = "";
 
   late AnimationController _controller;
+  late AnimationController _animationController;
+  late Animation _animation;
 
   @override
   void initState() {
-    super.initState();
+    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 2));
+    _animationController.repeat(reverse: true);
+    _animation = Tween(begin: 2.0, end: 10.0).animate(_animationController)
+      ..addListener(() {
+        setState(() {});
+      });
+
     this.fullName = widget.fullName;
     this.usernames = widget.usernames;
     this.visiblePlatforms = widget.visiblePlatforms;
@@ -121,6 +128,8 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
       isContactEnabled = true;
     }
     this.photoURL = widget.photoURL;
+
+    super.initState();
   }
 
   createWebsite() {
@@ -180,8 +189,7 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
         if (platform == "Venmo") {
           await URL.launchVenmo(username);
         } else {
-          await URL.launchURL(
-              URL.getPlatformURL(platform: platform, username: username));
+          await URL.launchURL(URL.getPlatformURL(platform: platform, username: username));
         }
       },
       // iconSize: MediaQuery.of(context).size.width / 4,
@@ -191,575 +199,638 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
 
   Map<String, dynamic> usernamesCopy = {};
 
-//   filterAllContacts() {
-//     print("total userName contacts Beginning : ${widget.usernames.length}");
-
-//     quickContacts = [];
-
-//     print("have username data: $usernames");
-
-//     usernamesCopy = Map.of(widget.usernames);
-
-//     Map converter = {
-//       'Phone': {'contact_name': 'Phone', 'contact_icon': Icons.phone},
-//       'Email': {'contact_name': 'Email', 'contact_icon': Icons.email},
-//       'SMS': {'contact_name': 'SMS', 'contact_icon': Icons.chat},
-//       'Contact': {
-//         'contact_name': 'Contact',
-//         'contact_icon': Icons.perm_contact_calendar_sharp
-//       }
-//     };
-
-//     usernamesCopy.keys.forEach((key) {
-//       if (visiblePlatforms.contains(key) == false) {
-//         usernamesCopy[key] = null;
-//         return;
-//       }
-
-//       if (key == "Email" &&
-//           widget.usernames[key] != null &&
-//           widget.usernames[key] != "") {
-//         converter[key]['contact_info'] = widget.usernames[key];
-//         quickContacts.add(converter[key]);
-//         usernamesCopy['Email'] = null;
-//         // converter[key] = null;
-//       }
-
-//       if (key == "Phone" &&
-//           widget.usernames[key] != null &&
-//           widget.usernames[key] != "") {
-//         converter[key]['contact_info'] = widget.usernames[key];
-//         quickContacts.add(converter[key]);
-//         converter["SMS"]['contact_info'] = widget.usernames[key];
-//         quickContacts.add(converter["SMS"]);
-
-//         usernamesCopy['Phone'] = null;
-//         // converter[key] = null;
-//       }
-
-//       if (key == "Contact" &&
-//           widget.usernames[key] != null &&
-//           widget.usernames[key] != "") {
-//         vcfDownloadUrl = widget.usernames['Contact'];
-//         converter["Contact"]['contact_info'] = vcfDownloadUrl;
-//         quickContacts.add(converter["Contact"]);
-//         usernamesCopy['Contact'] = null;
-//         // converter[key] = null;
-//       }
-//     }); // FOREACH ENDING
-
-//     // These platform are encoded to "Quick Actions" so remove them
-//     usernamesCopy['Soshi'] = null;
-
-//     print("total quick contacts: ${quickContacts.length}");
-//     print(
-//         "total userName contacts after removing quick contacts: ${usernamesCopy.length}");
-//     print(widget.usernames);
-
-//     // Clean up
-//     usernamesCopy.removeWhere((usernamesKey, usernamesValue) {
-//       if (usernamesValue == "" || usernamesValue == null) {
-//         return true;
-//       } else {
-//         return false;
-//       }
-//     });
-// // Remove all usernames that are now null
-
-//     print(
-//         "total userName contacts after removing waste contacts: ${usernamesCopy.length}");
-
-//     // usernamesCopy['Menu'] = "DUMMY_MENU";
-
-//     // usernamesCopy['Website'] = "WEBSITE";
-//   }
-
   @override
   Widget build(BuildContext context) {
-    // print("[+] rebuilding entire screen");
-    // filterAllContacts();
-
     MediaQueryData queryData = MediaQuery.of(context);
     double height = queryData.size.height;
     double width = queryData.size.width;
     int index = 0;
 
-    return Container(
-      // decoration: BoxDecoration(gradient: Constants.greyCyanGradient),
-
-      child: Scaffold(
-          // bottomNavigationBar: DownloadSoshiBanner(),
-          bottomNavigationBar: GetYourOwnCard(),
-          backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(mainAxisAlignment: MainAxisAlignment.start,
-                    // direction: Axis.vertical,
-
-                    children: [
-                      // SizedBox(height: height / 65),
-                      Container(
-                        width: width / 1.05,
+// NEW RESPONSIVE
+    return Responsive.isDesktop(context)
+        ? Scaffold(
+            backgroundColor: Colors.transparent,
+            body: SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 10),
+                    GestureDetector(
+                      onTap: () {
+                        URL.launchURL("https://www.soshi.org/");
+                      },
+                      child: Image.asset(
+                        "assets/images/SoshiLogos/soshi_logo.png",
+                        height: 50,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Container(
+                      width: 900,
+                      height: 700,
+                      decoration: BoxDecoration(
+                          // shape: BoxShape.circle,
+                          // color: Color.fromARGB(255, 27, 28, 30),
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.cyan.withOpacity(0.8),
+                                blurRadius: _animation.value,
+                                spreadRadius: _animation.value)
+                          ]),
+                      child: Card(
+                        color: Colors.white.withOpacity(0.8),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20))),
                         child: Container(
-                          color: Colors.transparent,
-                          child: Column(children: [
-                            SizedBox(height: 10),
-
-                            GestureDetector(
-                              onTap: () {
-                                URL.launchURL("https://www.soshi.org/");
-                              },
-                              child: Image.asset(
-                                "assets/images/SoshiLogos/soshi_logo.png",
-                                height: 30,
-                              ),
-                            ),
-
-                            SizedBox(
-                              height: 10.0,
-                            ),
-
-                            Container(
-                              child: Card(
-                                color: Colors.white.withOpacity(0.6),
-                                elevation: 7,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      child: ProfilePic(
-                                          radius: height / 7, url: photoURL),
+                          child: Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Card(
+                                    elevation: 10,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      child: Image.network(
+                                        // "https://qph.cf2.quoracdn.net/main-qimg-142be607dd44672c4cf844cda26962a3-lq",
+                                        photoURL,
+                                        height: 700,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                    SizedBox(width: 20),
-                                    Column(
-                                      children: [
-                                        Text(
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(20, 80, 20, 10),
+                                        child: Text(
                                           fullName,
                                           style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 25,
-                                              fontWeight: FontWeight.w600,
+                                              fontSize: 50,
+                                              fontWeight: FontWeight.w200,
                                               fontFamily: "Arial"),
                                         ),
-                                        SizedBox(height: 2),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "@" + widget.soshiUsername,
-                                              style: TextStyle(
-                                                  // color: Colors.cyan[300],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "@" + widget.soshiUsername,
+                                            style: TextStyle(
+                                                // color: Colors.cyan[300],
+                                                color: Colors.black,
+                                                letterSpacing: 2,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                fontStyle: FontStyle.italic,
+                                                fontFamily: "Arial"),
+                                          ),
+                                          SizedBox(width: 5),
+                                          widget.isVerified
+                                              ? Icon(Icons.verified, color: Colors.blue)
+                                              : Container(),
+                                          SizedBox(width: 10),
+                                          Container(
+                                              height: 50,
+                                              child: VerticalDivider(color: Colors.grey)),
+                                          SizedBox(width: 10),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.emoji_people,
+                                                color: Colors.black,
+                                                size: 30,
+                                              ),
+                                              Text(
+                                                "${widget.friendsAdded}",
+                                                style: TextStyle(
                                                   color: Colors.black,
-                                                  letterSpacing: 2,
-                                                  fontSize: 15,
-                                                  // fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                  // fontWeight:
+                                                  // FontWeight.bold,
+                                                  fontWeight: FontWeight.bold,
                                                   fontStyle: FontStyle.italic,
-                                                  fontFamily: "Arial"),
-                                            ),
-                                            SizedBox(width: 2),
-                                            widget.isVerified
-                                                ? Icon(Icons.verified,
-                                                    color: Colors.blue)
-                                                : Container(),
-                                          ],
-                                        ),
-                                        SizedBox(height: 2),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20))),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(7.0),
-                                            child: Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.emoji_people,
+                                                  fontFamily: "Arial",
+                                                ),
+                                              ),
+                                              Text(
+                                                " Friends",
+                                                style: TextStyle(
                                                   color: Colors.black,
-                                                  size: 15,
+                                                  fontSize: 18,
+                                                  // fontWeight:
+                                                  // FontWeight.bold,
+                                                  fontStyle: FontStyle.italic,
+                                                  fontFamily: "Arial",
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                        child: Container(
+                                          width: 200,
+                                          child: Text(
+                                            widget.userBio,
+                                            style: TextStyle(fontSize: 18, fontFamily: "Arial"),
+                                            textAlign: TextAlign.center,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                            // softWrap: false,
+                                          ),
+                                        ),
+                                      ),
+
+                                      Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: SocialGridWidget(),
+                                      ),
+
+                                      SizedBox(height: 20),
+                                      // For Desktop Web version
+                                      Visibility(
+                                        visible: isContactEnabled,
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            await URL.launchURL(usernames["Contact"]);
+                                          },
+                                          child: Container(
+                                            width: 250,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Image.asset(
+                                                  "assets/images/SMLogos/ContactLogo.png",
+                                                  height: 50,
                                                 ),
                                                 Text(
-                                                  "${widget.friendsAdded}",
+                                                  "Add To Contacts",
                                                   style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 12,
-                                                    // fontWeight:
-                                                    // FontWeight.bold,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontStyle: FontStyle.italic,
-                                                    fontFamily: "Arial",
-                                                  ),
+                                                      fontFamily: "Montserrat",
+                                                      fontSize: 15,
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.bold),
                                                 ),
-                                                Text(
-                                                  " Friends",
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 12,
-                                                    // fontWeight:
-                                                    // FontWeight.bold,
-                                                    fontStyle: FontStyle.italic,
-                                                    fontFamily: "Arial",
-                                                  ),
+                                                SizedBox(width: 4),
+                                                Icon(
+                                                  Icons.download,
+                                                  size: 25,
+                                                  color: Colors.black,
                                                 ),
                                               ],
                                             ),
                                           ),
-                                        ),
-                                        // {?} This is going to be the Bio
-                                        Container(
-                                          width: 200,
-                                          child: Text(
-                                            widget.userBio,
-                                            style: TextStyle(
-                                                fontSize: 13,
-                                                fontFamily: "Arial"),
-                                            textAlign: TextAlign.center,
-                                            maxLines: 3,
-                                            // softWrap: false,
+                                          style: ElevatedButton.styleFrom(
+                                            shadowColor: Colors.black,
+                                            primary: Colors.white,
+                                            // side: BorderSide(color: Colors.cyan[400]!, width: 2),
+                                            elevation: 20,
+                                            padding: const EdgeInsets.all(15.0),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10.0),
+                                            ),
                                           ),
                                         ),
-                                        SizedBox(height: 3)
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-
-                            SizedBox(height: 15),
-
-                            // // {?} This is going to be the Bio
-                            // Container(
-                            //   width: MediaQuery.of(context).size.width - 10,
-                            //   // height: 40,
-                            //   child: Padding(
-                            //     padding: const EdgeInsets.all(5),
-                            //     child: Container(
-                            //       child: Text(
-                            //         widget.userBio,
-                            //         style: TextStyle(
-                            //             fontSize: 14, fontFamily: "Arial"),
-                            //         textAlign: TextAlign.center,
-                            //         maxLines: 3,
-
-                            //         // softWrap: false,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // )
-                          ]),
-                        ),
-                      ),
-
-                      SizedBox(height: 15),
-
-                      // Card(
-                      //   elevation: 7,
-                      //   color: Colors.white.withOpacity(0.6),
-                      //   shape: RoundedRectangleBorder(
-                      //     borderRadius: BorderRadius.circular(20),
-                      //   ),
-                      //   child: Container(
-                      //     decoration: BoxDecoration(
-                      //         // color: Colors.black38,
-
-                      //         // gradient: Constants.greyCyanGradient,
-                      //         // border: Border.all(color: Colors.black),
-                      //         borderRadius:
-                      //             BorderRadius.all(Radius.circular(20))),
-                      //     width: MediaQuery.of(context).size.width - 20,
-                      //     child: Row(
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         children: quickContacts.map((e) {
-                      //           return QuickContactSquare(contactData: e);
-                      //         }).toList()),
-                      //   ),
-                      // ),
-                      Visibility(
-                        visible: isContactEnabled,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await URL.launchURL(usernames["Contact"]);
-                          },
-                          child: Container(
-                            height: height / 22,
-                            width: width / 2,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Image.asset(
-                                    "assets/images/SMLogos/ContactLogo.png",
-                                    width: width / 10),
-                                Text(
-                                  "Add To Contacts + ",
-                                  style: TextStyle(
-                                      fontFamily: "Montserrat",
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
                           ),
-                          style: ElevatedButton.styleFrom(
-                            shadowColor: Colors.black,
-                            primary: Colors.white.withOpacity(0.6),
-                            // side: BorderSide(color: Colors.cyan[400]!, width: 2),
-                            elevation: 20,
-                            padding: const EdgeInsets.all(15.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
                         ),
                       ),
-                      SizedBox(height: 25),
-                      Container(
-                        // color: Colors.red,
-                        // height: MediaQuery.of(context).size.height - 460,
-                        // height: double.infinity,
-                        width: Responsive.isMobile(context)
-                            ? MediaQuery.of(context).size.width - 50
-                            : MediaQuery.of(context).size.width - 500,
-                        child: GridView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4, crossAxisSpacing: 5,
-                              mainAxisSpacing: 5,
-                              // childAspectRatio: 1 / 1
+                    ),
+                    GetYourOwnCard()
+                  ],
+                ),
+              ),
+            ),
+          )
+        : Scaffold(
+            // bottomNavigationBar: DownloadSoshiBanner(),
+            bottomNavigationBar: GetYourOwnCard(),
+            backgroundColor: Colors.transparent,
+            body: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(mainAxisAlignment: MainAxisAlignment.start,
+                      // direction: Axis.vertical,
 
-                              // maxCrossAxisExtent: 200, childAspectRatio: , crossAxisSpacing: 20, mainAxisSpacing: 20
-                            ),
-                            // itemCount: usernamesCopy.keys.length,
-                            itemBuilder: (BuildContext context, index) {
-                              // String currentKey =
-                              //     usernamesCopy.keys.elementAt(index);
-                              // print("creating SM button");
-
-                              // if (currentKey == "Menu") {
-                              //   return createMenue();
-                              // } else if (currentKey == "Website") {
-                              //   return createWebsite();
-                              // }
-
-                              return createSMButton(
-                                  platform: visiblePlatforms[index],
-                                  username: usernames[visiblePlatforms[index]],
-                                  context: context);
-                            },
-                            itemCount: visiblePlatforms.length),
-                      ),
-
-// ------------- learn more Stuff
-
-                      // GetYourOwnCard(height: height, width: width)
-
-                      Divider(
-                        thickness: 1,
-                        color: Colors.transparent,
-                      ),
-                      SizedBox(height: 10),
-
-                      Visibility(
-                        visible: widget.isBusiness,
-                        child: InkWell(
-                          onTap: () {
-                            print("send feedback pressed [!]");
-                            showModalBottomSheet<void>(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
+                      children: [
+                        // SizedBox(height: height / 65),
+                        Container(
+                          width: width / 1.05,
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Column(children: [
+                              SizedBox(height: 10),
+                              GestureDetector(
+                                onTap: () {
+                                  URL.launchURL("https://www.soshi.org/");
+                                },
+                                child: Image.asset(
+                                  "assets/images/SoshiLogos/soshi_logo.png",
+                                  height: 30,
+                                ),
                               ),
-                              context: context,
-                              builder: (BuildContext context) {
-                                return Container(
-                                  height: 320,
-                                  child: Center(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Text("Feedback",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 30,
-                                                  color: Colors.blueGrey)),
-                                        ),
-                                        RatingBar.builder(
-                                          itemSize: 60,
-                                          initialRating: 3,
-                                          itemCount: 5,
-                                          itemBuilder: (context, index) {
-                                            switch (index) {
-                                              case 0:
-                                                return Icon(
-                                                  Icons
-                                                      .sentiment_very_dissatisfied,
-                                                  color: Colors.red,
-                                                );
-                                              case 1:
-                                                return Icon(
-                                                  Icons.sentiment_dissatisfied,
-                                                  color: Colors.redAccent,
-                                                );
-                                              case 2:
-                                                return Icon(
-                                                  Icons.sentiment_neutral,
-                                                  color: Colors.amber,
-                                                );
-                                              case 3:
-                                                return Icon(
-                                                  Icons.sentiment_satisfied,
-                                                  color: Colors.lightGreen,
-                                                );
-                                              case 4:
-                                                return Icon(
-                                                  Icons
-                                                      .sentiment_very_satisfied,
-                                                  color: Colors.green,
-                                                );
-                                            }
-
-                                            return Icon(Icons.cancel);
-                                          },
-                                          onRatingUpdate: (rating) {
-                                            print(rating);
-                                          },
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Container(
-                                            height: 120,
-                                            child: TextField(
-                                              maxLines: null,
-                                              maxLength: 120,
-                                              maxLengthEnforced: true,
-                                              style: TextStyle(
-                                                  fontSize: 18.0,
-                                                  color: Colors.black),
-                                              decoration: InputDecoration(
-                                                hintText:
-                                                    "Type your feedback...",
-                                                contentPadding:
-                                                    const EdgeInsets.all(10),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.blue,
-                                                      width: 2.0),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.grey,
-                                                      width: 1.0),
-                                                ),
-                                              ),
-                                            ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Container(
+                                child: Card(
+                                  color: Colors.white.withOpacity(0.6),
+                                  elevation: 7,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        child: ProfilePic(radius: height / 7, url: photoURL),
+                                      ),
+                                      SizedBox(width: 20),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            fullName,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily: "Arial"),
                                           ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            print(
-                                                "SUBMIT GIVEN FEEDBACK to business!");
-                                          },
-                                          child: Card(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            elevation: 7,
-                                            child: Container(
-                                              height: 40,
-                                              width: 200,
-                                              // decoration: fancyDecor,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.blue
-                                                      .withOpacity(0.4),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10))),
-
+                                          SizedBox(height: 2),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "@" + widget.soshiUsername,
+                                                style: TextStyle(
+                                                    // color: Colors.cyan[300],
+                                                    color: Colors.black,
+                                                    letterSpacing: 2,
+                                                    fontSize: 15,
+                                                    // fontWeight: FontWeight.bold,
+                                                    fontStyle: FontStyle.italic,
+                                                    fontFamily: "Arial"),
+                                              ),
+                                              SizedBox(width: 2),
+                                              widget.isVerified
+                                                  ? Icon(Icons.verified, color: Colors.blue)
+                                                  : Container(),
+                                            ],
+                                          ),
+                                          SizedBox(height: 2),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.all(Radius.circular(20))),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(7.0),
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
                                                 children: [
                                                   Icon(
-                                                    Icons.send_rounded,
+                                                    Icons.emoji_people,
                                                     color: Colors.black,
-                                                    size: 30,
+                                                    size: 15,
                                                   ),
-                                                  SizedBox(width: 10),
-                                                  Text("Submit",
-                                                      style: TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black))
+                                                  Text(
+                                                    "${widget.friendsAdded}",
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12,
+                                                      // fontWeight:
+                                                      // FontWeight.bold,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontStyle: FontStyle.italic,
+                                                      fontFamily: "Arial",
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    " Friends",
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12,
+                                                      // fontWeight:
+                                                      // FontWeight.bold,
+                                                      fontStyle: FontStyle.italic,
+                                                      fontFamily: "Arial",
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
+                                          // {?} This is going to be the Bio
+                                          Container(
+                                            width: 200,
+                                            child: Text(
+                                              widget.userBio,
+                                              style: TextStyle(fontSize: 13, fontFamily: "Arial"),
+                                              textAlign: TextAlign.center,
+                                              maxLines: 3,
+                                              // softWrap: false,
+                                            ),
+                                          ),
+                                          SizedBox(height: 3)
+                                        ],
+                                      )
+                                    ],
                                   ),
-                                );
-                              },
-                            );
-                          },
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            elevation: 7,
-                            child: Container(
-                              height: 60,
-                              width: 250,
-                              // decoration: fancyDecor,
-                              decoration: BoxDecoration(
-                                  color: Colors.blue.withOpacity(0.4),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
+                                ),
+                              ),
+                              SizedBox(height: 15),
+                            ]),
+                          ),
+                        ),
 
+                        SizedBox(height: 15),
+
+                        Visibility(
+                          visible: isContactEnabled,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await URL.launchURL(usernames["Contact"]);
+                            },
+                            child: Container(
+                              height: height / 22,
+                              width: width / 2,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(
-                                    Icons.chat_bubble,
-                                    color: Colors.black,
-                                    size: 30,
+                                  Image.asset("assets/images/SMLogos/ContactLogo.png",
+                                      width: width / 10),
+                                  Text(
+                                    "Add To Contacts + ",
+                                    style: TextStyle(
+                                        fontFamily: "Montserrat",
+                                        fontSize: 15,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                  SizedBox(width: 10),
-                                  Text("Send Feedback",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black))
                                 ],
                               ),
-
-                              // child: ElevatedButton.icon(
-                              //     onPressed: () {},
-                              //     icon: Icon(Icons.chat_bubble),
-                              //     label: Text("Send Feedback", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              shadowColor: Colors.black,
+                              primary: Colors.white.withOpacity(0.6),
+                              // side: BorderSide(color: Colors.cyan[400]!, width: 2),
+                              elevation: 20,
+                              padding: const EdgeInsets.all(15.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ]),
-                // DownloadSoshiBanner()
-              ],
-            ),
-          )),
-    );
+                        SizedBox(height: 25),
+                        Container(
+                          // color: Colors.red,
+                          // height: MediaQuery.of(context).size.height - 460,
+                          // height: double.infinity,
+                          width: Responsive.isMobile(context)
+                              ? MediaQuery.of(context).size.width - 50
+                              : MediaQuery.of(context).size.width - 500,
+                          child: SocialGridWidget(),
+                        ),
+
+// ------------- learn more Stuff
+
+                        // GetYourOwnCard(height: height, width: width)
+
+                        Divider(
+                          thickness: 1,
+                          color: Colors.transparent,
+                        ),
+                        SizedBox(height: 10),
+
+                        Visibility(
+                          visible: widget.isBusiness,
+                          child: InkWell(
+                            onTap: () {
+                              print("send feedback pressed [!]");
+                              showModalBottomSheet<void>(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    height: 320,
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Text("Feedback",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 30,
+                                                    color: Colors.blueGrey)),
+                                          ),
+                                          RatingBar.builder(
+                                            itemSize: 60,
+                                            initialRating: 3,
+                                            itemCount: 5,
+                                            itemBuilder: (context, index) {
+                                              switch (index) {
+                                                case 0:
+                                                  return Icon(
+                                                    Icons.sentiment_very_dissatisfied,
+                                                    color: Colors.red,
+                                                  );
+                                                case 1:
+                                                  return Icon(
+                                                    Icons.sentiment_dissatisfied,
+                                                    color: Colors.redAccent,
+                                                  );
+                                                case 2:
+                                                  return Icon(
+                                                    Icons.sentiment_neutral,
+                                                    color: Colors.amber,
+                                                  );
+                                                case 3:
+                                                  return Icon(
+                                                    Icons.sentiment_satisfied,
+                                                    color: Colors.lightGreen,
+                                                  );
+                                                case 4:
+                                                  return Icon(
+                                                    Icons.sentiment_very_satisfied,
+                                                    color: Colors.green,
+                                                  );
+                                              }
+
+                                              return Icon(Icons.cancel);
+                                            },
+                                            onRatingUpdate: (rating) {
+                                              print(rating);
+                                            },
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Container(
+                                              height: 120,
+                                              child: TextField(
+                                                maxLines: null,
+                                                maxLength: 120,
+                                                // maxLengthEnforced: true,
+                                                style:
+                                                    TextStyle(fontSize: 18.0, color: Colors.black),
+                                                decoration: InputDecoration(
+                                                  hintText: "Type your feedback...",
+                                                  contentPadding: const EdgeInsets.all(10),
+                                                  focusedBorder: OutlineInputBorder(
+                                                    borderSide:
+                                                        BorderSide(color: Colors.blue, width: 2.0),
+                                                  ),
+                                                  enabledBorder: OutlineInputBorder(
+                                                    borderSide:
+                                                        BorderSide(color: Colors.grey, width: 1.0),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              print("SUBMIT GIVEN FEEDBACK to business!");
+                                            },
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              elevation: 7,
+                                              child: Container(
+                                                height: 40,
+                                                width: 200,
+                                                // decoration: fancyDecor,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.blue.withOpacity(0.4),
+                                                    borderRadius:
+                                                        BorderRadius.all(Radius.circular(10))),
+
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.send_rounded,
+                                                      color: Colors.black,
+                                                      size: 30,
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                    Text("Submit",
+                                                        style: TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.black))
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              elevation: 7,
+                              child: Container(
+                                height: 60,
+                                width: 250,
+                                // decoration: fancyDecor,
+                                decoration: BoxDecoration(
+                                    color: Colors.blue.withOpacity(0.4),
+                                    borderRadius: BorderRadius.all(Radius.circular(10))),
+
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.chat_bubble,
+                                      color: Colors.black,
+                                      size: 30,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text("Send Feedback",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black))
+                                  ],
+                                ),
+
+                                // child: ElevatedButton.icon(
+                                //     onPressed: () {},
+                                //     icon: Icon(Icons.chat_bubble),
+                                //     label: Text("Send Feedback", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ]),
+                  // DownloadSoshiBanner()
+                ],
+              ),
+            ));
+  }
+
+  GridView SocialGridWidget() {
+    return GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4, crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
+          // childAspectRatio: 1 / 1
+
+          // maxCrossAxisExtent: 200, childAspectRatio: , crossAxisSpacing: 20, mainAxisSpacing: 20
+        ),
+        // itemCount: usernamesCopy.keys.length,
+        itemBuilder: (BuildContext context, index) {
+          // String currentKey =
+          //     usernamesCopy.keys.elementAt(index);
+          // print("creating SM button");
+
+          // if (currentKey == "Menu") {
+          //   return createMenue();
+          // } else if (currentKey == "Website") {
+          //   return createWebsite();
+          // }
+
+          return createSMButton(
+              platform: visiblePlatforms[index],
+              username: usernames[visiblePlatforms[index]],
+              context: context);
+        },
+        itemCount: visiblePlatforms.length);
   } //build
 
   Widget _buildContainer(double radius) {
@@ -788,8 +859,8 @@ class DownloadSoshiBanner extends StatelessWidget {
           color: Colors.black38,
           // gradient: Constants.greyCyanGradient,
           border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(20), topLeft: Radius.circular(20))),
+          borderRadius:
+              BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))),
 
       child: Padding(
         padding: const EdgeInsets.fromLTRB(2, 5, 2, 0),
@@ -828,43 +899,36 @@ class GetYourOwnCard extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
 
     return Padding(
-      padding: const EdgeInsets.all(30.0),
+      padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
       child: Card(
         elevation: 10,
-        // shape: ShapeBorder(borderRadius: BorderRadius.circular(15.0))),
+        color: Colors.white.withOpacity(0.8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
         child: Container(
-          height: height / 5.5,
+          height: Responsive.isDesktop(context) ? height / 8 : height / 5.5,
           width: width / 2,
           // height: 140,
           // width: 150,
-          decoration: ShapeDecoration.fromBoxDecoration(BoxDecoration(
-              color: Colors.white.withOpacity(0.6),
-              borderRadius: BorderRadius.circular(15.0))),
+          decoration: ShapeDecoration.fromBoxDecoration(
+              BoxDecoration(borderRadius: BorderRadius.circular(15.0))),
           child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Column(children: [
               Text(
                 "Want all your socials in one place?",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: "Montserrat",
-                    fontSize: 12.0,
-                    fontStyle: FontStyle.italic),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 1.0,
-              ),
-              Text(
-                "Join the Soshi community for free!",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: "Montserrat",
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w600),
+                style: Responsive.isDesktop(context)
+                    ? TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Montserrat",
+                        fontSize: 20.0,
+                        fontStyle: FontStyle.italic)
+                    : TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Montserrat",
+                        fontSize: 12.0,
+                        fontStyle: FontStyle.italic),
                 textAlign: TextAlign.center,
               ),
               SizedBox(
@@ -874,8 +938,7 @@ class GetYourOwnCard extends StatelessWidget {
                 onPressed: () {
                   if (defaultTargetPlatform != TargetPlatform.android) {
                     print("[+] Go to app store");
-                    URL.launchURL(
-                        "https://apps.apple.com/us/app/soshi/id1595515750");
+                    URL.launchURL("https://apps.apple.com/us/app/soshi/id1595515750");
                   } else {
                     print("[+] Go to play store");
                     URL.launchURL(
@@ -884,14 +947,31 @@ class GetYourOwnCard extends StatelessWidget {
                 },
                 child: Container(
                     height: height / 25,
-                    width: width / 2,
+                    width: Responsive.isDesktop(context) ? width / 5 : width / 2,
                     child: Center(
-                      child: Text(
-                        "Get the App",
-                        style: TextStyle(
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "Get the App",
+                            style: TextStyle(
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                          // SizedBox(width: 15),
+                          ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            child: Image.asset(
+                              "assets/images/SoshiLogos/soshi_icon.png",
+                            ),
+                          ),
+                          // SizedBox(width: 10),
+                          // Icon(
+                          //   Icons.chevron_right,
+                          //   size: 30,
+                          // )
+                        ],
                       ),
                     )),
                 style: ElevatedButton.styleFrom(
@@ -900,7 +980,7 @@ class GetYourOwnCard extends StatelessWidget {
                   elevation: 15,
                   padding: const EdgeInsets.all(15.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
               )

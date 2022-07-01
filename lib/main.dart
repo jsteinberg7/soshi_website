@@ -60,8 +60,7 @@ Future<User> fetchUserData(String soshiUsername) async {
 
   print("attempt to fetch user data base using $soshiUsername");
 
-  DatabaseService databaseService =
-      new DatabaseService(soshiUsernameIn: soshiUsername);
+  DatabaseService databaseService = new DatabaseService(soshiUsernameIn: soshiUsername);
 
   print("got data back from database!");
 
@@ -74,10 +73,8 @@ Future<User> fetchUserData(String soshiUsername) async {
   String photoURL = databaseService.getPhotoURL(userData);
   String fullName = databaseService.getFullName(userData);
 
-  Map<String, dynamic> usernames =
-      databaseService.getUserProfileNames(userData);
-  List<String> visiblePlatforms =
-      await databaseService.getEnabledPlatformsList(userData);
+  Map<String, dynamic> usernames = databaseService.getUserProfileNames(userData);
+  List<String> visiblePlatforms = await databaseService.getEnabledPlatformsList(userData);
   String userBio = databaseService.getBio(userData);
   int friendsAdded = databaseService.getFriendsCount(userData);
   print("friends added: " + friendsAdded.toString());
@@ -155,8 +152,7 @@ class _MyAppState extends State<MyApp> {
                   return FutureBuilder(
                       future: fetchUserData(UID),
                       builder: (BuildContext context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done &&
-                            snapshot.hasData) {
+                        if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                           User user = snapshot.data as User;
                           // return UserInfoDisplay(
                           //   visiblePlatforms: user.visiblePlatforms,
@@ -183,8 +179,7 @@ class _MyAppState extends State<MyApp> {
                               //userBio: user.userBio
                             ),
                           );
-                        } else if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
+                        } else if (snapshot.connectionState == ConnectionState.waiting) {
                           return LoadingScreen();
                         } else {
                           return PageNotFoundScreen(launchURLIn: false);
