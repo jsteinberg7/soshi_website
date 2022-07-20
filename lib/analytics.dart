@@ -4,8 +4,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 abstract class Analytics {
   static FirebaseAnalytics instance = FirebaseAnalytics.instance;
 
-  static Future<void> setUserAttributes(
-      {required String userId}) async {
+  static Future<void> setUserAttributes({required String userId}) async {
     await instance.setUserId(id: userId);
     // await instance.setUserProperty(name: 'location', value: SeeipClient().getGeoIP().toString());
   }
@@ -54,5 +53,10 @@ abstract class Analytics {
     return instance.logEvent(
         name: "update_username_for_platform",
         parameters: {"username": username, "platform": platform});
+  }
+
+  static Future<void> logAccessPlatform(String platform) async {
+    await instance
+        .logEvent(name: "access_platform", parameters: {"platform": platform});
   }
 }

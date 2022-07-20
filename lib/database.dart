@@ -27,6 +27,10 @@ class DatabaseService {
     });
   }
 
+  int getSoshiPoints(Map userData) {
+    return userData["Soshi Points"];
+  }
+
   // pass in soshiUsername, return map of user switches (platform visibility)
   Map<String, dynamic> getUserSwitches(Map userData) {
     return userData["Switches"];

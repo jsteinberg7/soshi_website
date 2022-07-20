@@ -1,5 +1,22 @@
 {
   "projects": {
-    "default": "soshi-bc9ec"
+    "production": "soshi-bc9ec",
+    "development": "soshi-web"
+  },
+  "targets": {
+    "myapp-prod": {
+      "hosting": {
+        "myapp": [
+          "soshi-bc9ec"
+        ]
+      }
+    },
+    "myapp-dev": {
+      "hosting": {
+        "myapp": [
+          "soshi-web"
+        ]
+      }
+    }
   }
 }
