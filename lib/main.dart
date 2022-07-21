@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:soshi/hybridUI.dart';
 
@@ -118,7 +119,7 @@ class _MyAppState extends State<MyApp> {
         themeMode:
             brightness == ui.Brightness.dark ? ThemeMode.dark : ThemeMode.light,
         theme: ThemeData(
-          fontFamily: "Montserrat",
+          fontFamily: GoogleFonts.inter().fontFamily,
           brightness: Theme.of(context).brightness,
           backgroundColor: Colors.grey[50],
           primarySwatch: MaterialColor(
@@ -158,7 +159,7 @@ class _MyAppState extends State<MyApp> {
           // , buttonTheme: ButtonTheme()
         ),
         darkTheme: ThemeData(
-            fontFamily: "Montserrat",
+            fontFamily: GoogleFonts.inter().fontFamily,
             brightness: Brightness.dark,
             backgroundColor: Colors.grey[850],
             primarySwatch: MaterialColor(

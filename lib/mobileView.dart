@@ -305,7 +305,8 @@ class _MobileViewState extends State<MobileView> {
                                 child: SizedBox(
                                   width: width / 1.1,
                                   child: Wrap(
-                                    alignment: WrapAlignment.center,
+                                    alignment: WrapAlignment.start,
+                                    runSpacing: width / 50,
                                     spacing: width / 35,
                                     children:
                                         List.generate(passionsList.length, (i) {
