@@ -136,13 +136,12 @@ class _MyAppState extends State<MyApp> {
           List<String> params = settings.name!.split("/");
           String UID = params.last;
 
-          //UID = "sri";
+          UID = "yuvansun";
 
           // if URL has slash at end, remove slash from UID
           if (UID.endsWith('/')) {
             UID = UID.replaceAll('/', '');
           }
-          // String UID = "yuvansun";
 
           if (params.length >= 1
               // &&

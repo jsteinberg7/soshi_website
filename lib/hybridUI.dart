@@ -636,7 +636,7 @@ class _HybridUIState extends State<HybridUI> with TickerProviderStateMixin {
                                             child: TextField(
                                               maxLines: null,
                                               maxLength: 120,
-                                              maxLengthEnforced: true,
+                                              //maxLengthEnforcement: true,
                                               style: TextStyle(
                                                   fontSize: 18.0,
                                                   color: Colors.black),
