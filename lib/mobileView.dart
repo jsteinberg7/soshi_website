@@ -310,7 +310,8 @@ class _MobileViewState extends State<MobileView> {
                                     spacing: width / 35,
                                     children:
                                         List.generate(passionsList.length, (i) {
-                                      return PassionBubble(passionsList[i]);
+                                      return PassionBubble(
+                                          passionsList[i], width);
                                     }),
                                   ),
                                 ),

@@ -85,8 +85,9 @@ class ProfilePicBackdrop extends StatelessWidget {
 
 class PassionBubble extends StatelessWidget {
   String passion;
+  double screenWidth;
 
-  PassionBubble(this.passion);
+  PassionBubble(this.passion, this.screenWidth);
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +101,7 @@ class PassionBubble extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.0)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(passion),
+          child: Text(passion, style: TextStyle(fontSize: screenWidth / 30)),
         ));
   }
 }
