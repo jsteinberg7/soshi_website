@@ -68,12 +68,12 @@ class _MobileViewState extends State<MobileView> {
             String numFriendsString = numfriends.toString();
             String photoUrl = databaseService.getPhotoURL(userData);
             bool isContactEnabled;
-            // List<String> passionLit = databaseService.getPassions(userData);
-            List<Map> passionsMap = [
-              {"passion_emoji": "😋", "passion_name": "food"},
-              {"passion_emoji": "🏑", "passion_name": "hockey"},
-              {"passion_emoji": "🏃‍♀️", "passion_name": "running"}
-            ];
+            List<dynamic> passionsMap = databaseService.getPassions(userData);
+            // List<Map> passionsMap = [
+            //   {"passion_emoji": "😋", "passion_name": "food"},
+            //   {"passion_emoji": "🏑", "passion_name": "hockey"},
+            //   {"passion_emoji": "🏃‍♀️", "passion_name": "running"}
+            // ];
 
             // List<Map> passionsMap = [];
 

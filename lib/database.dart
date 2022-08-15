@@ -28,7 +28,26 @@ class DatabaseService {
   }
 
   int getSoshiPoints(Map userData) {
-    return userData["Soshi Points"];
+    return userData["Soshi Points"] ?? 0;
+  }
+
+  List<dynamic> getPassions(Map userData) {
+    List<dynamic> rawPassions = userData["passions"] ?? [];
+    if (rawPassions.isEmpty) {
+      return [];
+    }
+    List<int> indicesToRemove = [];
+    for (int i = 0; i < 3; i++) {
+      if (rawPassions[i].toString().contains("valid")) {
+        indicesToRemove.add(i);
+        //rawPassions.removeAt(i);
+        print(rawPassions);
+      }
+    }
+    for (int j = 0; j < indicesToRemove.length; j++) {
+      rawPassions.removeAt(indicesToRemove[j]);
+    }
+    return rawPassions;
   }
 
   // pass in soshiUsername, return map of user switches (platform visibility)
@@ -67,12 +86,15 @@ class DatabaseService {
 
   // pass in soshiUsername, return (Map) of full name of user
   Map<String, dynamic> getFullNameMap(Map userData) {
-    return userData["Name"];
+    return userData["Name"] ?? {};
   }
 
   // pass in soshiUsername, return (String) full name of user
   String getFullName(Map userData) {
     Map fullNameMap = getFullNameMap(userData);
+    if (fullNameMap.isEmpty) {
+      return "";
+    }
     // convert to String
     String fullName = fullNameMap["First"] + " " + fullNameMap["Last"];
     return fullName;
@@ -113,7 +135,7 @@ class DatabaseService {
   }
 
   List getFriends(Map userData) {
-    return userData["Friends"];
+    return userData["Friends"] ?? [];
   }
 
   int getFriendsCount(Map userData) {
@@ -123,7 +145,7 @@ class DatabaseService {
   }
 
   bool getVerifiedStatus(Map userData) {
-    return userData["Verified"];
+    return userData["Verified"] ?? false;
     // if (isVerified == null) {
     //   isVerified == false;
     // }
