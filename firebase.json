@@ -5,7 +5,7 @@
   },
   "hosting": {
     "public": "build/web",
-    "site": "soshi-web",
+    "site": "soshi-bc9ec",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -13,11 +13,15 @@
     ],
     "rewrites": [
       {
-        "source": "/user/**",
+        "source": "/deeplink/user/**",
         "dynamicLinks": true
       },
       {
-        "source": "!/user/**",
+        "source": "/deeplink/group/**",
+        "dynamicLinks": true
+      },
+      {
+        "source": "!/deeplink/**",
         "destination": "/index.html"
       }
     ]

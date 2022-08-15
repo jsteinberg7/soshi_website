@@ -1,31 +1,16 @@
 import 'dart:html';
+import 'dart:ui' as ui;
 
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
-import 'package:soshi/constants/constants.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:soshi/hybridUI.dart';
-import 'package:soshi/newProfileUI.dart';
+
 import 'package:soshi/page_not_found_screen.dart';
-import 'package:soshi/sri_ui_version_2.dart';
-import 'package:soshi/url.dart';
-import 'package:soshi/user.dart';
-import 'package:soshi/userinfodisplay_backup.dart';
-import 'customUrlStrategy.dart';
-import 'database.dart';
-import 'loading_screen.dart';
+
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
-
-import "package:os_detect/os_detect.dart" as Platform;
-
-import 'dart:async';
-import 'dart:developer' as developer;
-import 'dart:io';
-
-// import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main() async {
   setUrlStrategy(PathUrlStrategy());
@@ -54,55 +39,55 @@ void main() async {
 //   };
 // }
 
-Future<User> fetchUserData(String soshiUsername) async {
-  var url = window.location.href;
-  print("URL: " + url);
+// Future<User> fetchUserData(String soshiUsername) async {
+//   var url = window.location.href;
+//   print("URL: " + url);
 
-  print("attempt to fetch user data base using $soshiUsername");
+//   print("attempt to fetch user data base using $soshiUsername");
 
-  DatabaseService databaseService =
-      new DatabaseService(soshiUsernameIn: soshiUsername);
+//   DatabaseService databaseService =
+//       new DatabaseService(soshiUsernameIn: soshiUsername);
 
-  print("got data back from database!");
+//   print("got data back from database!");
 
-  var userData = await databaseService.getUserFile(soshiUsername);
+//   var userData = await databaseService.getUserFile(soshiUsername);
 
-  print("after data print>?");
+//   print("after data print>?");
 
-  print(userData);
+//   print(userData);
 
-  String photoURL = databaseService.getPhotoURL(userData);
-  String fullName = databaseService.getFullName(userData);
+//   String photoURL = databaseService.getPhotoURL(userData);
+//   String fullName = databaseService.getFullName(userData);
 
-  Map<String, dynamic> usernames =
-      databaseService.getUserProfileNames(userData);
-  List<String> visiblePlatforms =
-      await databaseService.getEnabledPlatformsList(userData);
-  String userBio = databaseService.getBio(userData);
-  int friendsAdded = databaseService.getFriendsCount(userData);
-  print("friends added: " + friendsAdded.toString());
-  print("bio: " + userBio);
-  bool isVerified = databaseService.getVerifiedStatus(userData);
+//   Map<String, dynamic> usernames =
+//       databaseService.getUserProfileNames(userData);
+//   List<String> visiblePlatforms =
+//       await databaseService.getEnabledPlatformsList(userData);
+//   String userBio = databaseService.getBio(userData);
+//   int friendsAdded = databaseService.getFriendsCount(userData);
+//   print("friends added: " + friendsAdded.toString());
+//   print("bio: " + userBio);
+//   bool isVerified = databaseService.getVerifiedStatus(userData);
 
-  // DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+//   // DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
-  // Map<String, dynamic> _deviceData = <String, dynamic>{};
+//   // Map<String, dynamic> _deviceData = <String, dynamic>{};
 
-  // Map OSData = _readWebBrowserInfo(await deviceInfoPlugin.webBrowserInfo);
+//   // Map OSData = _readWebBrowserInfo(await deviceInfoPlugin.webBrowserInfo);
 
-  // print("printing user data:  " + OSData.toString());
+//   // print("printing user data:  " + OSData.toString());
 
-  return User(
-      fullName: fullName,
-      usernames: usernames,
-      visiblePlatforms: visiblePlatforms,
-      photoURL: photoURL,
-      soshiUsername: soshiUsername,
-      // userBio: OSData.toString(),
-      userBio: userBio,
-      friendsAdded: friendsAdded,
-      isVerified: isVerified);
-}
+//   return User(
+//       fullName: fullName,
+//       usernames: usernames,
+//       visiblePlatforms: visiblePlatforms,
+//       photoURL: photoURL,
+//       soshiUsername: soshiUsername,
+//       // userBio: OSData.toString(),
+//       userBio: userBio,
+//       friendsAdded: friendsAdded,
+//       isVerified: isVerified);
+// }
 
 class MyApp extends StatefulWidget {
   MyApp({Key? key}) : super(key: key);
@@ -112,9 +97,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late Brightness brightness;
   @override
   void initState() {
     super.initState();
+    brightness = ui.PlatformDispatcher.instance.platformBrightness;
   }
 
   @override
@@ -129,66 +116,120 @@ class _MyAppState extends State<MyApp> {
     // print("pushing url");
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: Constants.CustomTheme,
+        themeMode:
+            brightness == ui.Brightness.dark ? ThemeMode.dark : ThemeMode.light,
+        theme: ThemeData(
+          fontFamily: GoogleFonts.inter().fontFamily,
+          brightness: Theme.of(context).brightness,
+          backgroundColor: Colors.grey[50],
+          primarySwatch: MaterialColor(
+            0xFFE7E7E7,
+            <int, Color>{
+              50: Color.fromARGB(26, 223, 247, 248),
+              100: Color.fromARGB(26, 199, 230, 231),
+              200: Color.fromARGB(26, 187, 223, 224),
+              300: Color.fromARGB(26, 173, 206, 207),
+              400: Color.fromARGB(26, 153, 186, 187),
+              500: Color.fromARGB(26, 161, 193, 194),
+              600: Color.fromARGB(26, 152, 179, 180),
+              700: Color.fromARGB(26, 124, 152, 153),
+              800: Color.fromARGB(26, 95, 139, 141),
+              900: Color.fromARGB(26, 64, 116, 117),
+            },
+          ),
+          //primaryColor: Color.fromARGB(255, 179, 225, 237),
+          primaryColorLight: Color.fromARGB(255, 179, 225, 237),
+          // primaryColorDark: Colors.grey[850],
+          canvasColor: Color.fromARGB(255, 191, 200, 202),
+          scaffoldBackgroundColor: Colors.grey[50],
+          bottomAppBarColor: Color.fromARGB(255, 0, 0, 0),
+          appBarTheme: AppBarTheme(color: Colors.grey[50]),
+          cardColor: Colors.white,
+          dividerColor: Color(0x1f6D42CE),
+          focusColor: Color(0x1aF5E0C3),
+
+          textSelectionTheme:
+              TextSelectionThemeData(cursorColor: Colors.cyan[500]),
+          elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              return Colors.white;
+            }),
+          )),
+          // , buttonTheme: ButtonTheme()
+        ),
+        darkTheme: ThemeData(
+            fontFamily: GoogleFonts.inter().fontFamily,
+            brightness: Brightness.dark,
+            backgroundColor: Colors.grey[850],
+            primarySwatch: MaterialColor(
+              0xFFF5E0C3,
+              <int, Color>{
+                50: Color(0x1a5D4524),
+                100: Color(0xa15D4524),
+                200: Color(0xaa5D4524),
+                300: Color(0xaf5D4524),
+                400: Color(0x1a483112),
+                500: Color(0xa1483112),
+                600: Color(0xaa483112),
+                700: Color(0xff483112),
+                800: Color(0xaf2F1E06),
+                900: Color(0xff2F1E06)
+              },
+            ),
+            primaryColor: Colors.grey[850],
+            primaryColorLight: Color(0x1a311F06),
+            primaryColorDark: Colors.black,
+            canvasColor: Colors.grey[850],
+            scaffoldBackgroundColor: Colors.grey[900],
+            bottomAppBarColor: Color(0xff6D42CE),
+            cardColor: Colors.grey[900],
+            dividerColor: Color(0x1f6D42CE),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ButtonStyle(
+              // MaterialStateProperty.resolveWith<TextStyle>(Set<MaterialState> states) {
+              //   return TextStyle(color: Colors.white);
+              // }
+
+              backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states) {
+                return Colors.grey[900]!;
+              }),
+              elevation: MaterialStateProperty.resolveWith<double>(
+                  (Set<MaterialState> states) {
+                return 5.0;
+              }),
+              foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states) {
+                return Colors.white;
+              }),
+            )),
+            focusColor: Color(0x1a311F06)),
         initialRoute: "/",
         onGenerateRoute: (settings) {
           print("SETTINGS: " + settings.toString());
           List<String> params = settings.name!.split("/");
           String UID = params.last;
 
-          UID = "yuvansun";
+          //UID = "sri";
 
           // if URL has slash at end, remove slash from UID
           if (UID.endsWith('/')) {
             UID = UID.replaceAll('/', '');
           }
+          UID = "yuvansun";
 
           if (params.length >= 1
               // &&
               // (params[1] == "user" || params[1] == "u") &&
               // (params.last != "user" && params.last != "u")
               ) {
+            print(">>>> UID: " + UID);
             return MaterialPageRoute(
                 settings: settings,
                 builder: (context) {
-                  return FutureBuilder(
-                      future: fetchUserData(UID),
-                      builder: (BuildContext context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done &&
-                            snapshot.hasData) {
-                          User user = snapshot.data as User;
-                          // return UserInfoDisplay(
-                          //   visiblePlatforms: user.visiblePlatforms,
-                          //   fullName: user.fullName,
-                          //   usernames: user.usernames,
-                          //   photoURL: user.photoURL,
-                          //   bio: user.userBio,
-                          //   friendsAdded: user.friendsAdded,
-                          // );
-                          return AnimatedGradient(
-                            child: HybridUI(
-                              fullName: user.fullName,
-                              usernames: user.usernames,
-                              visiblePlatforms: user.visiblePlatforms,
-
-                              //   visiblePlatforms: user.visiblePlatforms                         photoURL: user.photoURL,
-                              // bio: user.userBio,
-                              friendsAdded: user.friendsAdded,
-                              isVerified: user.isVerified,
-                              soshiUsername: user.soshiUsername,
-                              userBio: user.userBio, photoURL: user.photoURL,
-                              isBusiness: false,
-                              //soshiUsername: user.soshiUsername,
-                              //userBio: user.userBio
-                            ),
-                          );
-                        } else if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return LoadingScreen();
-                        } else {
-                          return PageNotFoundScreen(launchURLIn: false);
-                        }
-                      });
+                  return HybridUI(UID);
+                  // return Container();
                 });
           } else {
             return MaterialPageRoute(builder: (context) {

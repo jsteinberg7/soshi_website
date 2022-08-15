@@ -266,7 +266,8 @@ class _SriUI2State extends State<SriUI2> with TickerProviderStateMixin {
                                             height: 40,
                                             child: ElevatedButton.icon(
                                               onPressed: () async {
-                                                print("Download .vcf file");
+                                                debugPrint(
+                                                    "Download .vcf file");
 
                                                 await launch(vcfDownloadUrl);
                                               },
@@ -274,7 +275,7 @@ class _SriUI2State extends State<SriUI2> with TickerProviderStateMixin {
                                                   .perm_contact_calendar_rounded),
                                               label: Text("Add to contacts"),
                                               style: ElevatedButton.styleFrom(
-                                                  primary: Colors.cyan[300],
+                                                  // primary: Colors.cyan[300],
                                                   onPrimary: Colors.black),
                                             ),
                                           ),
