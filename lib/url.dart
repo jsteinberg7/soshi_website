@@ -67,7 +67,22 @@ abstract class URL {
           ? youtubeLink = username
           : youtubeLink = "https://www.youtube.com/channel/" + username;
       return youtubeLink;
+    } else if (platform == "AppleMusic") {
+      String appleMusicLink;
+      username.contains("https://")
+          ? appleMusicLink = username
+          : appleMusicLink = "https://music.apple.com/us/artist/" + username;
+      return appleMusicLink;
+    } else if (platform == "Vsco") {
+      return "https://vsco.co/" + username;
+    } else if (platform == "CashApp") {
+      return "https://cash.app/\$" + username;
+    } else if (platform == "BeReal") {
+      return "https://bere.al/" + username;
+    } else if (platform == "OnlyFans") {
+      return "https://onlyfans.com/" + username;
     }
+
     // to make compiler happy
     return "";
   }

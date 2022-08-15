@@ -34,7 +34,7 @@ class ProfilePic extends StatelessWidget {
         placeHolder: (b, c) {
           return Image.asset('assets/images/misc/default_pic.png');
         },
-        borderColor: Colors.black,
+        borderColor: Colors.white,
         borderWidth: radius / 40,
         elevation: 0,
         radius: radius,
@@ -84,24 +84,38 @@ class ProfilePicBackdrop extends StatelessWidget {
 }
 
 class PassionBubble extends StatelessWidget {
-  String passion;
-  double screenWidth;
+  String passionString;
+  String passionEmoji;
 
-  PassionBubble(this.passion, this.screenWidth);
+  PassionBubble(this.passionString, this.passionEmoji);
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return Container(
         decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(context).brightness == Brightness.light
-                  ? Colors.black
-                  : Colors.white,
-            ),
-            borderRadius: BorderRadius.circular(20.0)),
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.white
+                : Colors.black,
+            borderRadius: BorderRadius.circular(10.0)),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(passion, style: TextStyle(fontSize: screenWidth / 30)),
+          padding: const EdgeInsets.fromLTRB(8, 2, 8, 5),
+          child: Container(
+            child: Text(
+              passionEmoji + " " + passionString,
+              style: TextStyle(fontSize: width / 22),
+            ),
+          ),
+          // child: Container(
+          //   width: width / 4.5,
+          //   height: height / 30,
+          //   decoration: BoxDecoration(color: Colors.blue),
+          //   child: AutoSizeText(
+          //     passionEmoji + passionString,
+          //     // style: TextStyle(fontSize: width / 28),
+          //   ),
+          // ),
         ));
   }
 }
@@ -135,15 +149,16 @@ class AddToContactsButton extends StatelessWidget {
                         "assets/images/SMLogos/ContactLogo.png",
                         height: 50,
                       ),
+                      SizedBox(width: 10),
                       Text(
                         "Add To Contacts",
                         style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.bold),
+                            fontSize: 15, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(width: 4),
+                      SizedBox(width: 10),
                       Icon(
-                        Icons.download,
-                        size: 25,
+                        CupertinoIcons.cloud_download,
+                        size: 24,
                       ),
                     ],
                   ),

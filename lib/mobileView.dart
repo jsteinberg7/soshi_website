@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:soshi/url.dart';
@@ -67,12 +68,14 @@ class _MobileViewState extends State<MobileView> {
             String numFriendsString = numfriends.toString();
             String photoUrl = databaseService.getPhotoURL(userData);
             bool isContactEnabled;
-            // List<String> passionsList = databaseService.getPassions(userData);
-            List<String> passionsList = [
-              "Ice Hockey",
-              "Entrepreneurship",
-              "Fitness"
+            // List<String> passionLit = databaseService.getPassions(userData);
+            List<Map> passionsMap = [
+              {"passion_emoji": "😋", "passion_name": "food"},
+              {"passion_emoji": "🏑", "passion_name": "hockey"},
+              {"passion_emoji": "🏃‍♀️", "passion_name": "running"}
             ];
+
+            // List<Map> passionsMap = [];
 
             List<String> visiblePlatforms;
             Map usernames;
@@ -139,7 +142,7 @@ class _MobileViewState extends State<MobileView> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(
-                              width / 40, height / 11, width / 40, 0),
+                              width / 40, height / 12.5, width / 40, 0),
                           child: Column(
                             children: [
                               SafeArea(
@@ -149,7 +152,7 @@ class _MobileViewState extends State<MobileView> {
                                       fullName,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: width / 16,
+                                        fontSize: width / 14,
                                       ),
                                     ),
                                     SizedBox(
@@ -162,7 +165,7 @@ class _MobileViewState extends State<MobileView> {
                                         Text("@" + friendSoshiUsername,
                                             style: TextStyle(
                                                 color: Colors.grey,
-                                                fontSize: width / 22,
+                                                fontSize: width / 24,
                                                 fontStyle: FontStyle.italic,
                                                 letterSpacing: 1.2)),
                                         SizedBox(
@@ -172,8 +175,8 @@ class _MobileViewState extends State<MobileView> {
                                                 isVerified == false
                                             ? Container()
                                             : Image.asset(
-                                                "assets/images/misc/verified.png",
-                                                scale: width / 22,
+                                                "images/misc/verified.png",
+                                                scale: width / 21,
                                               )
                                       ],
                                     )
@@ -194,7 +197,8 @@ class _MobileViewState extends State<MobileView> {
                                         numFriendsString.toString(),
                                         style: TextStyle(
                                             fontSize: width / 25,
-                                            letterSpacing: 1.2),
+                                            letterSpacing: 1.2,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       numFriendsString == "1"
                                           ? Text(
@@ -214,7 +218,7 @@ class _MobileViewState extends State<MobileView> {
                                   Hero(
                                     tag: friendSoshiUsername,
                                     child: ProfilePic(
-                                        radius: width / 7,
+                                        radius: width / 6,
                                         url: profilePhotoURL),
                                     // child: Text(
                                     //   "c",
@@ -230,7 +234,8 @@ class _MobileViewState extends State<MobileView> {
                                             : soshiPoints.toString(),
                                         style: TextStyle(
                                             fontSize: width / 25,
-                                            letterSpacing: 1.2),
+                                            letterSpacing: 1.2,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       soshiPoints.toString() == "1"
                                           ? Text("Bolt",
@@ -287,31 +292,33 @@ class _MobileViewState extends State<MobileView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Visibility(
-                          visible: passionsList.isNotEmpty,
+                          visible: passionsMap.isNotEmpty,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsets.fromLTRB(width / 15,
-                                    height / 30, width / 25, width / 30),
+                                padding: EdgeInsets.fromLTRB(
+                                    width / 25, width / 35, 0, width / 20),
                                 child: Text(
                                   "Passions",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: width / 20),
+                                      fontSize: width / 18),
                                 ),
                               ),
                               Center(
                                 child: SizedBox(
                                   width: width / 1.1,
                                   child: Wrap(
-                                    alignment: WrapAlignment.start,
-                                    runSpacing: width / 50,
-                                    spacing: width / 35,
+                                    alignment: WrapAlignment.center,
+                                    //runSpacing: width / 50,
+                                    spacing: width / 40,
                                     children:
-                                        List.generate(passionsList.length, (i) {
+                                        List.generate(passionsMap.length, (i) {
                                       return PassionBubble(
-                                          passionsList[i], width);
+                                        passionsMap[i]["passion_emoji"],
+                                        passionsMap[i]["passion_name"],
+                                      );
                                     }),
                                   ),
                                 ),
@@ -321,26 +328,13 @@ class _MobileViewState extends State<MobileView> {
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(
-                              width / 15, height / 30, width / 25, width / 30),
+                              width / 25, width / 20, 0, width / 30),
                           child: Text(
                             "Socials",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: width / 20),
+                                fontSize: width / 18),
                           ),
-                        ),
-                        Center(
-                          child: Visibility(
-                              visible: isContactEnabled,
-                              // visible: false,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: AddToContactsButton(
-                                  url: usernames["Contact"],
-                                  height: height / 30,
-                                  width: width / 2,
-                                ),
-                              )),
                         ),
                         Center(
                           child: (visiblePlatforms == null ||
@@ -370,6 +364,22 @@ class _MobileViewState extends State<MobileView> {
                                       );
                                     }),
                                   )),
+                        ),
+                        SizedBox(
+                          height: width / 40,
+                        ),
+                        Center(
+                          child: Visibility(
+                              visible: isContactEnabled,
+                              // visible: false,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: AddToContactsButton(
+                                  url: usernames["Contact"],
+                                  height: height / 30,
+                                  width: width / 2,
+                                ),
+                              )),
                         ),
                       ],
                     ),
@@ -434,11 +444,19 @@ class GetTheAppBanner extends StatelessWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Download Soshi today!"),
+            // Text(
+            //   "Download Soshi",
+            //   style:
+            //       TextStyle(fontWeight: FontWeight.bold, fontSize: width / 22),
+            // ),
+            // SizedBox(
+            //   width: 15,
+            // ),
+            // Icon(CupertinoIcons.arrow_right_circle),
             Padding(
-              padding: const EdgeInsets.all(3.0),
+              padding: const EdgeInsets.fromLTRB(15, 10, 3, 3),
               child: ElevatedButton(
                 onPressed: () {
                   if (defaultTargetPlatform != TargetPlatform.android) {
@@ -452,39 +470,39 @@ class GetTheAppBanner extends StatelessWidget {
                   }
                 },
                 child: Container(
-                    height: height / 2,
-                    width: width / 5,
+                    //height: height / 2,
+                    //width: width / 5,
                     child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "Get",
-                            style: TextStyle(
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Colors.white),
-                          ),
-                          // SizedBox(width: 15),
-                          ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            child: Image.asset(
-                              "assets/images/SoshiLogos/soshi_icon.png",
-                            ),
-                          ),
-                          // SizedBox(width: 10),
-                          // Icon(
-                          //   Icons.chevron_right,
-                          //   size: 30,
-                          // )
-                        ],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Download Soshi  ",
+                        style: TextStyle(
+                            fontFamily: "Montserrat",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.white),
                       ),
-                    )),
+                      // SizedBox(width: 15),
+                      ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        child: Image.asset(
+                          "assets/images/SoshiLogos/soshi_icon.png",
+                        ),
+                      ),
+                      // SizedBox(width: 10),
+                      // Icon(
+                      //   Icons.chevron_right,
+                      //   size: 30,
+                      // )
+                    ],
+                  ),
+                )),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.black,
                   // side: BorderSide(color: Colors.cyan[400]!, width: 2),
-                  elevation: 15,
+                  //elevation: 15,
                   padding: const EdgeInsets.all(15.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),
