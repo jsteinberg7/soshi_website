@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
@@ -92,6 +93,7 @@ class PassionBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     return Container(
         decoration: BoxDecoration(
@@ -101,11 +103,28 @@ class PassionBubble extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0)),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(8, 2, 8, 5),
-          child: Container(
-            child: Text(
-              passionEmoji + " " + passionString,
-              style: TextStyle(fontSize: width / 22),
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                child: Text(
+                  passionEmoji,
+                  style: TextStyle(fontSize: width / 20),
+                ),
+              ),
+              Container(
+                //color: Colors.green,
+                width: width / 5.5,
+                child: AutoSizeText(
+                  " " + passionString,
+                  textAlign: TextAlign.center,
+                  maxLines: 1, //passion.name.contains(" ") ? 2 : 1,
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 25),
+                  minFontSize: 1,
+                ),
+              ),
+            ],
           ),
           // child: Container(
           //   width: width / 4.5,

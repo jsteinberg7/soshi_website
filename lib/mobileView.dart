@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,6 @@ class _MobileViewState extends State<MobileView> {
           if (snapshot.connectionState == ConnectionState.done) {
             dynamic userData = snapshot.data;
             String fullName = databaseService.getFullName(userData);
-            bool isFriendAdded = false;
             String profilePhotoURL = databaseService.getPhotoURL(userData);
             String bio = databaseService.getBio(userData);
             bool isVerified = databaseService.getVerifiedStatus(userData);
@@ -69,6 +69,7 @@ class _MobileViewState extends State<MobileView> {
             String photoUrl = databaseService.getPhotoURL(userData);
             bool isContactEnabled;
             List<dynamic> passionsMap = databaseService.getPassions(userData);
+            print(passionsMap.toList());
             // List<Map> passionsMap = [
             //   {"passion_emoji": "😋", "passion_name": "food"},
             //   {"passion_emoji": "🏑", "passion_name": "hockey"},
@@ -142,17 +143,18 @@ class _MobileViewState extends State<MobileView> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(
-                              width / 40, height / 12.5, width / 40, 0),
+                              width / 40, height / 45, width / 40, 0),
                           child: Column(
                             children: [
                               SafeArea(
                                 child: Column(
                                   children: [
-                                    Text(
+                                    AutoSizeText(
                                       fullName,
+                                      maxLines: 1,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: width / 14,
+                                        fontSize: width / 15,
                                       ),
                                     ),
                                     SizedBox(
@@ -253,7 +255,7 @@ class _MobileViewState extends State<MobileView> {
                               //SizedBox(height: height / 1),
                               Padding(
                                   padding: EdgeInsets.fromLTRB(width / 6,
-                                      height / 70, width / 6, height / 80),
+                                      height / 70, width / 6, height / 40),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
@@ -271,6 +273,19 @@ class _MobileViewState extends State<MobileView> {
                                   )
                                   //),
                                   ),
+                              Visibility(
+                                visible: !passionsMap.isEmpty,
+                                child: Wrap(
+                                  alignment: WrapAlignment.center,
+                                  spacing: width / 65,
+                                  children:
+                                      List.generate(passionsMap.length, (i) {
+                                    return PassionBubble(
+                                        passionsMap[i]["passion_name"],
+                                        passionsMap[i]["passion_emoji"]);
+                                  }),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -279,7 +294,7 @@ class _MobileViewState extends State<MobileView> {
                   ),
                 ),
                 Positioned(
-                  top: height / 2.3,
+                  top: height / 2.2,
                   left: 0,
                   right: 0,
                   child: Container(
@@ -291,44 +306,9 @@ class _MobileViewState extends State<MobileView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Visibility(
-                          visible: passionsMap.isNotEmpty,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    width / 25, width / 35, 0, width / 20),
-                                child: Text(
-                                  "Passions",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: width / 18),
-                                ),
-                              ),
-                              Center(
-                                child: SizedBox(
-                                  width: width / 1.1,
-                                  child: Wrap(
-                                    alignment: WrapAlignment.center,
-                                    //runSpacing: width / 50,
-                                    spacing: width / 40,
-                                    children:
-                                        List.generate(passionsMap.length, (i) {
-                                      return PassionBubble(
-                                        passionsMap[i]["passion_emoji"],
-                                        passionsMap[i]["passion_name"],
-                                      );
-                                    }),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(
-                              width / 25, width / 20, 0, width / 30),
+                              width / 25, width / 30, 0, width / 30),
                           child: Text(
                             "Socials",
                             style: TextStyle(
@@ -386,10 +366,10 @@ class _MobileViewState extends State<MobileView> {
                   ),
                 ),
                 Positioned(
-                    top: 0,
                     left: 0,
                     right: 0,
-                    child: GetTheAppBanner(height / 15, width)),
+                    bottom: 40,
+                    child: GetTheAppBanner(height / 11, width)),
               ],
             );
           } else {
