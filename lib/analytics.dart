@@ -9,26 +9,6 @@ abstract class Analytics {
     // await instance.setUserProperty(name: 'location', value: SeeipClient().getGeoIP().toString());
   }
 
-  static logSignIn(String method) async {
-    await instance.logLogin(loginMethod: method);
-  }
-
-  static logSignUp(String method) async {
-    await instance.logSignUp(signUpMethod: method);
-  }
-
-  static Future<void> logQRScan(String qrResult) async {
-    await instance.logEvent(name: 'qr_scan', parameters: {
-      'qr_result': qrResult,
-    });
-  }
-
-  static Future<void> logSuccessfulQRScan(String qrResult) async {
-    await instance.logEvent(
-        name: "successful_qr_scan",
-        parameters: {"scanned_username": qrResult.split("/").last});
-  }
-
   static Future<void> logFailedQRScan(String qrResult) async {
     await instance
         .logEvent(name: "failed_qr_scan", parameters: {"qr_result": qrResult});
@@ -58,5 +38,13 @@ abstract class Analytics {
   static Future<void> logAccessPlatform(String platform) async {
     await instance
         .logEvent(name: "access_platform", parameters: {"platform": platform});
+  }
+
+  static Future<void> logViewProfile() async {
+    await instance.logEvent(name: "view_profile", parameters: {"mode": "web"});
+  }
+
+  static Future<void> log() async {
+    await instance.logEvent(name: "view_profile", parameters: {"mode": "web"});
   }
 }

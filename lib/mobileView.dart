@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:soshi/analytics.dart';
 import 'package:soshi/url.dart';
 
 import '../../../constants/widgets.dart';
@@ -8,6 +9,7 @@ import '../../../constants/widgets.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
 
 import 'database.dart';
 
@@ -36,10 +38,12 @@ class _MobileViewState extends State<MobileView> {
     databaseService = new DatabaseService(soshiUsernameIn: friendSoshiUsername);
     height = widget.height;
     width = widget.width;
+    Analytics.logViewProfile();
   }
 
   Future<Map> getUserData() async {
     // add enabled platforms to map
+    Analytics.setUserAttributes(userId: Uuid().toString());
     return await databaseService.getUserFile(friendSoshiUsername);
   }
 
