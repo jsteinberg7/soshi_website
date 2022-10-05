@@ -47,4 +47,8 @@ abstract class Analytics {
   static Future<void> log() async {
     await instance.logEvent(name: "view_profile", parameters: {"mode": "web"});
   }
+
+  static Future<void> logPressGetAppButton() async {
+    await instance.logEvent(name: "get_app_button");
+  }
 }

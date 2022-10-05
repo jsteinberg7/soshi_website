@@ -116,8 +116,8 @@ class _MyAppState extends State<MyApp> {
     // print("pushing url");
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        themeMode:
-            brightness == ui.Brightness.dark ? ThemeMode.dark : ThemeMode.light,
+        themeMode: ThemeMode.light,
+        //brightness == ui.Brightness.dark ? ThemeMode.dark : ThemeMode.light,
         theme: ThemeData(
           fontFamily: GoogleFonts.inter().fontFamily,
           brightness: Theme.of(context).brightness,
@@ -217,7 +217,7 @@ class _MyAppState extends State<MyApp> {
           if (UID.endsWith('/')) {
             UID = UID.replaceAll('/', '');
           }
-          UID = "mchaisson";
+          // UID = "yuvansun";
 
           if (params.length >= 1
               // &&

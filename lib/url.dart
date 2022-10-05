@@ -47,9 +47,11 @@ abstract class URL {
       return "mailto:" + username;
     } else if (platform == "Spotify") {
       return "https://open.spotify.com/user/" + username;
-    } else if (platform == "Venmo") {
+    }
+    // launchVenmo function at bottom because it is async, this VVV is not used
+    else if (platform == "Venmo") {
       if (defaultTargetPlatform == TargetPlatform.iOS) {
-        return "venmo://paycharge?txn=pay&recipients=$username";
+        return "venmo://paycharge?txn=pay&recipients=" + username;
       } else {
         return "https://venmo.com/" + username;
       }
@@ -87,14 +89,12 @@ abstract class URL {
     return "";
   }
 
+  // This function is here and used due to the fact that launchin venmo has to be done async!
   static Future<void> launchVenmo(String username) async {
     if (defaultTargetPlatform == TargetPlatform.iOS) {
-      await launch("venmo://paycharge?txn=pay&recipients=$username");
+      await launch("venmo://paycharge?txn=pay&recipients=" + username);
     } else {
-      await launch("https://venmo.com/");
+      await launch("https://venmo.com/$username");
     }
-    // await launch(
-    //   "venmo://paycharge?txn=pay&recipients=jsteinberg7",
-    // );
   }
 }

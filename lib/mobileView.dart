@@ -1,6 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:soshi/analytics.dart';
 import 'package:soshi/url.dart';
 
@@ -8,7 +10,6 @@ import '../../../constants/widgets.dart';
 
 import 'package:glassmorphism/glassmorphism.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
 import 'database.dart';
@@ -63,7 +64,6 @@ class _MobileViewState extends State<MobileView> {
           if (snapshot.connectionState == ConnectionState.done) {
             dynamic userData = snapshot.data;
             String fullName = databaseService.getFullName(userData);
-            bool isFriendAdded = false;
             String profilePhotoURL = databaseService.getPhotoURL(userData);
             String bio = databaseService.getBio(userData);
             bool isVerified = databaseService.getVerifiedStatus(userData);
@@ -72,7 +72,9 @@ class _MobileViewState extends State<MobileView> {
             String numFriendsString = numfriends.toString();
             String photoUrl = databaseService.getPhotoURL(userData);
             bool isContactEnabled;
-            List<dynamic> passionsMap = databaseService.getPassions(userData);
+            List<dynamic> passionsMap =
+                databaseService.getPassions(userData) ?? [];
+            print(passionsMap.toList());
             // List<Map> passionsMap = [
             //   {"passion_emoji": "😋", "passion_name": "food"},
             //   {"passion_emoji": "🏑", "passion_name": "hockey"},
@@ -145,43 +147,31 @@ class _MobileViewState extends State<MobileView> {
                           ],
                         ),
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              width / 40, height / 12.5, width / 40, 0),
+                          padding:
+                              EdgeInsets.fromLTRB(width / 40, 5, width / 40, 0),
                           child: Column(
                             children: [
                               SafeArea(
                                 child: Column(
                                   children: [
-                                    Text(
+                                    AutoSizeText(
                                       fullName,
+                                      maxLines: 1,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: width / 14,
+                                        fontSize: width / 15,
                                       ),
                                     ),
                                     SizedBox(
-                                      height: height / 170,
+                                      height: 2,
                                     ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text("@" + friendSoshiUsername,
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: width / 24,
-                                                fontStyle: FontStyle.italic,
-                                                letterSpacing: 1.2)),
-                                        SizedBox(
-                                          width: 3,
-                                        ),
-                                        isVerified == null ||
-                                                isVerified == false
-                                            ? Container()
-                                            : Image.asset(
-                                                "images/misc/verified.png",
-                                                scale: width / 21,
-                                              )
+                                        SoshiUsernameText(friendSoshiUsername,
+                                            fontSize: width / 24,
+                                            isVerified: isVerified)
                                       ],
                                     )
                                   ],
@@ -256,8 +246,8 @@ class _MobileViewState extends State<MobileView> {
                               ),
                               //SizedBox(height: height / 1),
                               Padding(
-                                  padding: EdgeInsets.fromLTRB(width / 6,
-                                      height / 70, width / 6, height / 80),
+                                  padding: EdgeInsets.fromLTRB(
+                                      width / 6, height / 70, width / 6, 0),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
@@ -275,6 +265,23 @@ class _MobileViewState extends State<MobileView> {
                                   )
                                   //),
                                   ),
+                              Visibility(
+                                visible: !passionsMap.isEmpty,
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: height / 100),
+                                  child: Wrap(
+                                    alignment: WrapAlignment.center,
+                                    spacing: width / 65,
+                                    children:
+                                        List.generate(passionsMap.length, (i) {
+                                      return PassionBubble(
+                                          passionsMap[i]["passion_name"],
+                                          passionsMap[i]["passion_emoji"],
+                                          width / 5.5);
+                                    }),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -283,7 +290,7 @@ class _MobileViewState extends State<MobileView> {
                   ),
                 ),
                 Positioned(
-                  top: height / 2.3,
+                  top: height / 2.05,
                   left: 0,
                   right: 0,
                   child: Container(
@@ -295,59 +302,61 @@ class _MobileViewState extends State<MobileView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Visibility(
-                          visible: passionsMap.isNotEmpty,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              width / 25, width / 30, 0, width / 30),
+                          child: Row(
                             children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    width / 25, width / 35, 0, width / 20),
-                                child: Text(
-                                  "Passions",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: width / 18),
-                                ),
+                              Text(
+                                "Socials",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: width / 18),
                               ),
-                              Center(
-                                child: SizedBox(
-                                  width: width / 1.1,
-                                  child: Wrap(
-                                    alignment: WrapAlignment.center,
-                                    //runSpacing: width / 50,
-                                    spacing: width / 40,
-                                    children:
-                                        List.generate(passionsMap.length, (i) {
-                                      return PassionBubble(
-                                        passionsMap[i]["passion_emoji"],
-                                        passionsMap[i]["passion_name"],
-                                      );
-                                    }),
-                                  ),
-                                ),
-                              ),
+                              Visibility(
+                                  visible: isContactEnabled,
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: width / 2.5,
+                                      ),
+                                      AddToContactsButtonNew(
+                                          url: usernames["Contact"],
+                                          height: 20,
+                                          width: width / 3),
+                                      // IconButton(
+                                      //     splashRadius: 1,
+                                      //     iconSize: 10,
+                                      //     onPressed: () {},
+                                      //     icon: Icon(
+                                      //         CupertinoIcons.person_add_solid)),
+                                      // Container(
+                                      //   height: 30,
+                                      //   child: NeumorphicButton(
+                                      //     style: NeumorphicStyle(
+                                      //         color: Colors.blue),
+                                      //     child: Row(
+                                      //       children: [
+                                      //         Text("Add to contacts"),
+                                      //         // Icon(
+                                      //         //     CupertinoIcons.cloud_download)
+                                      //       ],
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ))
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              width / 25, width / 20, 0, width / 30),
-                          child: Text(
-                            "Socials",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: width / 18),
-                          ),
-                        ),
                         Center(
-                          child: (visiblePlatforms == null ||
-                                  visiblePlatforms.isEmpty == true)
+                          child: (visiblePlatforms.isEmpty)
                               ? Center(
                                   child: Padding(
                                     padding: const EdgeInsets.all(15),
                                     child: Text(
                                       "This user isn't currently sharing any social media platforms :(",
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 )
@@ -369,31 +378,31 @@ class _MobileViewState extends State<MobileView> {
                                     }),
                                   )),
                         ),
-                        SizedBox(
-                          height: width / 40,
-                        ),
-                        Center(
-                          child: Visibility(
-                              visible: isContactEnabled,
-                              // visible: false,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: AddToContactsButton(
-                                  url: usernames["Contact"],
-                                  height: height / 30,
-                                  width: width / 2,
-                                ),
-                              )),
-                        ),
+                        // SizedBox(
+                        //   height: width / 40,
+                        // ),
+                        // Center(
+                        //   child: Visibility(
+                        //       visible: isContactEnabled,
+                        //       // visible: false,
+                        //       child: Padding(
+                        //         padding: const EdgeInsets.all(8.0),
+                        //         child: AddToContactsButton(
+                        //           url: usernames["Contact"],
+                        //           height: height / 30,
+                        //           width: width / 2,
+                        //         ),
+                        //       )),
+                        // ),
                       ],
                     ),
                   ),
                 ),
                 Positioned(
-                    top: 0,
                     left: 0,
                     right: 0,
-                    child: GetTheAppBanner(height / 15, width)),
+                    bottom: 40,
+                    child: GetTheAppBanner(height / 9, width)),
               ],
             );
           } else {
@@ -409,44 +418,9 @@ class GetTheAppBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlassmorphicContainer(
+    return Container(
         height: height,
         width: width,
-        borderRadius: 20,
-        blur: 10,
-        alignment: Alignment.bottomCenter,
-        border: 2,
-        linearGradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              (Theme.of(context).brightness == Brightness.light
-                      ? Colors.white
-                      : Colors.black)
-                  .withOpacity(0.01),
-              (Theme.of(context).brightness == Brightness.light
-                      ? Colors.white
-                      : Colors.black)
-                  .withOpacity(0.01),
-            ],
-            stops: [
-              0.1,
-              1,
-            ]),
-        borderGradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            (Theme.of(context).brightness == Brightness.light
-                    ? Colors.white
-                    : Colors.black)
-                .withOpacity(0.1),
-            (Theme.of(context).brightness == Brightness.light
-                    ? Colors.white
-                    : Colors.black)
-                .withOpacity(0.1),
-          ],
-        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -463,6 +437,7 @@ class GetTheAppBanner extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(15, 10, 3, 3),
               child: ElevatedButton(
                 onPressed: () {
+                  Analytics.logPressGetAppButton();
                   if (defaultTargetPlatform != TargetPlatform.android) {
                     // print("[+] Go to app store");
                     URL.launchURL(

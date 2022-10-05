@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:soshi/database.dart';
-import 'package:soshi/mobileView.dart';
+
 import 'package:soshi/responsive.dart';
 import 'package:soshi/url.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,6 +11,7 @@ import 'constants/widgets.dart';
 import 'package:flutter/foundation.dart';
 
 import 'desktopView.dart';
+import 'mobileview.dart';
 
 bool biz = true;
 
