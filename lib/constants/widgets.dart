@@ -8,6 +8,7 @@ import '../analytics.dart';
 import '../database.dart';
 import '../url.dart';
 import 'constants.dart';
+import 'package:flutter/foundation.dart';
 
 /* Widget to build the profile picture and check if they are null */
 // /* Widget to build the profile picture and check if they are null */
@@ -321,5 +322,146 @@ class SMButton extends StatelessWidget {
       },
       iconSize: size,
     );
+  }
+}
+
+class GetTheAppBanner extends StatelessWidget {
+  double height, width;
+  GetTheAppBanner(this.height, this.width);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: height,
+        width: width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Text(
+            //   "Download Soshi",
+            //   style:
+            //       TextStyle(fontWeight: FontWeight.bold, fontSize: width / 22),
+            // ),
+            // SizedBox(
+            //   width: 15,
+            // ),
+            // Icon(CupertinoIcons.arrow_right_circle),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 10, 3, 3),
+              child: ElevatedButton(
+                onPressed: () {
+                  Analytics.logPressGetAppButton();
+                  if (defaultTargetPlatform != TargetPlatform.android) {
+                    // print("[+] Go to app store");
+                    URL.launchURL(
+                        "https://apps.apple.com/us/app/soshi/id1595515750?platform=iphone");
+                  } else {
+                    // print("[+] Go to play store");
+                    URL.launchURL(
+                        "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
+                  }
+                },
+                child: Container(
+                    //height: height / 2,
+                    //width: width / 5,
+                    child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Download Soshi  ",
+                        style: TextStyle(
+                            fontFamily: "Montserrat",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.white),
+                      ),
+                      // SizedBox(width: 15),
+                      ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        child: Image.asset(
+                          "assets/images/SoshiLogos/soshi_icon.png",
+                        ),
+                      ),
+                      // SizedBox(width: 10),
+                      // Icon(
+                      //   Icons.chevron_right,
+                      //   size: 30,
+                      // )
+                    ],
+                  ),
+                )),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black,
+                  // side: BorderSide(color: Colors.cyan[400]!, width: 2),
+                  //elevation: 15,
+                  padding: const EdgeInsets.all(15.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ));
+  }
+}
+
+class CheckUsOutBanner extends StatelessWidget {
+  double height, width;
+  CheckUsOutBanner(this.height, this.width);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: height,
+        width: width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 10, 3, 3),
+              child: ElevatedButton(
+                onPressed: () {
+                  URL.launchURL("https://soshi.org");
+                },
+                child: Container(
+                    //height: height / 2,
+                    //width: width / 5,
+                    child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Check us Out",
+                        style: TextStyle(
+                            fontFamily: "Montserrat",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.white),
+                      ),
+                      // SizedBox(width: 15),
+
+                      // SizedBox(width: 10),
+                      // Icon(
+                      //   Icons.chevron_right,
+                      //   size: 30,
+                      // )
+                    ],
+                  ),
+                )),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black,
+                  // side: BorderSide(color: Colors.cyan[400]!, width: 2),
+                  //elevation: 15,
+                  padding: const EdgeInsets.all(15.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ));
   }
 }
