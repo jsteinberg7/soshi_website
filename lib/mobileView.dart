@@ -63,8 +63,7 @@ class _MobileViewState extends State<MobileView> {
       return FutureBuilder(
           future: getUserData(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done &&
-                snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.done) {
               dynamic userData = snapshot.data;
               String fullName = databaseService.getFullName(userData);
               String profilePhotoURL = databaseService.getPhotoURL(userData);
@@ -75,9 +74,8 @@ class _MobileViewState extends State<MobileView> {
               String numFriendsString = numfriends.toString();
               String photoUrl = databaseService.getPhotoURL(userData);
               bool isContactEnabled;
-              List<dynamic> passionsMap =
-                  databaseService.getPassions(userData) ?? [];
-              print(passionsMap.toList());
+              List<dynamic> passionsMap = databaseService.getPassions(userData);
+              // print(passionsMap.toList());
               // List<Map> passionsMap = [
               //   {"passion_emoji": "😋", "passion_name": "food"},
               //   {"passion_emoji": "🏑", "passion_name": "hockey"},

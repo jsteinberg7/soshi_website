@@ -32,22 +32,19 @@ class DatabaseService {
   }
 
   List<dynamic> getPassions(Map userData) {
-    List<dynamic> rawPassions = userData["passions"] ?? [];
+    List<dynamic> rawPassions = userData["Passions"] ?? [];
     if (rawPassions.isEmpty) {
       return [];
     }
-    List<int> indicesToRemove = [];
+    List<dynamic> filteredPassionsMap = [];
+
+    print(rawPassions[0]["passion_name"]);
     for (int i = 0; i < 3; i++) {
-      if (rawPassions[i].toString().contains("valid")) {
-        indicesToRemove.add(i);
-        //rawPassions.removeAt(i);
-        print(rawPassions);
+      if (!((rawPassions[i]["passion_name"]).contains("Empty"))) {
+        filteredPassionsMap.add(rawPassions[i]);
       }
     }
-    for (int j = 0; j < indicesToRemove.length; j++) {
-      rawPassions.removeAt(indicesToRemove[j]);
-    }
-    return rawPassions;
+    return filteredPassionsMap;
   }
 
   // pass in soshiUsername, return map of user switches (platform visibility)
