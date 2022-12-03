@@ -2,9 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:soshi/analytics.dart';
 import 'package:soshi/url.dart';
+
+import 'package:form_validator/form_validator.dart';
 
 import '../../../constants/widgets.dart';
 
@@ -12,6 +16,7 @@ import 'package:glassmorphism/glassmorphism.dart';
 
 import 'package:uuid/uuid.dart';
 
+import 'constants/loading.dart';
 import 'database.dart';
 
 class MobileView extends StatefulWidget {
@@ -73,14 +78,6 @@ class _MobileViewState extends State<MobileView> {
             String photoUrl = databaseService.getPhotoURL(userData);
             bool isContactEnabled;
             List<dynamic> passionsMap = databaseService.getPassions(userData);
-            // print(passionsMap.toList());
-            // List<Map> passionsMap = [
-            //   {"passion_emoji": "😋", "passion_name": "food"},
-            //   {"passion_emoji": "🏑", "passion_name": "hockey"},
-            //   {"passion_emoji": "🏃‍♀️", "passion_name": "running"}
-            // ];
-
-            // List<Map> passionsMap = [];
 
             List<String> visiblePlatforms;
             Map usernames;
@@ -97,6 +94,11 @@ class _MobileViewState extends State<MobileView> {
             } else {
               isContactEnabled = false;
             }
+
+            Future.delayed(Duration(milliseconds: 2000), () {
+              swapInfoForm(context, fullName.split(" ").first, profilePhotoURL,
+                  friendSoshiUsername);
+            });
             return Stack(
               children: [
                 Positioned(
@@ -153,13 +155,35 @@ class _MobileViewState extends State<MobileView> {
                               SafeArea(
                                 child: Column(
                                   children: [
-                                    AutoSizeText(
-                                      fullName,
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: width / 15,
-                                      ),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                            child: Center(
+                                          child: AutoSizeText(
+                                            fullName,
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: width / 15,
+                                            ),
+                                          ),
+                                        )),
+                                        GestureDetector(
+                                          onTap: () {
+                                            swapInfoForm(
+                                                context,
+                                                fullName.split(" ").first,
+                                                profilePhotoURL,
+                                                friendSoshiUsername);
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                5, 5, 0, 0),
+                                            child: Icon(
+                                                Icons.person_add_alt_1_sharp),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                     SizedBox(
                                       height: 2,
@@ -464,7 +488,7 @@ class GetTheAppBanner extends StatelessWidget {
                       ),
                       // SizedBox(width: 15),
                       ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
                         child: Image.asset(
                           "assets/images/SoshiLogos/soshi_icon.png",
                         ),
@@ -491,4 +515,140 @@ class GetTheAppBanner extends StatelessWidget {
           ],
         ));
   }
+}
+
+void swapInfoForm(BuildContext context, String firstname, String profilePicURL,
+    String soshiUsernameRecieving) {
+  double height = MediaQuery.of(context).size.height;
+  double width = MediaQuery.of(context).size.width;
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController numberController = new TextEditingController();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController jobTitleController = new TextEditingController();
+  TextEditingController companyController = new TextEditingController();
+
+  DatabaseService dbService =
+      new DatabaseService(soshiUsernameIn: soshiUsernameRecieving);
+
+  showBarModalBottomSheet(
+      context: context,
+      builder: (context) => SingleChildScrollView(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.grey[850]
+                      : Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8),
+                      bottomLeft: Radius.zero,
+                      bottomRight: Radius.zero)),
+              height: height / 1.1,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      SizedBox(
+                          //height: height / 50,
+                          height: 10),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(width: 10),
+                            ProfilePic(radius: 60, url: profilePicURL),
+                            SizedBox(
+                              width: width / 30,
+                            ),
+                            Flexible(
+                              child: Text(
+                                "Send your information back to $firstname.",
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          ]),
+                      //SizedBox(height: height / 40),
+                      // Padding(
+                      //   padding:
+                      //       const EdgeInsets.only(left: 10, right: 10, top: 10),
+                      //   child: Divider(
+                      //     color: Colors.white,
+                      //     thickness: .3,
+                      //   ),
+                      // ),
+                      SizedBox(height: height / 80),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: swapTextField(
+                                  "Name", "name", nameController)),
+                          Expanded(
+                              child: swapTextField("Phone Number",
+                                  "phonenumber", numberController)),
+                        ],
+                      ),
+                      SizedBox(height: height / 40),
+                      swapTextField("Email", "name", emailController),
+                      SizedBox(height: height / 40),
+                      swapTextField("Job Title", "name", jobTitleController),
+                      SizedBox(height: height / 40),
+                      swapTextField("Company", "name", companyController),
+                      SizedBox(height: height / 30),
+                      NeumorphicButton(
+                        onPressed: () async {
+                          DialogBuilder(context).showLoadingIndicator(
+                              "Sending information to $firstname.");
+                          await dbService.writeSwapInformation(
+                              soshiUsernameRecieving,
+                              nameController.text,
+                              numberController.text,
+                              emailController.text,
+                              jobTitleController.text,
+                              companyController.text);
+                          DialogBuilder(context).hideOpenDialog();
+                          Navigator.of(context).pop();
+                          // Pop up that info has been sent
+                        },
+                        child: Container(
+                          width: width / 1.5,
+                          height: height / 35,
+                          child: Text(
+                            "Connect",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(letterSpacing: 3, fontSize: 20),
+                          ),
+                        ),
+                        style: NeumorphicStyle(
+                            boxShape: NeumorphicBoxShape.roundRect(
+                                BorderRadius.circular(20.0)),
+                            color: Colors.blue,
+                            shadowLightColor: Colors.grey[700]),
+                      )
+                    ]),
+              ),
+            ),
+          ));
+}
+
+Padding swapTextField(
+    String hinttext, String autofill, TextEditingController textController) {
+  return Padding(
+    padding: EdgeInsets.only(left: 10, right: 10),
+    child: TextFormField(
+      keyboardType: hinttext == "Phone Number"
+          ? TextInputType.phone
+          : hinttext == "Email"
+              ? TextInputType.emailAddress
+              : TextInputType.name,
+      controller: textController,
+      decoration: InputDecoration(
+          hintText: hinttext,
+          contentPadding: EdgeInsets.fromLTRB(5, 20, 20, 20),
+          hintStyle: TextStyle(fontSize: 18),
+          focusColor: Colors.cyan),
+      style: TextStyle(fontSize: 18),
+    ),
+  );
 }
