@@ -465,11 +465,37 @@ class _MobileViewState extends State<MobileView> {
                     ),
                   ),
                 ),
-                // Positioned(
-                //     left: 0,
-                //     right: 0,
-                //     bottom: 40,
-                //     child: GetTheAppBanner(height / 9, width)),
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: ClipRRect(
+                      child: GestureDetector(
+                    onTap: () {
+                      print("LANCYH");
+                      Analytics.logPressGetAppButton();
+                      if (defaultTargetPlatform != TargetPlatform.android) {
+                        // print("[+] Go to app store");
+                        URL.launchURL(
+                            "https://apps.apple.com/us/app/soshi/id1595515750?platform=iphone");
+                      } else {
+                        // print("[+] Go to play store");
+                        URL.launchURL(
+                            "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
+                      }
+                    },
+                    child: Container(
+                        width: 45,
+                        height: 45,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            child: Image.asset(
+                              "assets/images/SoshiLogos/new_soshi_icon.png",
+                            ))),
+                  )
+
+                      // GetTheAppBanner(height / 15, width)
+                      ),
+                )
               ],
             );
           } else {
@@ -524,11 +550,7 @@ class GetTheAppBanner extends StatelessWidget {
                     children: [
                       Text(
                         "Download Soshi  ",
-                        style: TextStyle(
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Colors.white),
+                        style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                       // SizedBox(width: 15),
                       ClipRRect(
