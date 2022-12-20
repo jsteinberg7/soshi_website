@@ -95,10 +95,10 @@ class _MobileViewState extends State<MobileView> {
               isContactEnabled = false;
             }
 
-            Future.delayed(Duration(milliseconds: 2000), () {
-              swapInfoForm(context, fullName.split(" ").first, profilePhotoURL,
-                  friendSoshiUsername);
-            });
+            // Future.delayed(Duration(milliseconds: 2000), () {
+            //   swapInfoForm(context, fullName.split(" ").first, profilePhotoURL,
+            //       friendSoshiUsername);
+            // });
             return Stack(
               children: [
                 Positioned(
@@ -168,21 +168,21 @@ class _MobileViewState extends State<MobileView> {
                                             ),
                                           ),
                                         )),
-                                        GestureDetector(
-                                          onTap: () {
-                                            swapInfoForm(
-                                                context,
-                                                fullName.split(" ").first,
-                                                profilePhotoURL,
-                                                friendSoshiUsername);
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                5, 5, 0, 0),
-                                            child: Icon(
-                                                Icons.person_add_alt_1_sharp),
-                                          ),
-                                        )
+                                        // GestureDetector(
+                                        //   onTap: () {
+                                        //     swapInfoForm(
+                                        //         context,
+                                        //         fullName.split(" ").first,
+                                        //         profilePhotoURL,
+                                        //         friendSoshiUsername);
+                                        //   },
+                                        //   child: Padding(
+                                        //     padding: const EdgeInsets.fromLTRB(
+                                        //         5, 5, 0, 0),
+                                        //     child: Icon(
+                                        //         Icons.person_add_alt_1_sharp),
+                                        //   ),
+                                        // )
                                       ],
                                     ),
                                     SizedBox(
@@ -323,8 +323,85 @@ class _MobileViewState extends State<MobileView> {
                             topLeft: Radius.circular(20.0),
                             topRight: Radius.circular(20.0))),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        Visibility(
+                            visible: isContactEnabled,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                              child: Container(
+                                width: width / 1.3,
+                                child: MaterialButton(
+                                  onPressed: () async {
+                                    try {
+                                      await URL.launchURL(usernames["Contact"]);
+                                      // add contact added analytic here?
+                                    } catch (e) {}
+
+                                    //pop up of swap?
+                                    swapInfoForm(
+                                        context,
+                                        fullName.split(" ").first,
+                                        profilePhotoURL,
+                                        friendSoshiUsername);
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(80.0)),
+                                  padding: const EdgeInsets.all(0.0),
+                                  child: Ink(
+                                    decoration: const BoxDecoration(
+                                      gradient: LinearGradient(colors: [
+                                        Color.fromARGB(255, 192, 33, 246),
+                                        Color.fromARGB(255, 23, 61, 247)
+                                      ]),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(19.0)),
+                                    ),
+                                    child: Container(
+                                      width: width / 1.3,
+                                      height: height / 20,
+                                      alignment: Alignment.center,
+                                      child: const Text(
+                                        'Add to Contacts',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            letterSpacing: 1.4, fontSize: 20),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                // child: NeumorphicButton(
+                                //     onPressed: () async {
+                                //       try {
+                                //         await URL
+                                //             .launchURL(usernames["Contact"]);
+                                //         // add contact added analytic here?
+                                //       } catch (e) {}
+
+                                //       //pop up of swap?
+                                //       swapInfoForm(
+                                //           context,
+                                //           fullName.split(" ").first,
+                                //           profilePhotoURL,
+                                //           friendSoshiUsername);
+                                //     },
+                                //     child: Text(
+                                //       "Add to Contacts",
+                                //       textAlign: TextAlign.center,
+                                //       style: TextStyle(
+                                //           letterSpacing: 1.4, fontSize: 20),
+                                //     ),
+                                //     style: NeumorphicStyle(
+                                //         shadowDarkColor: Colors.black,
+                                //         shadowLightColor: Colors.black12,
+                                //         color: Colors.blue,
+                                //         boxShape: NeumorphicBoxShape.roundRect(
+                                //             BorderRadius.circular(19.0)))),
+                              ),
+                            )),
+
                         Padding(
                           padding: EdgeInsets.fromLTRB(
                               width / 25, width / 30, 0, width / 30),
@@ -336,39 +413,6 @@ class _MobileViewState extends State<MobileView> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: width / 18),
                               ),
-                              Visibility(
-                                  visible: isContactEnabled,
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: width / 2.5,
-                                      ),
-                                      AddToContactsButtonNew(
-                                          url: usernames["Contact"],
-                                          height: 20,
-                                          width: width / 3),
-                                      // IconButton(
-                                      //     splashRadius: 1,
-                                      //     iconSize: 10,
-                                      //     onPressed: () {},
-                                      //     icon: Icon(
-                                      //         CupertinoIcons.person_add_solid)),
-                                      // Container(
-                                      //   height: 30,
-                                      //   child: NeumorphicButton(
-                                      //     style: NeumorphicStyle(
-                                      //         color: Colors.blue),
-                                      //     child: Row(
-                                      //       children: [
-                                      //         Text("Add to contacts"),
-                                      //         // Icon(
-                                      //         //     CupertinoIcons.cloud_download)
-                                      //       ],
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                    ],
-                                  ))
                             ],
                           ),
                         ),
@@ -410,7 +454,7 @@ class _MobileViewState extends State<MobileView> {
                         //       // visible: false,
                         //       child: Padding(
                         //         padding: const EdgeInsets.all(8.0),
-                        //         child: AddToContactsButton(
+                        //       child: AddToContactsButton(
                         //           url: usernames["Contact"],
                         //           height: height / 30,
                         //           width: width / 2,
@@ -421,11 +465,11 @@ class _MobileViewState extends State<MobileView> {
                     ),
                   ),
                 ),
-                Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 40,
-                    child: GetTheAppBanner(height / 9, width)),
+                // Positioned(
+                //     left: 0,
+                //     right: 0,
+                //     bottom: 40,
+                //     child: GetTheAppBanner(height / 9, width)),
               ],
             );
           } else {
@@ -596,7 +640,7 @@ void swapInfoForm(BuildContext context, String firstname, String profilePicURL,
                       SizedBox(height: height / 40),
                       swapTextField("Company", "name", companyController),
                       SizedBox(height: height / 30),
-                      NeumorphicButton(
+                      MaterialButton(
                         onPressed: () async {
                           DialogBuilder(context).showLoadingIndicator(
                               "Sending information to $firstname.");
@@ -611,20 +655,42 @@ void swapInfoForm(BuildContext context, String firstname, String profilePicURL,
                           Navigator.of(context).pop();
                           // Pop up that info has been sent
                         },
-                        child: Container(
-                          width: width / 1.5,
-                          height: height / 35,
-                          child: Text(
-                            "Connect",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(letterSpacing: 3, fontSize: 20),
+                        child: Ink(
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(colors: [
+                              Color.fromARGB(255, 192, 33, 246),
+                              Color.fromARGB(255, 23, 61, 247)
+                            ]),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(19.0)),
+                          ),
+                          child: Container(
+                            width: width / 1.5,
+                            height: height / 20,
+                            alignment: Alignment.center,
+                            child: const Text(
+                              'Connect',
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(letterSpacing: 1.4, fontSize: 20),
+                            ),
                           ),
                         ),
-                        style: NeumorphicStyle(
-                            boxShape: NeumorphicBoxShape.roundRect(
-                                BorderRadius.circular(20.0)),
-                            color: Colors.blue,
-                            shadowLightColor: Colors.grey[700]),
+
+                        // child: Container(
+                        //   width: width / 1.5,
+                        //   height: height / 35,
+                        //   child: Text(
+                        //     "Connect",
+                        //     textAlign: TextAlign.center,
+                        //     style: TextStyle(letterSpacing: 3, fontSize: 20),
+                        //   ),
+                        // ),
+                        // style: NeumorphicStyle(
+                        //     boxShape: NeumorphicBoxShape.roundRect(
+                        //         BorderRadius.circular(20.0)),
+                        //     color: Colors.blue,
+                        //     shadowLightColor: Colors.grey[700]),
                       )
                     ]),
               ),

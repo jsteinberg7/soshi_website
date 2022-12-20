@@ -170,12 +170,12 @@ class DatabaseService {
       print(numForSwappedUser); // from 0 upto 999999 included
       String nameOfSwapFile = "~swap$numForSwappedUser";
       await swapCollection.doc(nameOfSwapFile).set(<String, dynamic>{
-        "swappedWith": receiveingSoshiUser,
-        "name": name,
-        "email": emailToLowerCase,
-        "phone": phoneNumber,
-        "jobTitle": jobTitle,
-        "company": company
+        "Swapped With": receiveingSoshiUser,
+        "Name": name,
+        "Email": emailToLowerCase,
+        "Phone": phoneNumber,
+        "Job Title": jobTitle,
+        "Company": company
       });
       await updateSwappedContactsList(nameOfSwapFile, receiveingSoshiUser);
       // add nameOfSwapFile to the swappedContacts list of the recieveing user
