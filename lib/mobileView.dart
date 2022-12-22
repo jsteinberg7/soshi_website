@@ -331,7 +331,14 @@ class _MobileViewState extends State<MobileView> {
                               padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
                               child: Container(
                                 width: width / 1.3,
-                                child: MaterialButton(
+                                child: NeumorphicButton(
+                                  style: NeumorphicStyle(
+                                      shadowDarkColor: Colors.black,
+                                      shadowLightColor: Colors.black12,
+                                      color: Colors.transparent,
+                                      boxShape: NeumorphicBoxShape.roundRect(
+                                          BorderRadius.circular(20.0))),
+                                  padding: EdgeInsets.all(0),
                                   onPressed: () async {
                                     try {
                                       await URL.launchURL(usernames["Contact"]);
@@ -345,11 +352,7 @@ class _MobileViewState extends State<MobileView> {
                                         profilePhotoURL,
                                         friendSoshiUsername);
                                   },
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(80.0)),
-                                  padding: const EdgeInsets.all(0.0),
-                                  child: Ink(
+                                  child: Container(
                                     decoration: const BoxDecoration(
                                       gradient: LinearGradient(colors: [
                                         Color.fromARGB(255, 192, 33, 246),
@@ -358,16 +361,14 @@ class _MobileViewState extends State<MobileView> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(19.0)),
                                     ),
-                                    child: Container(
-                                      width: width / 1.3,
-                                      height: height / 20,
-                                      alignment: Alignment.center,
-                                      child: const Text(
-                                        'Add to Contacts',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            letterSpacing: 1.4, fontSize: 20),
-                                      ),
+                                    width: width / 1.3,
+                                    height: height / 20,
+                                    alignment: Alignment.center,
+                                    child: const Text(
+                                      'Add to Contacts',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          letterSpacing: 1.4, fontSize: 20),
                                     ),
                                   ),
                                 ),
@@ -662,57 +663,86 @@ void swapInfoForm(BuildContext context, String firstname, String profilePicURL,
                       SizedBox(height: height / 40),
                       swapTextField("Company", "name", companyController),
                       SizedBox(height: height / 30),
-                      MaterialButton(
-                        onPressed: () async {
-                          DialogBuilder(context).showLoadingIndicator(
-                              "Sending information to $firstname.");
-                          await dbService.writeSwapInformation(
-                              soshiUsernameRecieving,
-                              nameController.text,
-                              numberController.text,
-                              emailController.text,
-                              jobTitleController.text,
-                              companyController.text);
-                          DialogBuilder(context).hideOpenDialog();
-                          Navigator.of(context).pop();
-                          // Pop up that info has been sent
-                        },
-                        child: Ink(
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(colors: [
-                              Color.fromARGB(255, 192, 33, 246),
-                              Color.fromARGB(255, 23, 61, 247)
-                            ]),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(19.0)),
-                          ),
-                          child: Container(
-                            width: width / 1.5,
-                            height: height / 20,
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Connect',
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(letterSpacing: 1.4, fontSize: 20),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          NeumorphicButton(
+                            padding: EdgeInsets.zero,
+                            style: NeumorphicStyle(
+                                shadowDarkColor: Colors.black,
+                                shadowLightColor: Colors.black12,
+                                color: Colors.transparent,
+                                boxShape: NeumorphicBoxShape.roundRect(
+                                    BorderRadius.circular(20.0))),
+                            onPressed: () async {
+                              DialogBuilder(context).showLoadingIndicator(
+                                  "Sending information to $firstname.");
+                              await dbService.writeSwapInformation(
+                                  soshiUsernameRecieving,
+                                  nameController.text,
+                                  numberController.text,
+                                  emailController.text,
+                                  jobTitleController.text,
+                                  companyController.text);
+                              DialogBuilder(context).hideOpenDialog();
+                              Navigator.of(context).pop();
+                              // Pop up that info has been sent
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 18, vertical: 10),
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(colors: [
+                                  Color.fromARGB(255, 192, 33, 246),
+                                  Color.fromARGB(255, 23, 61, 247)
+                                ]),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(19.0)),
+                              ),
+                              width: width / 1.5,
+                              height: height / 17,
+                              alignment: Alignment.center,
+                              child: const Text(
+                                'Send My Info',
+                                textAlign: TextAlign.center,
+                                style:
+                                    TextStyle(letterSpacing: 1.4, fontSize: 20),
+                              ),
                             ),
                           ),
-                        ),
-
-                        // child: Container(
-                        //   width: width / 1.5,
-                        //   height: height / 35,
-                        //   child: Text(
-                        //     "Connect",
-                        //     textAlign: TextAlign.center,
-                        //     style: TextStyle(letterSpacing: 3, fontSize: 20),
-                        //   ),
-                        // ),
-                        // style: NeumorphicStyle(
-                        //     boxShape: NeumorphicBoxShape.roundRect(
-                        //         BorderRadius.circular(20.0)),
-                        //     color: Colors.blue,
-                        //     shadowLightColor: Colors.grey[700]),
+                          SizedBox(height: height / 30),
+                          NeumorphicButton(
+                            padding: EdgeInsets.zero,
+                            style: NeumorphicStyle(
+                                shadowDarkColor: Colors.black,
+                                shadowLightColor: Colors.black12,
+                                color: Colors.transparent,
+                                boxShape: NeumorphicBoxShape.roundRect(
+                                    BorderRadius.circular(20.0))),
+                            onPressed: () async {
+                              DialogBuilder(context).hideOpenDialog();
+                              // Navigator.of(context).pop();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 18, vertical: 10),
+                              decoration: const BoxDecoration(
+                                color: Colors.black,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(19.0)),
+                              ),
+                              width: width / 1.5,
+                              height: height / 17,
+                              alignment: Alignment.center,
+                              child: const Text(
+                                'No Thanks',
+                                textAlign: TextAlign.center,
+                                style:
+                                    TextStyle(letterSpacing: 1.4, fontSize: 20),
+                              ),
+                            ),
+                          ),
+                        ],
                       )
                     ]),
               ),
