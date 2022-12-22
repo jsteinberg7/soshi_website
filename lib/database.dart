@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 /*
  Includes getters and setters for various fields in the Firebase database
@@ -150,5 +153,65 @@ class DatabaseService {
 
   Future<void> updateVerifiedStatus(String soshiUser, bool isVerified) async {
     await usersCollection.doc(soshiUser).update({"Verified": isVerified});
+  }
+
+  // Swap functions go here
+
+  Future<void> writeSwapInformation(String receiveingSoshiUser, String name,
+      String phoneNumber, String email, String jobTitle, String company) async {
+    if (!name.isEmpty) {
+      CollectionReference swapCollection =
+          FirebaseFirestore.instance.collection("swappedInfo");
+
+      // Writing to a new file in "swappedInfo" collection
+      String emailToLowerCase = email.toLowerCase();
+      Random random = new Random();
+      int numForSwappedUser = random.nextInt(2 ^ 32);
+      print(numForSwappedUser); // from 0 upto 999999 included
+      String nameOfSwapFile = "~swap$numForSwappedUser";
+      await swapCollection.doc(nameOfSwapFile).set(<String, dynamic>{
+        "Swapped With": receiveingSoshiUser,
+        "Name": name,
+        "Email": emailToLowerCase,
+        "Phone": phoneNumber,
+        "Job Title": jobTitle,
+        "Company": company
+      });
+      await updateSwappedContactsList(nameOfSwapFile, receiveingSoshiUser);
+      // add nameOfSwapFile to the swappedContacts list of the recieveing user
+    }
+  }
+
+  Future<void> updateSwappedContactsList(
+      String nameOfSwapFile, String recievingSoshiUsername) async {
+    DatabaseService databaseService =
+        new DatabaseService(soshiUsernameIn: recievingSoshiUsername);
+    List<dynamic> swappedContacts =
+        await databaseService.getSwappedContacts(recievingSoshiUsername);
+    // ignore: unnecessary_null_comparison
+    if (swappedContacts.toString() == "[NULL]") {
+      swappedContacts = [nameOfSwapFile];
+    } else {
+      swappedContacts.add(nameOfSwapFile);
+    }
+    await usersCollection
+        .doc(recievingSoshiUsername)
+        .update({'Swapped Contacts': swappedContacts});
+
+    // push doc changes
+  }
+
+  Future<List<dynamic>> getSwappedContacts(
+      String currSoshiUsernameParam) async {
+    List<dynamic> swappedContactsList = ["NULL"];
+    await usersCollection
+        .doc(currSoshiUsernameParam)
+        .get()
+        .then((DocumentSnapshot ds) {
+      Map data = ds.data() as Map;
+      swappedContactsList = data["Swapped Contacts"] ?? ["NULL"];
+      print(swappedContactsList);
+    });
+    return swappedContactsList;
   }
 }

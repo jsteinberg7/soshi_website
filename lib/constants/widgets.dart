@@ -132,48 +132,33 @@ class PassionBubble extends StatelessWidget {
 
 class AddToContactsButtonNew extends StatelessWidget {
   String url;
-  double height, width;
-  AddToContactsButtonNew(
-      {required this.url, required this.height, required this.width});
+  double width;
+  AddToContactsButtonNew({required this.url, required this.width});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        try {
-          await URL.launchURL(url);
-          // add contact added analytic here?
-        } catch (e) {}
-      },
+    return Padding(
+      padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
       child: Container(
-        decoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.light
-                ? Colors.grey[200]
-                : Colors.black,
-            //color: Colors.black,
-            borderRadius: BorderRadius.all(Radius.circular(5))),
-        height: height,
-        width: width,
-        child: Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                "Add to Contacts",
-                style: TextStyle(
-                    fontSize: 10,
-                    color: Theme.of(context).brightness == Brightness.light
-                        ? Colors.black
-                        : Colors.white),
-              ),
-              Icon(
-                CupertinoIcons.cloud_download,
-                size: 10,
-              )
-            ],
-          ),
-        ),
+        width: width / 1.3,
+        child: NeumorphicButton(
+            onPressed: () async {
+              try {
+                await URL.launchURL(url);
+                // add contact added analytic here?
+              } catch (e) {}
+            },
+            child: Text(
+              "Add to Contacts",
+              textAlign: TextAlign.center,
+              style: TextStyle(letterSpacing: 1.4, fontSize: 20),
+            ),
+            style: NeumorphicStyle(
+                shadowDarkColor: Colors.black,
+                shadowLightColor: Colors.black12,
+                color: Colors.blue,
+                boxShape:
+                    NeumorphicBoxShape.roundRect(BorderRadius.circular(19.0)))),
       ),
     );
   }
