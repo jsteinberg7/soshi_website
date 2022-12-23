@@ -116,9 +116,8 @@ class _MyAppState extends State<MyApp> {
     // print("pushing url");
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        themeMode: brightness == ui.Brightness.dark
-            ? ThemeMode.light
-            : ThemeMode.light,
+        themeMode:
+            brightness == ui.Brightness.dark ? ThemeMode.dark : ThemeMode.light,
         theme: ThemeData(
           fontFamily: GoogleFonts.inter().fontFamily,
           brightness: Theme.of(context).brightness,
