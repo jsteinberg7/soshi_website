@@ -471,7 +471,6 @@ class _MobileViewState extends State<MobileView> {
                   child: ClipRRect(
                       child: GestureDetector(
                     onTap: () {
-                      print("LANCYH");
                       Analytics.logPressGetAppButton();
                       if (defaultTargetPlatform != TargetPlatform.android) {
                         // print("[+] Go to app store");
