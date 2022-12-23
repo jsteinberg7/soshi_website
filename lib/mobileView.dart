@@ -385,7 +385,7 @@ class _MobileViewState extends State<MobileView> {
                                       decoration: const BoxDecoration(
                                         gradient: LinearGradient(colors: [
                                           Color.fromARGB(255, 192, 33, 246),
-                                          Color.fromARGB(255, 23, 157, 247)
+                                          Color.fromARGB(255, 21, 175, 218)
                                         ]),
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(19.0)),
@@ -738,7 +738,7 @@ void swapInfoForm(BuildContext context, String firstname, String profilePicURL,
                               decoration: const BoxDecoration(
                                 gradient: LinearGradient(colors: [
                                   Color.fromARGB(255, 192, 33, 246),
-                                  Color.fromARGB(255, 23, 157, 247)
+                                  Color.fromARGB(255, 21, 175, 218)
                                 ]),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(19.0)),
