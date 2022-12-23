@@ -51,7 +51,7 @@ class ProfilePic extends StatelessWidget {
     //       radius: radius,
     //       backgroundImage: (url != null) && (url != "null")
     //           ? NetworkImage(url)
-    //           : AssetImage('assets/images/SoshiLogos/soshi_icon.png'),
+    //           : AssetImage(assets/images/SoshiLogos/new_soshi_icon.png),
     //     ),
     //     decoration: new BoxDecoration(
     //       shape: BoxShape.circle,
@@ -365,7 +365,7 @@ class GetTheAppBanner extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         child: Image.asset(
-                          "assets/images/SoshiLogos/soshi_icon.png",
+                          "assets/images/SoshiLogos/new_soshi_icon.png",
                         ),
                       ),
                       // SizedBox(width: 10),

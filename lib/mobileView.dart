@@ -588,7 +588,7 @@ class GetTheAppBanner extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                         child: Image.asset(
-                          "assets/images/SoshiLogos/soshi_icon.png",
+                          "assets/images/SoshiLogos/new_soshi_icon.png",
                         ),
                       ),
                       // SizedBox(width: 10),
