@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:smart_banner/smart_banner.dart';
 import 'package:soshi/analytics.dart';
 import 'package:soshi/url.dart';
 
@@ -99,404 +100,435 @@ class _MobileViewState extends State<MobileView> {
             //   swapInfoForm(context, fullName.split(" ").first, profilePhotoURL,
             //       friendSoshiUsername);
             // });
-            return Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: Stack(
-                    children: [
-                      ProfilePicBackdrop(photoUrl,
-                          height: height / 2, width: width),
-                      GlassmorphicContainer(
-                        height: height / 2,
-                        width: width,
-                        borderRadius: 0,
-                        blur: 10,
-                        alignment: Alignment.bottomCenter,
-                        border: 2,
-                        linearGradient: LinearGradient(
+            return SmartBannerScaffold(
+              style: defaultTargetPlatform == TargetPlatform.iOS
+                  ? BannerStyle.ios
+                  : BannerStyle.android,
+              properties: BannerProperties(
+                  title: 'Soshi',
+                  author: defaultTargetPlatform == TargetPlatform.iOS
+                      ? "Free - Available on the App Store"
+                      : "Free - Available on the Play Store",
+                  buttonLabel: 'View',
+                  androidProperties: BannerPropertiesAndroid(
+                      packageName: 'com.swoledevs.soshi',
+                      icon: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          child: Image.asset(
+                            "assets/images/SoshiLogos/new_soshi_icon.png",
+                          ))),
+                  iosProperties: BannerPropertiesIOS(
+                      appId: '1595515750',
+                      icon: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          child: Image.asset(
+                            "assets/images/SoshiLogos/new_soshi_icon.png",
+                          )))),
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: Stack(
+                      children: [
+                        ProfilePicBackdrop(photoUrl,
+                            height: height / 2, width: width),
+                        GlassmorphicContainer(
+                          height: height / 2,
+                          width: width,
+                          borderRadius: 0,
+                          blur: 10,
+                          alignment: Alignment.bottomCenter,
+                          border: 2,
+                          linearGradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                (Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? Colors.white
+                                        : Colors.black)
+                                    .withOpacity(0.8),
+                                (Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? Colors.white
+                                        : Colors.black)
+                                    .withOpacity(0.4),
+                              ],
+                              stops: [
+                                0.1,
+                                1,
+                              ]),
+                          borderGradient: LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             colors: [
                               (Theme.of(context).brightness == Brightness.light
                                       ? Colors.white
                                       : Colors.black)
-                                  .withOpacity(0.8),
+                                  .withOpacity(0.5),
                               (Theme.of(context).brightness == Brightness.light
                                       ? Colors.white
                                       : Colors.black)
-                                  .withOpacity(0.4),
+                                  .withOpacity(0.5),
                             ],
-                            stops: [
-                              0.1,
-                              1,
-                            ]),
-                        borderGradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            (Theme.of(context).brightness == Brightness.light
-                                    ? Colors.white
-                                    : Colors.black)
-                                .withOpacity(0.5),
-                            (Theme.of(context).brightness == Brightness.light
-                                    ? Colors.white
-                                    : Colors.black)
-                                .withOpacity(0.5),
-                          ],
-                        ),
-                        child: Padding(
-                          padding:
-                              EdgeInsets.fromLTRB(width / 40, 5, width / 40, 0),
-                          child: Column(
-                            children: [
-                              SafeArea(
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                            child: Center(
-                                          child: AutoSizeText(
-                                            fullName,
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: width / 15,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                width / 40, 5, width / 40, 0),
+                            child: Column(
+                              children: [
+                                SafeArea(
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                              child: Center(
+                                            child: AutoSizeText(
+                                              fullName,
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: width / 15,
+                                              ),
                                             ),
-                                          ),
-                                        )),
-                                        // GestureDetector(
-                                        //   onTap: () {
-                                        //     swapInfoForm(
-                                        //         context,
-                                        //         fullName.split(" ").first,
-                                        //         profilePhotoURL,
-                                        //         friendSoshiUsername);
-                                        //   },
-                                        //   child: Padding(
-                                        //     padding: const EdgeInsets.fromLTRB(
-                                        //         5, 5, 0, 0),
-                                        //     child: Icon(
-                                        //         Icons.person_add_alt_1_sharp),
-                                        //   ),
-                                        // )
-                                      ],
+                                          )),
+                                          // GestureDetector(
+                                          //   onTap: () {
+                                          //     swapInfoForm(
+                                          //         context,
+                                          //         fullName.split(" ").first,
+                                          //         profilePhotoURL,
+                                          //         friendSoshiUsername);
+                                          //   },
+                                          //   child: Padding(
+                                          //     padding: const EdgeInsets.fromLTRB(
+                                          //         5, 5, 0, 0),
+                                          //     child: Icon(
+                                          //         Icons.person_add_alt_1_sharp),
+                                          //   ),
+                                          // )
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 2,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SoshiUsernameText(friendSoshiUsername,
+                                              fontSize: width / 24,
+                                              isVerified: isVerified)
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: height / 60,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SizedBox(
+                                      width: width / 4,
+                                      child: Column(children: [
+                                        Text(
+                                          numFriendsString.toString(),
+                                          style: TextStyle(
+                                              fontSize: width / 25,
+                                              letterSpacing: 1.2,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        numFriendsString == "1"
+                                            ? Text(
+                                                "Friend",
+                                                style: TextStyle(
+                                                    fontSize: width / 25,
+                                                    letterSpacing: 1.2),
+                                              )
+                                            : Text(
+                                                "Friends",
+                                                style: TextStyle(
+                                                    fontSize: width / 25,
+                                                    letterSpacing: 1.2),
+                                              )
+                                      ]),
+                                    ),
+                                    Hero(
+                                      tag: friendSoshiUsername,
+                                      child: ProfilePic(
+                                          radius: width / 6,
+                                          url: profilePhotoURL),
+                                      // child: Text(
+                                      //   "c",
+                                      //   textAlign: TextAlign.center,
+                                      // )
                                     ),
                                     SizedBox(
-                                      height: 2,
+                                      width: width / 4,
+                                      child: Column(children: [
+                                        Text(
+                                          soshiPoints == null
+                                              ? "0"
+                                              : soshiPoints.toString(),
+                                          style: TextStyle(
+                                              fontSize: width / 25,
+                                              letterSpacing: 1.2,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        soshiPoints.toString() == "1"
+                                            ? Text("Bolt",
+                                                style: TextStyle(
+                                                    fontSize: width / 25,
+                                                    letterSpacing: 1.2))
+                                            : Text("Bolts",
+                                                style: TextStyle(
+                                                    fontSize: width / 25,
+                                                    letterSpacing: 1.2))
+                                      ]),
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SoshiUsernameText(friendSoshiUsername,
-                                            fontSize: width / 24,
-                                            isVerified: isVerified)
-                                      ],
-                                    )
                                   ],
                                 ),
-                              ),
-                              SizedBox(
-                                height: height / 60,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  SizedBox(
-                                    width: width / 4,
-                                    child: Column(children: [
-                                      Text(
-                                        numFriendsString.toString(),
-                                        style: TextStyle(
-                                            fontSize: width / 25,
-                                            letterSpacing: 1.2,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      numFriendsString == "1"
-                                          ? Text(
-                                              "Friend",
-                                              style: TextStyle(
-                                                  fontSize: width / 25,
-                                                  letterSpacing: 1.2),
-                                            )
-                                          : Text(
-                                              "Friends",
-                                              style: TextStyle(
-                                                  fontSize: width / 25,
-                                                  letterSpacing: 1.2),
-                                            )
-                                    ]),
-                                  ),
-                                  Hero(
-                                    tag: friendSoshiUsername,
-                                    child: ProfilePic(
-                                        radius: width / 6,
-                                        url: profilePhotoURL),
-                                    // child: Text(
-                                    //   "c",
-                                    //   textAlign: TextAlign.center,
-                                    // )
-                                  ),
-                                  SizedBox(
-                                    width: width / 4,
-                                    child: Column(children: [
-                                      Text(
-                                        soshiPoints == null
-                                            ? "0"
-                                            : soshiPoints.toString(),
-                                        style: TextStyle(
-                                            fontSize: width / 25,
-                                            letterSpacing: 1.2,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      soshiPoints.toString() == "1"
-                                          ? Text("Bolt",
-                                              style: TextStyle(
-                                                  fontSize: width / 25,
-                                                  letterSpacing: 1.2))
-                                          : Text("Bolts",
-                                              style: TextStyle(
-                                                  fontSize: width / 25,
-                                                  letterSpacing: 1.2))
-                                    ]),
-                                  ),
-                                ],
-                              ),
-                              //SizedBox(height: height / 1),
-                              Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      width / 6, height / 70, width / 6, 0),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                        child: //Padding(
-                                            //padding: EdgeInsets.fromLTRB(width / 5, 0, width / 5, 0),
-                                            //child:
-                                            Visibility(
-                                                visible: bio.isNotEmpty,
-                                                child: Text(bio,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: width / 25
-                                                        // color: Colors.grey[300],
-                                                        )))),
-                                  )
-                                  //),
-                                  ),
-                              Visibility(
-                                visible: !passionsMap.isEmpty,
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: height / 100),
-                                  child: Wrap(
-                                    alignment: WrapAlignment.center,
-                                    spacing: width / 65,
-                                    children:
-                                        List.generate(passionsMap.length, (i) {
-                                      return PassionBubble(
-                                          passionsMap[i]["passion_name"],
-                                          passionsMap[i]["passion_emoji"],
-                                          width / 5.5);
-                                    }),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: height / 2.05,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20.0),
-                            topRight: Radius.circular(20.0))),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Visibility(
-                            visible: isContactEnabled,
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                              child: Container(
-                                width: width / 1.3,
-                                child: NeumorphicButton(
-                                  style: NeumorphicStyle(
-                                      shadowDarkColor: Colors.black,
-                                      shadowLightColor: Colors.black12,
-                                      color: Colors.transparent,
-                                      boxShape: NeumorphicBoxShape.roundRect(
-                                          BorderRadius.circular(20.0))),
-                                  padding: EdgeInsets.all(0),
-                                  onPressed: () async {
-                                    try {
-                                      await URL.launchURL(usernames["Contact"]);
-                                      // add contact added analytic here?
-                                    } catch (e) {}
-
-                                    //pop up of swap?
-                                    swapInfoForm(
-                                        context,
-                                        fullName.split(" ").first,
-                                        profilePhotoURL,
-                                        friendSoshiUsername);
-                                  },
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      gradient: LinearGradient(colors: [
-                                        Color.fromARGB(255, 192, 33, 246),
-                                        Color.fromARGB(255, 23, 61, 247)
-                                      ]),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(19.0)),
+                                //SizedBox(height: height / 1),
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        width / 6, height / 70, width / 6, 0),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                          child: //Padding(
+                                              //padding: EdgeInsets.fromLTRB(width / 5, 0, width / 5, 0),
+                                              //child:
+                                              Visibility(
+                                                  visible: bio.isNotEmpty,
+                                                  child: Text(bio,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          fontSize: width / 25
+                                                          // color: Colors.grey[300],
+                                                          )))),
+                                    )
+                                    //),
                                     ),
-                                    width: width / 1.3,
-                                    height: height / 20,
-                                    alignment: Alignment.center,
-                                    child: const Text(
-                                      'Add to Contacts',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          letterSpacing: 1.4, fontSize: 20),
+                                Visibility(
+                                  visible: !passionsMap.isEmpty,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: height / 100),
+                                    child: Wrap(
+                                      alignment: WrapAlignment.center,
+                                      spacing: width / 65,
+                                      children: List.generate(
+                                          passionsMap.length, (i) {
+                                        return PassionBubble(
+                                            passionsMap[i]["passion_name"],
+                                            passionsMap[i]["passion_emoji"],
+                                            width / 5.5);
+                                      }),
                                     ),
                                   ),
                                 ),
-
-                                // child: NeumorphicButton(
-                                //     onPressed: () async {
-                                //       try {
-                                //         await URL
-                                //             .launchURL(usernames["Contact"]);
-                                //         // add contact added analytic here?
-                                //       } catch (e) {}
-
-                                //       //pop up of swap?
-                                //       swapInfoForm(
-                                //           context,
-                                //           fullName.split(" ").first,
-                                //           profilePhotoURL,
-                                //           friendSoshiUsername);
-                                //     },
-                                //     child: Text(
-                                //       "Add to Contacts",
-                                //       textAlign: TextAlign.center,
-                                //       style: TextStyle(
-                                //           letterSpacing: 1.4, fontSize: 20),
-                                //     ),
-                                //     style: NeumorphicStyle(
-                                //         shadowDarkColor: Colors.black,
-                                //         shadowLightColor: Colors.black12,
-                                //         color: Colors.blue,
-                                //         boxShape: NeumorphicBoxShape.roundRect(
-                                //             BorderRadius.circular(19.0)))),
-                              ),
-                            )),
-
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              width / 25, width / 30, 0, width / 30),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Socials",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: width / 18),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                        Center(
-                          child: (visiblePlatforms.isEmpty)
-                              ? Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15),
-                                    child: Text(
-                                      "This user isn't currently sharing any social media platforms :(",
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                )
-                              : SizedBox(
-                                  // height: height / 3.5,
-                                  width: width / 1.1,
-                                  child: Wrap(
-                                    alignment: WrapAlignment.center,
-                                    spacing: width / 40,
-                                    children: List.generate(
-                                        visiblePlatforms.length, (i) {
-                                      return SMButton(
-                                        soshiUsername: friendSoshiUsername,
-                                        platform: visiblePlatforms[i],
-                                        username:
-                                            usernames[visiblePlatforms[i]],
-                                        size: width / 7,
-                                      );
-                                    }),
-                                  )),
-                        ),
-                        // SizedBox(
-                        //   height: width / 40,
-                        // ),
-                        // Center(
-                        //   child: Visibility(
-                        //       visible: isContactEnabled,
-                        //       // visible: false,
-                        //       child: Padding(
-                        //         padding: const EdgeInsets.all(8.0),
-                        //       child: AddToContactsButton(
-                        //           url: usernames["Contact"],
-                        //           height: height / 30,
-                        //           width: width / 2,
-                        //         ),
-                        //       )),
-                        // ),
                       ],
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: ClipRRect(
-                      child: GestureDetector(
-                    onTap: () {
-                      Analytics.logPressGetAppButton();
-                      if (defaultTargetPlatform != TargetPlatform.android) {
-                        // print("[+] Go to app store");
-                        URL.launchURL(
-                            "https://apps.apple.com/us/app/soshi/id1595515750?platform=iphone");
-                      } else {
-                        // print("[+] Go to play store");
-                        URL.launchURL(
-                            "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
-                      }
-                    },
+                  Positioned(
+                    top: height / 2.05,
+                    left: 0,
+                    right: 0,
                     child: Container(
-                        width: 45,
-                        height: 45,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            child: Image.asset(
-                              "assets/images/SoshiLogos/new_soshi_icon.png",
-                            ))),
-                  )
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20.0),
+                              topRight: Radius.circular(20.0))),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Visibility(
+                              visible: isContactEnabled,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                                child: Container(
+                                  width: width / 1.3,
+                                  child: NeumorphicButton(
+                                    style: NeumorphicStyle(
+                                        shadowDarkColor: Colors.black,
+                                        shadowLightColor: Colors.black12,
+                                        color: Colors.transparent,
+                                        boxShape: NeumorphicBoxShape.roundRect(
+                                            BorderRadius.circular(20.0))),
+                                    padding: EdgeInsets.all(0),
+                                    onPressed: () async {
+                                      try {
+                                        await URL
+                                            .launchURL(usernames["Contact"]);
+                                        // add contact added analytic here?
+                                      } catch (e) {}
 
-                      // GetTheAppBanner(height / 15, width)
+                                      //pop up of swap?
+                                      swapInfoForm(
+                                          context,
+                                          fullName.split(" ").first,
+                                          profilePhotoURL,
+                                          friendSoshiUsername);
+                                    },
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                        gradient: LinearGradient(colors: [
+                                          Color.fromARGB(255, 192, 33, 246),
+                                          Color.fromARGB(255, 23, 61, 247)
+                                        ]),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(19.0)),
+                                      ),
+                                      width: width / 1.3,
+                                      height: height / 20,
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'Add to Contacts',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            letterSpacing: 1.4,
+                                            fontSize: width / 23,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+
+                                  // child: NeumorphicButton(
+                                  //     onPressed: () async {
+                                  //       try {
+                                  //         await URL
+                                  //             .launchURL(usernames["Contact"]);
+                                  //         // add contact added analytic here?
+                                  //       } catch (e) {}
+
+                                  //       //pop up of swap?
+                                  //       swapInfoForm(
+                                  //           context,
+                                  //           fullName.split(" ").first,
+                                  //           profilePhotoURL,
+                                  //           friendSoshiUsername);
+                                  //     },
+                                  //     child: Text(
+                                  //       "Add to Contacts",
+                                  //       textAlign: TextAlign.center,
+                                  //       style: TextStyle(
+                                  //           letterSpacing: 1.4, fontSize: 20),
+                                  //     ),
+                                  //     style: NeumorphicStyle(
+                                  //         shadowDarkColor: Colors.black,
+                                  //         shadowLightColor: Colors.black12,
+                                  //         color: Colors.blue,
+                                  //         boxShape: NeumorphicBoxShape.roundRect(
+                                  //             BorderRadius.circular(19.0)))),
+                                ),
+                              )),
+
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                width / 25, width / 30, 0, width / 30),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Socials",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: width / 18),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Center(
+                            child: (visiblePlatforms.isEmpty)
+                                ? Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Text(
+                                        "This user isn't currently sharing any social media platforms :(",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox(
+                                    // height: height / 3.5,
+                                    width: width / 1.1,
+                                    child: Wrap(
+                                      alignment: WrapAlignment.center,
+                                      spacing: width / 40,
+                                      children: List.generate(
+                                          visiblePlatforms.length, (i) {
+                                        return SMButton(
+                                          soshiUsername: friendSoshiUsername,
+                                          platform: visiblePlatforms[i],
+                                          username:
+                                              usernames[visiblePlatforms[i]],
+                                          size: width / 7,
+                                        );
+                                      }),
+                                    )),
+                          ),
+                          // SizedBox(
+                          //   height: width / 40,
+                          // ),
+                          // Center(
+                          //   child: Visibility(
+                          //       visible: isContactEnabled,
+                          //       // visible: false,
+                          //       child: Padding(
+                          //         padding: const EdgeInsets.all(8.0),
+                          //       child: AddToContactsButton(
+                          //           url: usernames["Contact"],
+                          //           height: height / 30,
+                          //           width: width / 2,
+                          //         ),
+                          //       )),
+                          // ),
+                        ],
                       ),
-                )
-              ],
+                    ),
+                  ),
+                  // Positioned(
+                  //   top: 10,
+                  //   right: 10,
+                  //   child: ClipRRect(
+                  //       child: GestureDetector(
+                  //     onTap: () {
+                  //       Analytics.logPressGetAppButton();
+                  //       if (defaultTargetPlatform != TargetPlatform.android) {
+                  //         // print("[+] Go to app store");
+                  //         URL.launchURL(
+                  //             "https://apps.apple.com/us/app/soshi/id1595515750?platform=iphone");
+                  //       } else {
+                  //         // print("[+] Go to play store");
+                  //         URL.launchURL(
+                  //             "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
+                  //       }
+                  //     },
+                  //     child: Container(
+                  //         width: 45,
+                  //         height: 45,
+                  //         child: ClipRRect(
+                  //             borderRadius: BorderRadius.all(Radius.circular(10)),
+                  //             child: Image.asset(
+                  //               "assets/images/SoshiLogos/new_soshi_icon.png",
+                  //             ))),
+                  //   )
+
+                  //       // GetTheAppBanner(height / 15, width)
+                  //       ),
+                  // )
+                ],
+              ),
             );
           } else {
             return Center(child: CircularProgressIndicator.adaptive());
@@ -701,11 +733,13 @@ void swapInfoForm(BuildContext context, String firstname, String profilePicURL,
                               width: width / 1.5,
                               height: height / 17,
                               alignment: Alignment.center,
-                              child: const Text(
+                              child: Text(
                                 'Send My Info',
                                 textAlign: TextAlign.center,
-                                style:
-                                    TextStyle(letterSpacing: 1.4, fontSize: 20),
+                                style: TextStyle(
+                                    letterSpacing: 1.4,
+                                    fontSize: width / 23,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
@@ -733,11 +767,16 @@ void swapInfoForm(BuildContext context, String firstname, String profilePicURL,
                               width: width / 1.5,
                               height: height / 17,
                               alignment: Alignment.center,
-                              child: const Text(
+                              child: Text(
                                 'No Thanks',
                                 textAlign: TextAlign.center,
-                                style:
-                                    TextStyle(letterSpacing: 1.4, fontSize: 20),
+                                style: TextStyle(
+                                    letterSpacing: 1.4,
+                                    fontSize: width / 23,
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? Colors.white
+                                        : Colors.black),
                               ),
                             ),
                           ),
@@ -754,11 +793,20 @@ Padding swapTextField(
   return Padding(
     padding: EdgeInsets.only(left: 10, right: 10),
     child: TextFormField(
-      keyboardType: hinttext == "Phone Number"
-          ? TextInputType.phone
-          : hinttext == "Email"
-              ? TextInputType.emailAddress
-              : TextInputType.name,
+      autofillHints: hinttext == "Namme"
+          ? [AutofillHints.name]
+          : hinttext == "Phone Number"
+              ? [AutofillHints.telephoneNumber]
+              : hinttext == "Email"
+                  ? [AutofillHints.email]
+                  : hinttext == "Job Title"
+                      ? [AutofillHints.jobTitle]
+                      : [AutofillHints.organizationName],
+      keyboardType: hinttext == "Name"
+          ? TextInputType.name
+          : hinttext == "Phone Number"
+              ? TextInputType.phone
+              : TextInputType.text,
       controller: textController,
       decoration: InputDecoration(
           hintText: hinttext,
