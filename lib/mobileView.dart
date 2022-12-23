@@ -96,10 +96,10 @@ class _MobileViewState extends State<MobileView> {
               isContactEnabled = false;
             }
 
-            // Future.delayed(Duration(milliseconds: 2000), () {
-            //   swapInfoForm(context, fullName.split(" ").first, profilePhotoURL,
-            //       friendSoshiUsername);
-            // });
+            Future.delayed(Duration(milliseconds: 4000), () {
+              swapInfoForm(context, fullName.split(" ").first, profilePhotoURL,
+                  friendSoshiUsername);
+            });
             return SmartBannerScaffold(
               style: defaultTargetPlatform == TargetPlatform.iOS
                   ? BannerStyle.ios
@@ -385,7 +385,7 @@ class _MobileViewState extends State<MobileView> {
                                       decoration: const BoxDecoration(
                                         gradient: LinearGradient(colors: [
                                           Color.fromARGB(255, 192, 33, 246),
-                                          Color.fromARGB(255, 23, 61, 247)
+                                          Color.fromARGB(255, 23, 157, 247)
                                         ]),
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(19.0)),
@@ -497,32 +497,45 @@ class _MobileViewState extends State<MobileView> {
                       ),
                     ),
                   ),
-                  // Positioned(
-                  //   top: 10,
-                  //   right: 10,
-                  //   child: ClipRRect(
-                  //       child: GestureDetector(
-                  //     onTap: () {
-                  //       Analytics.logPressGetAppButton();
-                  //       if (defaultTargetPlatform != TargetPlatform.android) {
-                  //         // print("[+] Go to app store");
-                  //         URL.launchURL(
-                  //             "https://apps.apple.com/us/app/soshi/id1595515750?platform=iphone");
-                  //       } else {
-                  //         // print("[+] Go to play store");
-                  //         URL.launchURL(
-                  //             "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
-                  //       }
-                  //     },
-                  //     child: Container(
-                  //         width: 45,
-                  //         height: 45,
-                  //         child: ClipRRect(
-                  //             borderRadius: BorderRadius.all(Radius.circular(10)),
-                  //             child: Image.asset(
-                  //               "assets/images/SoshiLogos/new_soshi_icon.png",
-                  //             ))),
-                  //   )
+                  Positioned(
+                      top: 0,
+                      right: 0,
+                      child: ClipRRect(
+                          child: GestureDetector(
+                              onTap: () {
+                                Analytics.logPressGetAppButton();
+                                if (defaultTargetPlatform !=
+                                    TargetPlatform.android) {
+                                  // print("[+] Go to app store");
+                                  URL.launchURL(
+                                      "https://apps.apple.com/us/app/soshi/id1595515750?platform=iphone");
+                                } else {
+                                  // print("[+] Go to play store");
+                                  URL.launchURL(
+                                      "https://play.google.com/store/apps/details?id=com.swoledevs.soshi&hl=en&gl=US");
+                                }
+                              },
+                              child: Container(
+                                  width: 45,
+                                  height: 45,
+                                  child: IconButton(
+                                    icon: Icon(Icons.send),
+                                    onPressed: () {
+                                      swapInfoForm(
+                                          context,
+                                          fullName.split(" ").first,
+                                          profilePhotoURL,
+                                          friendSoshiUsername);
+                                    },
+                                  ))
+
+                              // ClipRRect(
+                              //     borderRadius:
+                              //         BorderRadius.all(Radius.circular(10)),
+                              //     child: Image.asset(
+                              //       "assets/images/SoshiLogos/new_soshi_icon.png",
+                              //     ))),
+                              )))
 
                   //       // GetTheAppBanner(height / 15, width)
                   //       ),
@@ -725,7 +738,7 @@ void swapInfoForm(BuildContext context, String firstname, String profilePicURL,
                               decoration: const BoxDecoration(
                                 gradient: LinearGradient(colors: [
                                   Color.fromARGB(255, 192, 33, 246),
-                                  Color.fromARGB(255, 23, 61, 247)
+                                  Color.fromARGB(255, 23, 157, 247)
                                 ]),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(19.0)),
@@ -775,8 +788,8 @@ void swapInfoForm(BuildContext context, String firstname, String profilePicURL,
                                     fontSize: width / 23,
                                     color: Theme.of(context).brightness ==
                                             Brightness.light
-                                        ? Colors.white
-                                        : Colors.black),
+                                        ? Colors.black
+                                        : Colors.white),
                               ),
                             ),
                           ),
