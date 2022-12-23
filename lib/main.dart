@@ -233,9 +233,10 @@ class _MyAppState extends State<MyApp> {
                 });
           } else {
             return MaterialPageRoute(builder: (context) {
-              return PageNotFoundScreen(
-                launchURLIn: true,
-              );
+              double height = MediaQuery.of(context).size.height;
+              double width = MediaQuery.of(context).size.width;
+
+              return PageNotFoundScreen(height, width);
             });
           }
         });
