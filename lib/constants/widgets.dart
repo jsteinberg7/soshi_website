@@ -130,6 +130,61 @@ class PassionBubble extends StatelessWidget {
   }
 }
 
+class SkillBubble extends StatelessWidget {
+  String skillName;
+
+  SkillBubble(this.skillName);
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    return Container(
+        decoration: BoxDecoration(
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.white
+                : Colors.black,
+            borderRadius: BorderRadius.circular(30.0)),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(8, 2, 8, 5),
+          child: Container(
+            //color: Colors.green,
+            width: width / 4,
+            height: height / 40,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 2),
+              child: Text(
+                skillName,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: width / 30),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            ),
+
+            // child: AutoSizeText(
+            //   skillName,
+            //   textAlign: TextAlign.center,
+            //   maxLines: 1, //passion.name.contains(" ") ? 2 : 1,
+            //   style:
+            //       TextStyle(fontSize: MediaQuery.of(context).size.width / 25),
+            //   minFontSize: 10,
+            // ),
+          ),
+          // child: Container(
+          //   width: width / 4.5,
+          //   height: height / 30,
+          //   decoration: BoxDecoration(color: Colors.blue),
+          //   child: AutoSizeText(
+          //     passionEmoji + passionString,
+          //     // style: TextStyle(fontSize: width / 28),
+          //   ),
+          // ),
+        ));
+  }
+}
+
 class AddToContactsButtonNew extends StatelessWidget {
   String url;
   double width;

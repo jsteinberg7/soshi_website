@@ -50,6 +50,22 @@ class DatabaseService {
     return filteredPassionsMap;
   }
 
+  List<dynamic> getSkills(Map userData) {
+    List<dynamic> rawSkills = userData["Skills"] ?? [];
+    List<dynamic> filteredSkillsList = [];
+
+    if (rawSkills.isEmpty) {
+      return [];
+    } else {
+      for (int i = 0; i < 3; i++) {
+        if (!((rawSkills[i]).toUpperCase().contains("ADD +"))) {
+          filteredSkillsList.add(rawSkills[i]);
+        }
+      }
+    }
+    return filteredSkillsList;
+  }
+
   // pass in soshiUsername, return map of user switches (platform visibility)
   Map<String, dynamic> getUserSwitches(Map userData) {
     return userData["Switches"];

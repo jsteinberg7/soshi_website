@@ -78,7 +78,7 @@ class _MobileViewState extends State<MobileView> {
             String numFriendsString = numfriends.toString();
             String photoUrl = databaseService.getPhotoURL(userData);
             bool isContactEnabled;
-            List<dynamic> passionsMap = databaseService.getPassions(userData);
+            List<dynamic> skills = databaseService.getSkills(userData);
 
             List<String> visiblePlatforms;
             Map usernames;
@@ -296,8 +296,8 @@ class _MobileViewState extends State<MobileView> {
                                 ),
                                 //SizedBox(height: height / 1),
                                 Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        width / 6, height / 70, width / 6, 0),
+                                    padding: EdgeInsets.fromLTRB(width / 7.5,
+                                        height / 70, width / 7.5, 0),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
@@ -316,23 +316,20 @@ class _MobileViewState extends State<MobileView> {
                                     )
                                     //),
                                     ),
-                                Visibility(
-                                  visible: !passionsMap.isEmpty,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(top: height / 100),
-                                    child: Wrap(
-                                      alignment: WrapAlignment.center,
-                                      spacing: width / 65,
-                                      children: List.generate(
-                                          passionsMap.length, (i) {
-                                        return PassionBubble(
-                                            passionsMap[i]["passion_name"],
-                                            passionsMap[i]["passion_emoji"],
-                                            width / 5.5);
-                                      }),
-                                    ),
-                                  ),
-                                ),
+                                // Visibility(
+                                //   visible: !skills.isEmpty,
+                                //   child: Padding(
+                                //     padding: EdgeInsets.only(top: height / 100),
+                                //     child: Wrap(
+                                //       alignment: WrapAlignment.center,
+                                //       spacing: width / 65,
+                                //       children:
+                                //           List.generate(skills.length, (i) {
+                                //         return SkillBubble(skills[i]);
+                                //       }),
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -341,7 +338,7 @@ class _MobileViewState extends State<MobileView> {
                     ),
                   ),
                   Positioned(
-                    top: height / 2.05,
+                    top: height / 2.5,
                     left: 0,
                     right: 0,
                     child: Container(
@@ -436,6 +433,40 @@ class _MobileViewState extends State<MobileView> {
 
                           Padding(
                             padding: EdgeInsets.fromLTRB(
+                                width / 25, width / 30, 0, width / 80),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Skills",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: width / 18),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Center(
+                              child: Padding(
+                                  padding: EdgeInsets.only(top: height / 100),
+                                  child: !skills.isEmpty
+                                      ? Container(
+                                          child: Wrap(
+                                            alignment: WrapAlignment.center,
+                                            spacing: width / 65,
+                                            children: List.generate(
+                                                skills.length, (i) {
+                                              return SkillBubble(skills[i]);
+                                            }),
+                                          ),
+                                        )
+                                      : Text(
+                                          "This user is not sharing their skills.",
+                                          style:
+                                              TextStyle(fontSize: width / 30),
+                                        ))),
+
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(
                                 width / 25, width / 30, 0, width / 30),
                             child: Row(
                               children: [
@@ -448,6 +479,7 @@ class _MobileViewState extends State<MobileView> {
                               ],
                             ),
                           ),
+
                           Center(
                             child: (visiblePlatforms.isEmpty)
                                 ? Center(
