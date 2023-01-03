@@ -143,8 +143,8 @@ class SkillBubble extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             color: Theme.of(context).brightness == Brightness.light
-                ? Colors.white
-                : Colors.black,
+                ? Colors.grey[200]
+                : Colors.grey[850],
             borderRadius: BorderRadius.circular(30.0)),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(8, 2, 8, 5),
@@ -206,7 +206,10 @@ class AddToContactsButtonNew extends StatelessWidget {
             child: Text(
               "Add to Contacts",
               textAlign: TextAlign.center,
-              style: TextStyle(letterSpacing: 1.4, fontSize: 20),
+              style: TextStyle(
+                letterSpacing: 1.4,
+                fontSize: 20,
+              ),
             ),
             style: NeumorphicStyle(
                 shadowDarkColor: Colors.black,
@@ -248,7 +251,10 @@ class AddToContactsButton extends StatelessWidget {
                   SizedBox(width: 10),
                   Text(
                     "Add To Contacts",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   SizedBox(width: 10),
                   Icon(

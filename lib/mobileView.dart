@@ -115,14 +115,14 @@ class _MobileViewState extends State<MobileView> {
                       icon: ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           child: Image.asset(
-                            "assets/images/SoshiLogos/new_soshi_icon.png",
+                            "assets/images/SoshiLogos/new_logo_white.png",
                           ))),
                   iosProperties: BannerPropertiesIOS(
                       appId: '1595515750',
                       icon: ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           child: Image.asset(
-                            "assets/images/SoshiLogos/new_soshi_icon.png",
+                            "assets/images/SoshiLogos/new_logo_white.png",
                           )))),
               child: Stack(
                 children: [
@@ -396,7 +396,8 @@ class _MobileViewState extends State<MobileView> {
                                         style: TextStyle(
                                             letterSpacing: 1.4,
                                             fontSize: width / 23,
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
                                       ),
                                     ),
                                   ),
@@ -784,7 +785,8 @@ void swapInfoForm(BuildContext context, String firstname, String profilePicURL,
                                 style: TextStyle(
                                     letterSpacing: 1.4,
                                     fontSize: width / 23,
-                                    fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
                               ),
                             ),
                           ),
@@ -812,17 +814,12 @@ void swapInfoForm(BuildContext context, String firstname, String profilePicURL,
                               width: width / 1.5,
                               height: height / 17,
                               alignment: Alignment.center,
-                              child: Text(
-                                'No Thanks',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    letterSpacing: 1.4,
-                                    fontSize: width / 23,
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? Colors.black
-                                        : Colors.white),
-                              ),
+                              child: Text('No Thanks',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      letterSpacing: 1.4,
+                                      fontSize: width / 23,
+                                      color: Colors.white)),
                             ),
                           ),
                         ],
