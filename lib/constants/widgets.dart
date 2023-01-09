@@ -196,6 +196,7 @@ class AddToContactsButtonNew extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
       child: Container(
         width: width / 1.3,
+        // height: MediaQuery.of(context).size.height / 2,
         child: NeumorphicButton(
             onPressed: () async {
               try {
@@ -300,7 +301,9 @@ class SoshiUsernameText extends StatelessWidget {
       children: [
         Text("@" + username,
             style: TextStyle(
-              color: Colors.grey,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.grey
+                  : Colors.grey[700],
               fontSize: fontSize,
             )),
         Visibility(

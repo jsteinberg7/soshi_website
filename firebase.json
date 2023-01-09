@@ -1,10 +1,32 @@
 {
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
   "hosting": {
-    "public": "dist/Soshi",
+    "public": "build/web",
+    "site": "soshi-bc9ec",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/deeplink/user/**",
+        "dynamicLinks": true
+      },
+      {
+        "source": "/deeplink/group/**",
+        "dynamicLinks": true
+      },
+      {
+        "source": "!/deeplink/**",
+        "destination": "/index.html"
+      }
     ]
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }
